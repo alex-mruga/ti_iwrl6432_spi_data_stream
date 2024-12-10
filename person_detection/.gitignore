@@ -1,0 +1,37 @@
+# Ignore build directories
+/build/
+/out/
+/bin/
+/obj/
+/Release/
+
+# Ignore compiled object files
+*.o
+*.a
+*.so
+*.exe
+*.out
+
+# Ignore IDE-specific files
+/.idea/
+/.vscode/
+/*.swp
+*.swo
+
+# Ignore temporary files
+*.log
+*.bak
+*.tmp
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore generated files (such as compiled binaries, debug files)
+*.elf
+*.map
+*.bin
+*.appimage
+
+# Ignore config files specific to the project (optional)
+*.config
