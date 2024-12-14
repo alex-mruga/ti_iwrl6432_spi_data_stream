@@ -11,6 +11,7 @@
 
 HWA_Handle hwaHandle;
 DPU_RangeProcHWA_Handle rangeProcHWADpuHandle;
+DPU_RangeProcHWA_Config rangeProcDpuCfg;
 
 void rangeproc_main(void *args)
 {
@@ -50,3 +51,35 @@ void rangeProc_dpuInit()
     }
 }
 
+void RangeProc_configParser()
+{
+    DPU_RangeProcHWA_HW_Resources *pHwConfig = &rangeProcDpuCfg.hwRes;
+    DPU_RangeProcHWA_StaticConfig  * params;
+
+    /*
+      For values refer to "Sensor front-end parameters" in:
+      https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/MMWAVE_DEMO.html
+     */
+    params->numTxAntennas = NUM_TX_ANTENNAS;
+    params->numVirtualAntennas = NUM_VIRT_ANTENNAS;
+    params->numRangeBins = NUM_ADC_SAMPLES; // real only input /2 previouisly
+    params->numChirpsPerFrame = testConfig->numChirpsPerFrame;
+    params->numDopplerChirpsPerFrame = params->numChirpsPerFrame/params->numTxAntennas;
+    params->numDopplerChirpsPerProc = params->numDopplerChirpsPerFrame;
+    params->isBpmEnabled = TRUE;
+    /* windowing */
+    params->windowSize = sizeof(uint32_t) * ((testConfig->numAdcSamples +1 ) / 2); //symmetric window, for real samples
+    params->ADCBufData.dataSize = testConfig->numAdcSamples * testConfig->numRxAntennas * 4 ;  
+    params->ADCBufData.dataProperty.numAdcSamples = testConfig->numAdcSamples;
+    params->ADCBufData.dataProperty.numRxAntennas = testConfig->numRxAntennas;
+ 
+    params->rangeFFTtuning.fftOutputDivShift = 2;
+    params->rangeFFTtuning.numLastButterflyStagesToScale = 0; /* no scaling needed as ADC is 16-bit and we have 8 bits to grow */  
+    params->enableMajorMotion = 1;
+    params->enableMinorMotion = 0;
+    //params->numFramesPerMinorMotProc = 4;
+    params->numMinorMotionChirpsPerFrame = 0;
+ 
+    //params->rangeFftSize = HWAFFT_log2Approx(testConfig->numAdcSamples);
+    params->rangeFftSize = testConfig->numAdcSamples;
+}

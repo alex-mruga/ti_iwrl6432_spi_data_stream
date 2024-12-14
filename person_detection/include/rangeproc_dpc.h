@@ -9,6 +9,8 @@
 #include <datapath/dpu/rangeproc/v0/rangeprochwa.h>
 #include "drivers/hwa.h"
 
+#include "defines.h"
+
 /**
  *  @b Description
  *  @n
@@ -36,6 +38,16 @@ extern DPU_RangeProcHWA_Handle rangeProcHWADpuHandle;
  * @retval None
  */
 void rangeProc_dpuInit(void);
+
+/**
+ * @brief Configures the Range Processing DPU
+ *
+ * This function configures the range processing DPU (Data Path Unit) and
+ * It is derived from the dpc.c of the mmwavedemo project.
+ *
+ * @retval None
+ */
+void RangeProc_configParser();
 
 /**
  * @brief Main function for Range Processing DPU
