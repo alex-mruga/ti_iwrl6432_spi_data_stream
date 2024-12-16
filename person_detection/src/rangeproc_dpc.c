@@ -51,7 +51,7 @@ void rangeProc_dpuInit()
     }
 }
 
-void RangeProc_configParser()
+void RangeProc_config()
 {
     DPU_RangeProcHWA_HW_Resources *pHwConfig = &rangeProcDpuCfg.hwRes;
     DPU_RangeProcHWA_StaticConfig  * params;
