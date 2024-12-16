@@ -60,26 +60,36 @@ void RangeProc_configParser()
       For values refer to "Sensor front-end parameters" in:
       https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/MMWAVE_DEMO.html
      */
+    /* number of TX antennas (on the IWRL6432BOOST 2)*/
     params->numTxAntennas = NUM_TX_ANTENNAS;
+    /* number of RX antennas, product of TX- and RX-antennas (on the IWRL6432BOOST 2*3=6) */
     params->numVirtualAntennas = NUM_VIRT_ANTENNAS;
-    params->numRangeBins = NUM_ADC_SAMPLES; // real only input /2 previouisly
-    params->numChirpsPerFrame = testConfig->numChirpsPerFrame;
+    /* size of range FFT: equal to number of ADC samples*/
+    params->rangeFftSize = NUM_ADC_SAMPLES;
+    /* size of real part of range FFT: half of the range FFT size, since the ADC samples are real valued*/
+    params->numRangeBins = NUM_ADC_SAMPLES/2;
+    /* number of chirps per frame (= number of chirps per burst, if Nburst = 1) */
+    params->numChirpsPerFrame = NUM_CHIRPS_PER_FRAME;
+    /* number of doppler chirps per frame (derived from rangeproc init example) */
     params->numDopplerChirpsPerFrame = params->numChirpsPerFrame/params->numTxAntennas;
     params->numDopplerChirpsPerProc = params->numDopplerChirpsPerFrame;
+    /* enable BPM mode (instead of TDM) */
     params->isBpmEnabled = TRUE;
+
     /* windowing */
-    params->windowSize = sizeof(uint32_t) * ((testConfig->numAdcSamples +1 ) / 2); //symmetric window, for real samples
-    params->ADCBufData.dataSize = testConfig->numAdcSamples * testConfig->numRxAntennas * 4 ;  
-    params->ADCBufData.dataProperty.numAdcSamples = testConfig->numAdcSamples;
-    params->ADCBufData.dataProperty.numRxAntennas = testConfig->numRxAntennas;
- 
+    params->windowSize = sizeof(uint32_t) * ((NUM_ADC_SAMPLES +1 ) / 2); // symmetric window (Blackman), for real samples (therefore /2)
+    /* dataSize defines the size of buffer that holds ADC data of every frame */
+    /* ADCBufData.dataSize omitted due to forum post: https://e2e.ti.com/support/sensors-group/sensors/f/sensors-forum/1324580/awrl6432boost-adc-buffer-data-size-in-motion-and-presence-detection-demo */
+    //params->ADCBufData.dataSize = NUM_ADC_SAMPLES * NUM_RX_ANTENNAS * sizeof(uint16_t) * 2; // times 2, because of ping and pong C:\ti\mmwave-sdk\docs\MotionPresenceDetectionDemo_documentation.pdf 
+    params->ADCBufData.dataProperty.numAdcSamples = NUM_ADC_SAMPLES;
+    params->ADCBufData.dataProperty.numRxAntennas = NUM_RX_ANTENNAS;
+    
+    /* FFT optimizing params (derived from rangeproc DPU example) */
     params->rangeFFTtuning.fftOutputDivShift = 2;
     params->rangeFFTtuning.numLastButterflyStagesToScale = 0; /* no scaling needed as ADC is 16-bit and we have 8 bits to grow */  
+
+    /* Set Motion Mode (Minor/Major) */
     params->enableMajorMotion = 1;
     params->enableMinorMotion = 0;
-    //params->numFramesPerMinorMotProc = 4;
-    params->numMinorMotionChirpsPerFrame = 0;
- 
-    //params->rangeFftSize = HWAFFT_log2Approx(testConfig->numAdcSamples);
-    params->rangeFftSize = testConfig->numAdcSamples;
+    params->numMinorMotionChirpsPerFrame = 0; // obsolete, not using minor motion
 }
