@@ -29,8 +29,11 @@ void rangeproc_main(void *args)
         DebugP_assert(0);
     }
 
+
     rangeProc_dpuInit();
     DebugP_log("Hello World!\r\n");
+
+    RangeProc_config();
 
     Board_driversClose();
     Drivers_close();
@@ -54,7 +57,7 @@ void rangeProc_dpuInit()
 void RangeProc_config()
 {
     DPU_RangeProcHWA_HW_Resources *pHwConfig = &rangeProcDpuCfg.hwRes;
-    DPU_RangeProcHWA_StaticConfig  * params;
+    params = &rangeProcDpuCfg.staticCfg;
     uint32_t bytesPerRxChan;
 
     /*
@@ -147,4 +150,14 @@ void RangeProc_config()
     /* total size of radar cube in bytes*/
     pHwConfig->radarCube.dataSize = params->numRangeBins * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * params->numDopplerChirpsPerProc;
     pHwConfig->radarCube.datafmt = DPIF_RADARCUBE_FORMAT_6;
+
+    /* configure HWA with set parameters */
+    int32_t retVal;
+    retVal = DPU_RangeProcHWA_config(rangeProcDpuHandle, &rangeProcDpuCfg);
+ 
+    if(retVal < 0)
+    {
+        DebugP_log("DEBUG: RANGE DPU config return error:%d \n", retVal);
+        DebugP_assert(0);
+    }
 }
