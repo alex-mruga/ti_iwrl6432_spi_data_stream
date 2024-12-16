@@ -9,6 +9,7 @@
 #include <datapath/dpu/rangeproc/v0/rangeprochwa.h>
 #include "drivers/hwa.h"
 
+#include "dpu_res.h"
 #include "defines.h"
 
 /**
