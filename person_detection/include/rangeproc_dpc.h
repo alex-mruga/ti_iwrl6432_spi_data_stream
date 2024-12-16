@@ -43,12 +43,12 @@ void rangeProc_dpuInit(void);
 /**
  * @brief Configures the Range Processing DPU
  *
- * This function configures the range processing DPU (Data Path Unit) and
+ * This function configures the range processing DPU (Data Path Unit) and the HWA
  * It is derived from the dpc.c of the mmwavedemo project.
  *
  * @retval None
  */
-void RangeProc_configParser();
+void RangeProc_config();
 
 /**
  * @brief Main function for Range Processing DPU
