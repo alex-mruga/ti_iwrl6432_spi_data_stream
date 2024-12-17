@@ -5,6 +5,7 @@
 "./syscfg/ti_power_clock_config.o"
 "./syscfg/ti_board_config.o"
 "./syscfg/ti_board_open_close.o"
+"./src/factory_cal.o"
 "./src/main.o"
 "./src/mmwave_basic.o"
 "./src/rangeproc_dpc.o"

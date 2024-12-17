@@ -39,6 +39,15 @@
                 "name": "person_detection",
                 "resourceId": "/person_detection/include/rangeproc_dpc.h"
             }
+        },
+        {
+            "name": "person_detection (3)",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "person_detection",
+                "resourceId": "/person_detection/src/mmwave_basic.c"
+            }
         }
     ]
 }

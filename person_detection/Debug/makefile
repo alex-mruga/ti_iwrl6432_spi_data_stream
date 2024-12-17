@@ -17,6 +17,7 @@ ORDERED_OBJS += \
 "./syscfg/ti_power_clock_config.o" \
 "./syscfg/ti_board_config.o" \
 "./syscfg/ti_board_open_close.o" \
+"./src/factory_cal.o" \
 "./src/main.o" \
 "./src/mmwave_basic.o" \
 "./src/rangeproc_dpc.o" \
@@ -162,8 +163,8 @@ person_detection.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "syscfg\ti_dpl_config.o" "syscfg\ti_drivers_config.o" "syscfg\ti_drivers_open_close.o" "syscfg\ti_pinmux_config.o" "syscfg\ti_power_clock_config.o" "syscfg\ti_board_config.o" "syscfg\ti_board_open_close.o" "src\main.o" "src\mmwave_basic.o" "src\rangeproc_dpc.o" 
-	-$(RM) "syscfg\ti_dpl_config.d" "syscfg\ti_drivers_config.d" "syscfg\ti_drivers_open_close.d" "syscfg\ti_pinmux_config.d" "syscfg\ti_power_clock_config.d" "syscfg\ti_board_config.d" "syscfg\ti_board_open_close.d" "src\main.d" "src\mmwave_basic.d" "src\rangeproc_dpc.d" 
+	-$(RM) "syscfg\ti_dpl_config.o" "syscfg\ti_drivers_config.o" "syscfg\ti_drivers_open_close.o" "syscfg\ti_pinmux_config.o" "syscfg\ti_power_clock_config.o" "syscfg\ti_board_config.o" "syscfg\ti_board_open_close.o" "src\factory_cal.o" "src\main.o" "src\mmwave_basic.o" "src\rangeproc_dpc.o" 
+	-$(RM) "syscfg\ti_dpl_config.d" "syscfg\ti_drivers_config.d" "syscfg\ti_drivers_open_close.d" "syscfg\ti_pinmux_config.d" "syscfg\ti_power_clock_config.d" "syscfg\ti_board_config.d" "syscfg\ti_board_open_close.d" "src\factory_cal.d" "src\main.d" "src\mmwave_basic.d" "src\rangeproc_dpc.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'
 	-@echo ' '
