@@ -37,8 +37,11 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+#include <mmwavelink/mmwavelink.h>
+
 #include <datapath/dpu/rangeproc/v0/rangeprochwa.h>
 #include "rangeproc_dpc.h"
+#include "mmwave_basic.h"
 
 // --- FRERTOS
 #define MAIN_TASK_PRI  (configMAX_PRIORITIES-1)
@@ -54,6 +57,8 @@ void rangeproc_main(void *args);
 
 void freertos_main(void *args)
 {
+    mmwave_init(); // no warm start
+    mmwave_openSensor();
     rangeproc_main(NULL);
 
     vTaskDelete(NULL);

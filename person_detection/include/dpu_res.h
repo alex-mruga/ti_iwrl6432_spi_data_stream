@@ -48,6 +48,8 @@ extern "C" {
  * resource used in the demo.
  *******************************************************************************/
 
+#define DPC_OBJDET_HWA_WINDOW_RAM_OFFSET                               0
+
 #define DPC_OBJDET_EDMA_SHADOW_BASE                                    SOC_EDMA_NUM_DMACH
 
 /* Range DPU */

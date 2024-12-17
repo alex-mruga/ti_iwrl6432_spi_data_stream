@@ -18,6 +18,7 @@ ORDERED_OBJS += \
 "./syscfg/ti_board_config.o" \
 "./syscfg/ti_board_open_close.o" \
 "./src/main.o" \
+"./src/mmwave_basic.o" \
 "./src/rangeproc_dpc.o" \
 "../linker.cmd" \
 $(GEN_CMDS__FLAG) \
@@ -28,6 +29,9 @@ $(GEN_CMDS__FLAG) \
 -Wl,-lcontrol.xwrL64xx.m4f.ti-arm-clang.debug.lib \
 -Wl,-lutils.xwrL64xx.m4f.ti-arm-clang.debug.lib \
 -Wl,-llibc.a \
+-Wl,-lmmwavelink_m4.lib \
+-Wl,-lfecss_rom_m4.lib \
+-Wl,-lfecss_patch_m4.lib \
 
 -include ../makefile.init
 
@@ -150,7 +154,7 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 person_detection.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: Arm Linker'
-	"C:/ti/ti_cgt_tiarmclang_3.2.2.LTS/bin/tiarmclang.exe" -mcpu=cortex-m4 -mfloat-abi=hard -mlittle-endian -mthumb -DSOC_XWRL64XX -D_DEBUG_=1 -g -Wall -Wno-gnu-variable-sized-type-not-at-end -Wno-unused-function -mno-unaligned-access -Wl,-m"hello_world.Debug.map" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/kernel/freertos/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/drivers/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/datapath/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/board/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/control/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/utils/lib" -Wl,-i"C:/ti/ti_cgt_tiarmclang_3.2.2.LTS/lib" -Wl,--reread_libs -Wl,--diag_wrap=off -Wl,--display_error_number -Wl,--warn_sections -Wl,--xml_link_info="person_detection_linkInfo.xml" -Wl,--ram_model -o "person_detection.out" $(ORDERED_OBJS)
+	"C:/ti/ti_cgt_tiarmclang_3.2.2.LTS/bin/tiarmclang.exe" -mcpu=cortex-m4 -mfloat-abi=hard -mlittle-endian -mthumb -DSOC_XWRL64XX -D_DEBUG_=1 -g -Wall -Wno-gnu-variable-sized-type-not-at-end -Wno-unused-function -mno-unaligned-access -Wl,-m"hello_world.Debug.map" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/kernel/freertos/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/drivers/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/datapath/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/board/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/control/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/source/utils/lib" -Wl,-i"C:/ti/ti_cgt_tiarmclang_3.2.2.LTS/lib" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/lib/xWRLx432" -Wl,-i"C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/mmwavelink/lib/xWRLx432" -Wl,--reread_libs -Wl,--diag_wrap=off -Wl,--display_error_number -Wl,--warn_sections -Wl,--xml_link_info="person_detection_linkInfo.xml" -Wl,--ram_model -o "person_detection.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -158,8 +162,8 @@ person_detection.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "syscfg\ti_dpl_config.o" "syscfg\ti_drivers_config.o" "syscfg\ti_drivers_open_close.o" "syscfg\ti_pinmux_config.o" "syscfg\ti_power_clock_config.o" "syscfg\ti_board_config.o" "syscfg\ti_board_open_close.o" "src\main.o" "src\rangeproc_dpc.o" 
-	-$(RM) "syscfg\ti_dpl_config.d" "syscfg\ti_drivers_config.d" "syscfg\ti_drivers_open_close.d" "syscfg\ti_pinmux_config.d" "syscfg\ti_power_clock_config.d" "syscfg\ti_board_config.d" "syscfg\ti_board_open_close.d" "src\main.d" "src\rangeproc_dpc.d" 
+	-$(RM) "syscfg\ti_dpl_config.o" "syscfg\ti_drivers_config.o" "syscfg\ti_drivers_open_close.o" "syscfg\ti_pinmux_config.o" "syscfg\ti_power_clock_config.o" "syscfg\ti_board_config.o" "syscfg\ti_board_open_close.o" "src\main.o" "src\mmwave_basic.o" "src\rangeproc_dpc.o" 
+	-$(RM) "syscfg\ti_dpl_config.d" "syscfg\ti_drivers_config.d" "syscfg\ti_drivers_open_close.d" "syscfg\ti_pinmux_config.d" "syscfg\ti_power_clock_config.d" "syscfg\ti_board_config.d" "syscfg\ti_board_open_close.d" "src\main.d" "src\mmwave_basic.d" "src\rangeproc_dpc.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'
 	-@echo ' '

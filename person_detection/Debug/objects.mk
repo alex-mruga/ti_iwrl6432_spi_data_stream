@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -Wl,-lfreertos.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-ldatapath_tracker2d.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-ldrivers.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-lboard.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-lcontrol.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-lutils.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-llibc.a
+LIBS := -Wl,-lfreertos.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-ldatapath_tracker2d.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-ldrivers.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-lboard.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-lcontrol.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-lutils.xwrL64xx.m4f.ti-arm-clang.debug.lib -Wl,-llibc.a -Wl,-lmmwavelink_m4.lib -Wl,-lfecss_rom_m4.lib -Wl,-lfecss_patch_m4.lib
 

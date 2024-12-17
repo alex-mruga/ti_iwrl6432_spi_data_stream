@@ -64,6 +64,22 @@ src/main.o: ../src/main.c \
  C:/ti/MMWAVE_L_SDK_05_05_02_00/source/kernel/freertos/FreeRTOS-Kernel/include/mpu_wrappers.h \
  C:/ti/MMWAVE_L_SDK_05_05_02_00/source/kernel/freertos/FreeRTOS-Kernel/include/task.h \
  C:/ti/MMWAVE_L_SDK_05_05_02_00/source/kernel/freertos/FreeRTOS-Kernel/include/list.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/mmwavelink/mmwavelink.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/fecsslib.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_datatypes.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_users.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_device.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_sensor.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_monitor.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/device/include/fe_driver.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/common/reg_topprcm.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/common/reg_fecrcm.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/common/reg_fecctrl.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_trace.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/rfscripter/include/rfs_command.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/device/include/fe_device.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/sensor/include/fe_sensor.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/rommap.h \
  C:/ti/MMWAVE_L_SDK_05_05_02_00/source/datapath/dpu/rangeproc/v0/rangeprochwa.h \
  C:/ti/MMWAVE_L_SDK_05_05_02_00/source/datapath/dpif/dpif_adcdata.h \
  C:/ti/MMWAVE_L_SDK_05_05_02_00/source/common/syscommon.h \
@@ -79,7 +95,15 @@ src/main.o: ../src/main.c \
  C:/ti/MMWAVE_L_SDK_05_05_02_00/source/datapath/dpu/rangeproc/v0/rangeproc_common.h \
  C:/Users/jonas/repos/tin/ti_iwrl6432boost_dsp/person_detection/include/rangeproc_dpc.h \
  syscfg/ti_drivers_open_close.h \
- syscfg/ti_board_open_close.h
+ syscfg/ti_board_open_close.h \
+ C:/Users/jonas/repos/tin/ti_iwrl6432boost_dsp/person_detection/include/dpu_res.h \
+ C:/Users/jonas/repos/tin/ti_iwrl6432boost_dsp/person_detection/include/defines.h \
+ C:/Users/jonas/repos/tin/ti_iwrl6432boost_dsp/person_detection/include/mmwave_basic.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/source/control/mmwave/mmwave.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/source/drivers/crc.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/source/drivers/crc/v0/crc.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/source/drivers/hw_include/cslr_crc.h \
+ C:/ti/MMWAVE_L_SDK_05_05_02_00/source/drivers/crc/v0/hw_crc.h
 
 C:/ti/MMWAVE_L_SDK_05_05_02_00/source/kernel/dpl/DebugP.h:
 
@@ -207,6 +231,38 @@ C:/ti/MMWAVE_L_SDK_05_05_02_00/source/kernel/freertos/FreeRTOS-Kernel/include/ta
 
 C:/ti/MMWAVE_L_SDK_05_05_02_00/source/kernel/freertos/FreeRTOS-Kernel/include/list.h:
 
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/mmwavelink/mmwavelink.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/fecsslib.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_datatypes.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_users.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_device.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_sensor.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_monitor.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/device/include/fe_driver.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/common/reg_topprcm.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/common/reg_fecrcm.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/common/reg_fecctrl.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/common/dfp_trace.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/rfscripter/include/rfs_command.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/device/include/fe_device.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/sensor/include/fe_sensor.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/fecsslib/rommap.h:
+
 C:/ti/MMWAVE_L_SDK_05_05_02_00/source/datapath/dpu/rangeproc/v0/rangeprochwa.h:
 
 C:/ti/MMWAVE_L_SDK_05_05_02_00/source/datapath/dpif/dpif_adcdata.h:
@@ -238,3 +294,19 @@ C:/Users/jonas/repos/tin/ti_iwrl6432boost_dsp/person_detection/include/rangeproc
 syscfg/ti_drivers_open_close.h:
 
 syscfg/ti_board_open_close.h:
+
+C:/Users/jonas/repos/tin/ti_iwrl6432boost_dsp/person_detection/include/dpu_res.h:
+
+C:/Users/jonas/repos/tin/ti_iwrl6432boost_dsp/person_detection/include/defines.h:
+
+C:/Users/jonas/repos/tin/ti_iwrl6432boost_dsp/person_detection/include/mmwave_basic.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/source/control/mmwave/mmwave.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/source/drivers/crc.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/source/drivers/crc/v0/crc.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/source/drivers/hw_include/cslr_crc.h:
+
+C:/ti/MMWAVE_L_SDK_05_05_02_00/source/drivers/crc/v0/hw_crc.h:

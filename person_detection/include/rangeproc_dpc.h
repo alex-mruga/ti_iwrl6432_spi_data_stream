@@ -63,4 +63,23 @@ void RangeProc_config();
  */
 void rangeproc_main(void *args);
 
+/**
+ * @brief Registers an interrupt for the frame start event.
+ *
+ * This function configures and registers the interrupt handler for the frame start event,
+ * which is triggered by the frame timer. It sets up the interrupt priority and callback function,
+ * then enables the interrupt to trigger the corresponding handler.
+ * Copied from ${MMWAVE_SDK_INSTALL_PATH}\examples\mmw_demo\motion_and_presence_detection\source\interrupts.c
+ * 
+ * @param None
+ *
+ * @retval SystemP_SUCCESS on successful registration, SystemP_FAILURE on error.
+ */
+int32_t registerFrameStartInterrupt(void);
+
+static void frameStartISR(void *arg);
+
+uint32_t Cycleprofiler_getTimeStamp(void);
+
+
 #endif /* RANGEPROC_DPC_H */

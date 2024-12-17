@@ -42,6 +42,8 @@
                                     <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/FreeRTOS-Kernel/include"/>
                                     <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/portable/TI_ARM_CLANG/ARM_CM4F"/>
                                     <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/config/xwrL64xx/m4f"/>
+                                    <listOptionValue value="${MMW_DFP_PATH}"/>
+                                    <listOptionValue value="C:/ti/MMWAVE_L_SDK_05_05_02_00/firmware/mmwave_dfp/mmwavelink"/>
                                 </option>
                                 <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.DEFINE.1895044175" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.DEFINE" valueType="definedSymbols">
                                     <listOptionValue value="${SYSCONFIG_TOOL_SYMBOLS}"/>
@@ -76,6 +78,8 @@
                                     <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/control/lib"/>
                                     <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/utils/lib"/>
                                     <listOptionValue value="${CG_TOOL_ROOT}/lib"/>
+                                    <listOptionValue value="${MMW_DFP_PATH}/fecsslib/lib/xWRLx432"/>
+                                    <listOptionValue value="${MMW_DFP_PATH}/mmwavelink/lib/xWRLx432"/>
                                 </option>
                                 <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.LIBRARY.1962561879" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.LIBRARY" valueType="libs">
                                     <listOptionValue value="${SYSCONFIG_TOOL_LIBRARIES}"/>
@@ -87,6 +91,9 @@
                                     <listOptionValue value="control.xwrL64xx.m4f.ti-arm-clang.debug.lib"/>
                                     <listOptionValue value="utils.xwrL64xx.m4f.ti-arm-clang.debug.lib"/>
                                     <listOptionValue value="libc.a"/>
+                                    <listOptionValue value="mmwavelink_m4.lib"/>
+                                    <listOptionValue value="fecss_rom_m4.lib"/>
+                                    <listOptionValue value="fecss_patch_m4.lib"/>
                                 </option>
                                 <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.INITIALIZATION_MODEL.2072906538" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.INITIALIZATION_MODEL" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.INITIALIZATION_MODEL.RAM_MODEL" valueType="enumerated"/>
                             </tool>

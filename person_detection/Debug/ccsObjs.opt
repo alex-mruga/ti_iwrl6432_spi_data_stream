@@ -6,6 +6,7 @@
 "./syscfg/ti_board_config.o"
 "./syscfg/ti_board_open_close.o"
 "./src/main.o"
+"./src/mmwave_basic.o"
 "./src/rangeproc_dpc.o"
 "../linker.cmd"
 -lfreertos.xwrL64xx.m4f.ti-arm-clang.debug.lib
@@ -15,3 +16,6 @@
 -lcontrol.xwrL64xx.m4f.ti-arm-clang.debug.lib
 -lutils.xwrL64xx.m4f.ti-arm-clang.debug.lib
 -llibc.a
+-lmmwavelink_m4.lib
+-lfecss_rom_m4.lib
+-lfecss_patch_m4.lib
