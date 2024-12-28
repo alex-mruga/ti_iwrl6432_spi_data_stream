@@ -42,7 +42,7 @@ MMWave_OpenCfg mmwOpenCfg;
 MMWave_CtrlCfg mmwCtrlCfg;
 
 
-int32_t mmwave_init()
+int32_t mmwave_initSensor()
 {
     int32_t             errCode;
     int32_t             retVal = SystemP_SUCCESS;

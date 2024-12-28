@@ -57,7 +57,7 @@ void rangeproc_main(void *args);
 
 void freertos_main(void *args)
 {
-    mmwave_init(); // no warm start
+    mmwave_initSensor();
     mmwave_openSensor();
     mmwave_configSensor();
     

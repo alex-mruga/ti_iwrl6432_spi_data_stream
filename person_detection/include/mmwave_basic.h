@@ -36,6 +36,6 @@
 #include <string.h>
 
 
-int32_t mmwave_init();
+int32_t mmwave_initSensor();
 int32_t mmwave_openSensor(void);
 int32_t mmwave_configSensor(void);
