@@ -51,6 +51,7 @@
 #include <control/mmwave/mmwave.h>
 #include <kernel/dpl/DebugP.h>
 #include <utils/testlogger/logger.h>
+#include "source/mmwave_demo.h"
 
 extern MmwDemo_MSS_MCB gMmwMssMCB;
 

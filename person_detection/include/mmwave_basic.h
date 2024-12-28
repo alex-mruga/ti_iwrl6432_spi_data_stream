@@ -48,11 +48,6 @@
 extern HWA_Handle hwaHandle;
 
 /**
- * @brief calls Drivers_open(), Board_driversOpen() and SOC_memoryInit()
-*/
-void board_init(void);
-
-/**
  * @brief calls HWA_open() and thereby retrieves the HWA's handle (HWA_Handle)
 */
 void hwa_open_handler(void);

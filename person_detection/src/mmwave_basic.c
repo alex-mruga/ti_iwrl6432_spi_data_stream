@@ -54,21 +54,6 @@ MMWave_OpenCfg mmwOpenCfg;
 
 MMWave_CtrlCfg mmwCtrlCfg;
 
-void board_init()
-{
-    /* Peripheral Driver Initialization */
-    Drivers_open();
-    Board_driversOpen();
-
-    /* The following function call and comment is copied from the motion and presence detection demo (motion_detect.c motion_detect()) */
-    /*HWASS_SHRD_RAM, TPCCA and TPCCB memory have to be init before use. */
-    /*APPSS SHRAM0 and APPSS SHRAM1 memory have to be init before use. However, for awrL varients these are initialized by RBL */
-    /*FECSS SHRAM (96KB) has to be initialized before use as RBL does not perform initialization.*/
-    SOC_memoryInit(SOC_RCM_MEMINIT_HWA_SHRAM_INIT|SOC_RCM_MEMINIT_TPCCA_INIT|SOC_RCM_MEMINIT_TPCCB_INIT|SOC_RCM_MEMINIT_FECSS_SHRAM_INIT|SOC_RCM_MEMINIT_APPSS_SHRAM0_INIT|SOC_RCM_MEMINIT_APPSS_SHRAM1_INIT);
-
-    DebugP_log("Completed Drivers_open(), Board_driversOpen() and SOC_memoryInit()");
-}
-
 void hwa_open_handler() {
     // Status handle for HWA_open
     int32_t status = SystemP_SUCCESS;
