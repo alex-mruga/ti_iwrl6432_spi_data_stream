@@ -57,11 +57,20 @@ void rangeproc_main(void *args);
 
 void freertos_main(void *args)
 {
+    board_init();
     mmwave_initSensor();
+    hwa_open_handler();
+
+    // init all required DPUs
+    rangeProc_dpuInit();
+
     mmwave_openSensor();
     mmwave_configSensor();
     
     rangeproc_main(NULL);
+
+    Board_driversClose();
+    Drivers_close();
 
     vTaskDelete(NULL);
 }

@@ -11,9 +11,9 @@
 #include <datapath/dpu/rangeproc/v0/rangeprochwa.h>
 #include "drivers/hwa.h"
 
+#include "mmwave_basic.h"
 #include "rangeproc_dpc.h"
 
-HWA_Handle hwaHandle;
 DPU_RangeProcHWA_Handle rangeProcHWADpuHandle;
 DPU_RangeProcHWA_Config rangeProcDpuCfg;
 
@@ -32,26 +32,8 @@ int16_t radarCube[NUM_ADC_SAMPLES * NUM_CHIRPS_PER_FRAME * NUM_VIRT_ANTENNAS] __
 
 void rangeproc_main(void *args)
 {
-    // Status handle for HWA_open
-    int32_t status = SystemP_SUCCESS;
-    int32_t retVal = 0;
-
+    int32_t retVal = -1;
     DPU_RangeProcHWA_OutParams outParams;
-
-    /* Open drivers to open the UART driver for console */
-    Drivers_open();
-    Board_driversOpen();
-
-    hwaHandle = HWA_open(0, NULL, &status);
-    if (hwaHandle == NULL)
-    {
-        DebugP_log("Error: Unable to open the HWA Instance err:%d\n", status);
-        DebugP_assert(0);
-    }
-
-
-    rangeProc_dpuInit();
-    DebugP_log("Hallo Jonas!\r\n");
 
     RangeProc_config();
 
@@ -79,8 +61,6 @@ void rangeproc_main(void *args)
         DebugP_assert(0);
     }
 
-    Board_driversClose();
-    Drivers_close();
 }
 
 void rangeProc_dpuInit()

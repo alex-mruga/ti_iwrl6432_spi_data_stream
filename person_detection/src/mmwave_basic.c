@@ -30,17 +30,50 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
  
-#include "mmwave_basic.h"
+#include "drivers/hwa.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 #include "kernel/dpl/DebugP.h"
 
-/*! @brief This is the mmWave control handle which is used
-     * to configure the BSS. */
+#include "mmwave_basic.h"
+
+HWA_Handle hwaHandle = NULL;
+
+/*! @brief This is the mmWave control handle which is used to configure the BSS. */
 MMWave_Handle ctrlHandle;
 /*! @brief  Configuration to open DFP */
 MMWave_OpenCfg mmwOpenCfg;
 
 MMWave_CtrlCfg mmwCtrlCfg;
 
+void board_init()
+{
+    /* Peripheral Driver Initialization */
+    Drivers_open();
+    Board_driversOpen();
+
+    /* The following function call and comment is copied from the motion and presence detection demo (motion_detect.c motion_detect()) */
+    /*HWASS_SHRD_RAM, TPCCA and TPCCB memory have to be init before use. */
+    /*APPSS SHRAM0 and APPSS SHRAM1 memory have to be init before use. However, for awrL varients these are initialized by RBL */
+    /*FECSS SHRAM (96KB) has to be initialized before use as RBL does not perform initialization.*/
+    SOC_memoryInit(SOC_RCM_MEMINIT_HWA_SHRAM_INIT|SOC_RCM_MEMINIT_TPCCA_INIT|SOC_RCM_MEMINIT_TPCCB_INIT|SOC_RCM_MEMINIT_FECSS_SHRAM_INIT|SOC_RCM_MEMINIT_APPSS_SHRAM0_INIT|SOC_RCM_MEMINIT_APPSS_SHRAM1_INIT);
+
+    DebugP_log("Completed Drivers_open(), Board_driversOpen() and SOC_memoryInit()");
+}
+
+void hwa_open_handler() {
+    // Status handle for HWA_open
+    int32_t status = SystemP_SUCCESS;
+
+    hwaHandle = HWA_open(0, NULL, &status);
+    if (hwaHandle == NULL)
+    {
+        DebugP_log("Error: Unable to open the HWA Instance err:%d\n", status);
+        DebugP_assert(0);
+    }
+
+    DebugP_log("Successfully opened HWA");
+}
 
 int32_t mmwave_initSensor()
 {
@@ -77,6 +110,7 @@ int32_t mmwave_openSensor(void)
     int16_t             subsysErrorCode;
     
 
+    Mmwave_populateDefaultOpenCfg(&mmwOpenCfg);
     /**********************************************************
      **********************************************************/
 
@@ -98,6 +132,8 @@ int32_t mmwave_openSensor(void)
 int32_t mmwave_configSensor(void)
 {
     int32_t     errCode = 0;
+
+    Mmwave_populateDefaultChirpControlCfg (&mmwCtrlCfg); /* regular frame config */
 
     /* Configure the mmWave module: */
     if (MMWave_config (ctrlHandle, &mmwCtrlCfg, &errCode) < 0)

@@ -20,11 +20,6 @@
  */
 
 /**
- * @brief Handle for HWA
- */
-extern HWA_Handle hwaHandle;
-
-/**
  * @brief Handle for Range Processing DPU
  */
 extern DPU_RangeProcHWA_Handle rangeProcHWADpuHandle;
