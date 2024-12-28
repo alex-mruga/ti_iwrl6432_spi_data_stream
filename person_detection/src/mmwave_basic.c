@@ -37,6 +37,14 @@
 
 #include "mmwave_basic.h"
 
+/**************************************************************************
+ ************************** Extern Definitions ****************************
+ **************************************************************************/
+extern void Mmwave_populateDefaultOpenCfg (MMWave_OpenCfg* ptrOpenCfg);
+extern void Mmwave_populateDefaultChirpControlCfg (MMWave_CtrlCfg* ptrCtrlCfg);
+/**************************************************************************/
+
+
 HWA_Handle hwaHandle = NULL;
 
 /*! @brief This is the mmWave control handle which is used to configure the BSS. */
