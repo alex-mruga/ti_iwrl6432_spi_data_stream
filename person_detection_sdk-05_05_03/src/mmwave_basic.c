@@ -109,7 +109,7 @@ int32_t mmwave_openSensor(void)
     int16_t             subsysErrorCode;
     
 
-    // Mmwave_populateDefaultOpenCfg(&mmwOpenCfg);
+    Mmwave_populateDefaultOpenCfg(&mmwOpenCfg);
     /**********************************************************
      **********************************************************/
 
@@ -132,7 +132,7 @@ int32_t mmwave_configSensor(void)
 {
     int32_t     errCode = 0;
 
-    // Mmwave_populateDefaultChirpControlCfg (&mmwCtrlCfg); /* regular frame config */
+    Mmwave_populateDefaultChirpControlCfg (&mmwCtrlCfg); /* regular frame config */
 
     /* Configure the mmWave module: */
     if (MMWave_config (gCtrlHandle, &mmwCtrlCfg, &errCode) < 0)

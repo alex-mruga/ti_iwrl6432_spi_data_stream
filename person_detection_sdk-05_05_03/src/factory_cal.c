@@ -40,7 +40,6 @@
 // #include <string.h>
 // #include <stdio.h>
 
-// #include "source/motion_detect.h"
 // #include "mmw_flash_cal.h"
 // #include "source/mmw_res.h"
 // #include "source/mmw_cli.h"
@@ -52,55 +51,46 @@
 // /* Calibration Data Save/Restore defines */
 // #define MMWDEMO_CALIB_STORE_MAGIC            (0x7CB28DF9U)
 
-// extern MmwDemo_MSS_MCB gMmwMssMCB;
-
-// #if (ENABLE_MONITORS==1)
-// /*! @brief  RF Monitor LB result during factory calibration */
-// volatile MmwDemo_Mon_Result rfMonResFactCal = {0};
-// /* Flag to indicate status of storing monitor results during factory calibration */
-// uint8_t rfMonSemFactCalFlag = 0;
-// #endif
-
 // MmwDemo_calibData gFactoryCalibDataStorage __attribute__((aligned(8))) = {0};
 
-// /**
-//  *  @b Description
-//  *  @n
-//  *      This function reads calibration data from flash and send it to front end
-//  *
-//  *  @param[in]  ptrCalibData         Pointer to Calibration data
-//  *
-//  *  @retval
-//  *      Success -   0
-//  *  @retval
-//  *      Error   -   <0
-//  */
-// static int32_t MmwDemo_calibRestore(MmwDemo_calibData  *ptrCalibData)
-// {
-//     int32_t    retVal = 0;
-//     uint32_t   flashOffset;
+// // /**
+// //  *  @b Description
+// //  *  @n
+// //  *      This function reads calibration data from flash and send it to front end
+// //  *
+// //  *  @param[in]  ptrCalibData         Pointer to Calibration data
+// //  *
+// //  *  @retval
+// //  *      Success -   0
+// //  *  @retval
+// //  *      Error   -   <0
+// //  */
+// // static int32_t MmwDemo_calibRestore(MmwDemo_calibData  *ptrCalibData)
+// // {
+// //     int32_t    retVal = 0;
+// //     uint32_t   flashOffset;
 
-//     /* Get Flash Offset */
-//     flashOffset = gMmwMssMCB.factoryCalCfg.flashOffset;
+// //     /* Get Flash Offset */
+// //     flashOffset = gMmwMssMCB.factoryCalCfg.flashOffset;
 
-//     /* Read calibration data */
-//     if(mmwDemo_flashRead(flashOffset, (uint8_t *)ptrCalibData, sizeof(MmwDemo_calibData) )< 0)
-//     {
-//         /* Error: Failed to read from Flash */
-//         CLI_write ("Error: MmwDemo failed when reading Factory calibration data from flash.\r\n");
-//         return -1;
-//     }
+// //     /* Read calibration data */
+// //     if(mmwDemo_flashRead(flashOffset, (uint8_t *)ptrCalibData, sizeof(MmwDemo_calibData) )< 0)
+// //     {
+// //         /* Error: Failed to read from Flash */
+// //         CLI_write ("Error: MmwDemo failed when reading Factory calibration data from flash.\r\n");
+// //         return -1;
+// //     }
 
-//     /* Validate Calib data Magic number */
-//     if(ptrCalibData->magic != MMWDEMO_CALIB_STORE_MAGIC)
-//     {
-//         /* Header validation failed */
-//         CLI_write ("Error: MmwDemo Factory calibration data header validation failed.\r\n");
-//         return -1;
-//     }
+// //     /* Validate Calib data Magic number */
+// //     if(ptrCalibData->magic != MMWDEMO_CALIB_STORE_MAGIC)
+// //     {
+// //         /* Header validation failed */
+// //         CLI_write ("Error: MmwDemo Factory calibration data header validation failed.\r\n");
+// //         return -1;
+// //     }
 
-//     return retVal;
-// }
+// //     return retVal;
+// // }
 
 // /**
 //  *  @b Description
@@ -176,15 +166,10 @@
 //     factoryCalCfg.fecRFFactoryCalCmd.c_CalTxBackOffSel[1] = gMmwMssMCB.factoryCalCfg.txBackoffSel;
 
 //     /* Calculate Calibration Rf Frequency. Use Center frequency of the bandwidth(being used in demo) for calibration */
-// #if SOC_XWRL64XX
 //     calRfFreq = (gMmwMssMCB.profileTimeCfg.w_ChirpRfFreqStart) + \
 //                 ((((gMmwMssMCB.chirpSlope * 256.0)/300) * (gMmwMssMCB.profileComCfg.h_ChirpRampEndTime * 0.1)) / 2);
 //     factoryCalCfg.fecRFFactoryCalCmd.xh_CalRfSlope = 0x4Du; /* 2.2Mhz per uSec*/
-// #else
-//     calRfFreq = (gMmwMssMCB.profileTimeCfg.w_ChirpRfFreqStart) + \
-//                 ((((gMmwMssMCB.chirpSlope * 256.0)/400) * (gMmwMssMCB.profileComCfg.h_ChirpRampEndTime * 0.1)) / 2);
-//     factoryCalCfg.fecRFFactoryCalCmd.xh_CalRfSlope = 0x3Au; /* 2.2Mhz per uSec*/
-// #endif
+
 
 //     factoryCalCfg.fecRFFactoryCalCmd.h_CalRfFreq = calRfFreq;
 //     if(gMmwMssMCB.channelCfg.h_TxChCtrlBitMask == 0x3)
@@ -256,30 +241,6 @@
 //             MmwDemo_debugAssert (0);
 //         }
 //     }
-//   #if (ENABLE_MONITORS==1)
-//           if(gMmwMssMCB.rfMonEnbl != 0)
-//         {
-//             rfMonSemFactCalFlag = RF_MON_FACT_CAL_DONE;
-//             // Enable monitors if requested via CFG
-//             mmwDemo_MonitorConfig();
-//             // Enable Monitors configured (They have to be enabled only during frame idle time)
-//             MMWave_enableMonitors(gMmwMssMCB.ctrlHandle);
-//             SemaphoreP_pend(&gMmwMssMCB.rfmonSemHandle, SystemP_WAIT_FOREVER);
-//             rfMonSemFactCalFlag = 0;
-    
-//             /*Storing Loopback & Ball Break Monitors Results during Factory Calibration
-//             * These two monitor results are saved during Factory Calibration, to calculate
-//             * Tx Loopback Rx Gain Mismatch after zeroing time-0 mismatch 
-//             * Tx Loopback Rx Phase Mismatch after zeroing time-0 mismatch
-//             * Tx Gain Mismatch after zeroing time-0 mismatch 
-//             * Tx Phase Mismatch after zeroing time-0 mismatch
-//             * Change in return loss from factory (Ball Break Monitor)
-//             *
-//             * This is a one time activity and user can store these results in flash memory for use in subsequent runs
-//             */
-//              rfMonResFactCal=gMmwMssMCB.rfMonRes;
-//         }
-// #endif
 //     /* Save calibration data in flash */
 //     if(gMmwMssMCB.factoryCalCfg.saveEnable != 0)
 //     {
