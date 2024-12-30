@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?ccsproject version="1.0"?>
+<projectOptions>
+	<ccsVariant value="50:Theia-based"/>
+	<ccsVersion value="51.5.0"/>
+	<deviceFamily value="TMS470"/>
+	<connection value="common/targetdb/connections/TIXDS110_Connection.xml"/>
+	<createSlaveProjects value=""/>
+	<ignoreDefaultDeviceSettings value="true"/>
+	<ignoreDefaultCCSSettings value="true"/>
+	<templateProperties value="id=example.projectspec.hwa_fft1d_xwrL64xx-evm_m4fss0-0_freertos_ti-arm-clang"/>
+	<activeTargetConfiguration value="targetConfigs/IWRL6432.ccxml"/>
+	<isTargetConfigurationManual value="false"/>
+	<origin value="C:\ti\MMWAVE_L_SDK_05_05_03_00\examples\drivers\hwa\hwa_fft1D\xwrL64xx-evm\m4fss0-0_freertos\ti-arm-clang\example.projectspec"/>
+	<filesToOpen value=""/>
+</projectOptions>
