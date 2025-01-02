@@ -77,19 +77,33 @@ void freertos_main(void *args)
     if(hwa_open_handler() == SystemP_FAILURE){
         exit(1);
     }
-    DebugP_log("init passed");
+
     // init all required DPUs
     rangeProc_dpuInit();
 
+    DebugP_log("init passed");
+
     /*** CONFIG ***/
     // TODO: factory calibration (mmwDemo_factoryCal()) 
-    mmwave_openSensor();
-    mmwave_configSensor();
+    if(mmwave_openSensor() == SystemP_FAILURE){
+        exit(1);
+    }
+    if(mmwave_configSensor() == SystemP_FAILURE){
+        exit(1);
+    }
+    if(mmwave_startSensor() == SystemP_FAILURE){
+        exit(1);
+    }
     
     /*** RUN ***/
+    DebugP_log("running rangeproc");
     rangeproc_main(NULL);
+    DebugP_log("rangeproc finished");
 
     /*** DEINIT ***/
+    DebugP_log("de-init components");
+    mmwave_stop_close_deinit();
+
     Board_driversClose();
     Drivers_close();
 

@@ -44,6 +44,8 @@
  **************************************************************************/
 extern void Mmwave_populateDefaultOpenCfg (MMWave_OpenCfg* ptrOpenCfg);
 extern void Mmwave_populateDefaultChirpControlCfg (MMWave_CtrlCfg* ptrCtrlCfg);
+extern void Mmwave_populateDefaultCalibrationCfg (MMWave_CalibrationCfg* ptrCalibrationCfg);
+extern void Mmwave_populateDefaultStartCfg (MMWave_StrtCfg* ptrStartCfg);
 /**************************************************************************/
 
 
@@ -55,7 +57,11 @@ MMWave_Handle gCtrlHandle;
 /*! @brief  Configuration to open DFP */
 MMWave_OpenCfg mmwOpenCfg;
 
+/*! @brief  Configuration for mmwave control */
 MMWave_CtrlCfg mmwCtrlCfg;
+
+/*! @brief  Configuration for mmwave start (equal to gMmwMssMCB.sensorStart from mmwave demo project) */
+MMWave_StrtCfg sensorStartCfg;
 
 int32_t hwa_open_handler() {
     // Status handle for HWA_open
@@ -107,6 +113,7 @@ int32_t mmwave_openSensor(void)
     MMWave_ErrorLevel   errorLevel;
     int16_t             mmWaveErrorCode;
     int16_t             subsysErrorCode;
+    int32_t             retVal = SystemP_SUCCESS;
     
 
     Mmwave_populateDefaultOpenCfg(&mmwOpenCfg);
@@ -122,15 +129,16 @@ int32_t mmwave_openSensor(void)
         MMWave_decodeError (errCode, &errorLevel, &mmWaveErrorCode, &subsysErrorCode);
         DebugP_log ("Error: mmWave Open failed [Error code: %d Subsystem: %d]\n",
                         mmWaveErrorCode, subsysErrorCode);
-        return -1;
+        retVal = SystemP_FAILURE;
     }
 
-    return 0;
+    return retVal;
 }
 
 int32_t mmwave_configSensor(void)
 {
-    int32_t     errCode = 0;
+    int32_t     errCode;
+    int32_t     retVal = SystemP_SUCCESS;
 
     Mmwave_populateDefaultChirpControlCfg (&mmwCtrlCfg); /* regular frame config */
 
@@ -145,11 +153,92 @@ int32_t mmwave_configSensor(void)
         MMWave_decodeError (errCode, &errorLevel, &mmWaveErrorCode, &subsysErrorCode);
         DebugP_log("Error: mmWave Config failed [Error code: %d Subsystem: %d]\n",
                         mmWaveErrorCode, subsysErrorCode);
-        goto exit;
+
+        retVal = SystemP_FAILURE;
     }
 
-exit:
-    return errCode;
+    return retVal;
+}
+
+int32_t mmwave_startSensor(void)
+{
+    MMWave_CalibrationCfg   calibrationCfg;
+    int32_t                 retVal = SystemP_SUCCESS;
+    int32_t                 errCode;
+
+    /*****************************************************************************
+     * RF :: now start the RF and the real time ticking
+     *****************************************************************************/
+    /* Initialize the calibration configuration: */
+    memset ((void *)&calibrationCfg, 0, sizeof(MMWave_CalibrationCfg));
+    /* Populate the calibration configuration: */
+    Mmwave_populateDefaultCalibrationCfg(&calibrationCfg);
+
+    /* Populate the start configuration: */
+    Mmwave_populateDefaultStartCfg(&sensorStartCfg);
+
+    DebugP_log("App: MMWave_start Issued\n");
+
+    /* Start the mmWave module: The configuration has been applied successfully. */
+    if (MMWave_start(gCtrlHandle, &calibrationCfg, &sensorStartCfg, &errCode) < 0)
+    {
+        MMWave_ErrorLevel   errorLevel;
+        int16_t             mmWaveErrorCode;
+        int16_t             subsysErrorCode;
+
+        /* Error/Warning: Unable to start the mmWave module */
+        MMWave_decodeError (errCode, &errorLevel, &mmWaveErrorCode, &subsysErrorCode);
+        DebugP_log("Error: mmWave Start failed [mmWave Error: %d Subsys: %d]\n", mmWaveErrorCode, subsysErrorCode);
+        /* datapath has already been moved to start state; so either we initiate a cleanup of start sequence or
+           assert here and re-start from the beginning. For now, choosing the latter path */
+        retVal = SystemP_FAILURE;
+    }
+
+    return retVal;
+}
+
+int32_t mmwave_stop_close_deinit(void)
+{
+    int32_t                 errCode;
+    int32_t                 retVal = SystemP_SUCCESS;
+
+    if (MMWave_stop(gCtrlHandle,&errCode) < 0)
+    {
+        MMWave_ErrorLevel   errorLevel;
+        int16_t             mmWaveErrorCode;
+        int16_t             subsysErrorCode;
+
+        MMWave_decodeError (errCode, &errorLevel, &mmWaveErrorCode, &subsysErrorCode);
+        DebugP_log("Error: mmWave Stop failed [Error code: %d Subsystem: %d]\n",
+                        mmWaveErrorCode, subsysErrorCode);
+        retVal = SystemP_FAILURE;
+    }
+
+    if (MMWave_close(gCtrlHandle,&errCode) < 0)
+    {
+        MMWave_ErrorLevel   errorLevel;
+        int16_t             mmWaveErrorCode;
+        int16_t             subsysErrorCode;
+
+        MMWave_decodeError (errCode, &errorLevel, &mmWaveErrorCode, &subsysErrorCode);
+        DebugP_log("Error: mmWave Close failed [Error code: %d Subsystem: %d]\n",
+                        mmWaveErrorCode, subsysErrorCode);
+        retVal = SystemP_FAILURE;
+    }
+
+    if (MMWave_deinit(gCtrlHandle,&errCode) < 0)
+    {
+        MMWave_ErrorLevel   errorLevel;
+        int16_t             mmWaveErrorCode;
+        int16_t             subsysErrorCode;
+
+        MMWave_decodeError (errCode, &errorLevel, &mmWaveErrorCode, &subsysErrorCode);
+        DebugP_log("Error: mmWave De-Init failed [Error code: %d Subsystem: %d]\n",
+                        mmWaveErrorCode, subsysErrorCode);
+        retVal = SystemP_FAILURE;
+    }
+
+    return retVal;
 }
 
 // static int32_t CLI_MMWaveFactoryCalConfig (int32_t argc, char* argv[])

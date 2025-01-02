@@ -67,5 +67,14 @@ int32_t mmwave_openSensor(void);
 */
 int32_t mmwave_configSensor(void);
 
+/**
+ * @brief calls the MMWave_start() function, requires the configuration for start (MMWave_StartCfg)
+*/
+int32_t mmwave_startSensor(void);
+
+/**
+ * @brief calls the MMWave_stop(), MMWave_close() and MMWave_deinit() function
+*/
+int32_t mmwave_stop_close_deinit(void);
 
 void Mmwave_HwaConfig_custom (void);

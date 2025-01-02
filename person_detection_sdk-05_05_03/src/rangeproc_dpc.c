@@ -52,6 +52,8 @@ void rangeproc_main(void *args)
         DebugP_assert(0);
     }
 
+    // while(true){
+        
     memset((void *)&outParams, 0, sizeof(DPU_RangeProcHWA_OutParams));
     retVal = DPU_RangeProcHWA_process(rangeProcHWADpuHandle, &outParams);
 

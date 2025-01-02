@@ -86,6 +86,8 @@ T_RL_API_SENS_FRAME_CFG frameCfg;
 
 static void Mmwave_populateDefaultProfileCfg (T_RL_API_SENS_CHIRP_PROF_COMN_CFG* ptrProfileCfg, T_RL_API_SENS_CHIRP_PROF_TIME_CFG* ptrProfileTimeCfg);
 static void Mmwave_populateDefaultChirpCfg (T_RL_API_SENS_PER_CHIRP_CFG* ptrChirpCfg, T_RL_API_SENS_PER_CHIRP_CTRL* ptrChirpCtrl);
+void Mmwave_populateDefaultCalibrationCfg (MMWave_CalibrationCfg* ptrCalibrationCfg);
+void Mmwave_populateDefaultStartCfg (MMWave_StrtCfg* ptrStartCfg);
 
 /**************************************************************************
  ************************* Extern Declarations ****************************
@@ -440,3 +442,22 @@ void Mmwave_populateDefaultCalibrationCfg (MMWave_CalibrationCfg* ptrCalibration
     return;
 }
 
+/**
+ *  @b Description
+ *  @n
+ *      The function is used to populate the default start
+ *      configuration which is passed to start the mmWave module
+ *
+ *  @retval
+ *      Not applicable
+ */
+void Mmwave_populateDefaultStartCfg (MMWave_StrtCfg* ptrStartCfg)
+{
+    /* Populate the start configuration: */
+    ptrStartCfg->frameTrigMode      = SENSOR_START_FRAME_TRIG_MODE;
+    ptrStartCfg->chirpStartSigLbEn  = SENSOR_START_CHIRP_START_SIG_LB_ENABLE;
+    ptrStartCfg->frameLivMonEn      = SENSOR_START_FRAME_LIVE_MON_ENABLE;
+    ptrStartCfg->frameTrigTimerVal  = SENSOR_START_FRAME_TRIG_TIMER_VAL;
+
+    return;
+}
