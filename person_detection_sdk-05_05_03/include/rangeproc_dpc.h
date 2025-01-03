@@ -58,6 +58,9 @@ void RangeProc_config();
  */
 void rangeproc_main(void *args);
 
+
+void dpcTask();
+
 /**
  * @brief Registers an interrupt for the frame start event.
  *

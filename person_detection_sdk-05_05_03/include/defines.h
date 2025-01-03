@@ -1,3 +1,5 @@
+#define LOW_POWER_MODE 2
+
 /* basic configuration ( and frameCfg)*/
 #define NUM_TX_ANTENNAS 2
 #define NUM_RX_ANTENNAS 3
@@ -6,6 +8,12 @@
 #define NUM_BURSTS_PER_FRAME 1 // from MOTION_AND_PRESENCE_DETECTION_DEMO
 #define NUM_CHIRPS_PER_BURST 8 // from MOTION_AND_PRESENCE_DETECTION_DEMO
 #define NUM_CHIRPS_PER_FRAME (NUM_BURSTS_PER_FRAME * NUM_CHIRPS_PER_BURST)
+
+// calculated defines, not in config
+#define NUM_RANGE_BINS (NUM_ADC_SAMPLES / 2)
+#define NUM_DOPPLER_CHIRPS_PER_FRAME (NUM_ADC_SAMPLES / NUM_TX_ANTENNAS)
+#define NUM_DOPPLER_CHIRPS_PER_PROC NUM_DOPPLER_CHIRPS_PER_FRAME
+///////////////////
 
 /* chirpComnCfg */
 #define CHIRPCOMNCFG_DIG_OUTPUT_SAMP_RATE         20  // M_RL_SENS_DIG_OUT_SAMP_RATE_MAX_12P5M
@@ -51,3 +59,11 @@
 
 /* This is the size of the Chirp Parameters (CP) in CBUFF Units */
 #define SYS_COMMON_CP_SIZE_CBUFF_UNITS              2U
+
+
+
+
+
+// DMA channel defines
+#define DMA_TRIG_SRC_CHAN_0 0
+#define DMA_TRIG_SRC_CHAN_1 1

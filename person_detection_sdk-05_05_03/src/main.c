@@ -40,19 +40,31 @@
 
 #include <mmwavelink/mmwavelink.h>
 
+#include <kernel/dpl/SemaphoreP.h>
 #include <datapath/dpu/rangeproc/v0/rangeprochwa.h>
 #include "rangeproc_dpc.h"
 #include "mmwave_basic.h"
 
 // --- FRERTOS
-#define MAIN_TASK_PRI  (configMAX_PRIORITIES-1)
+//#define MAIN_TASK_PRI  (configMAX_PRIORITIES-1)
+#define MAIN_TASK_PRI  1
 
 #define MAIN_TASK_SIZE (16384U/sizeof(configSTACK_DEPTH_TYPE))
-StackType_t gMainTaskStack[MAIN_TASK_SIZE] __attribute__((aligned(32)));
+#define DPC_TASK_STACK_SIZE 8192
+
+#define DPC_TASK_PRI 5
 
 StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
+StackType_t gMainTaskStack[MAIN_TASK_SIZE] __attribute__((aligned(32)));
 // ---
+StaticTask_t gDpcTaskObj;
+TaskHandle_t gDpcTask;
+StackType_t  gDpcTaskStack[DPC_TASK_STACK_SIZE] __attribute__((aligned(32)));
+
+// semaphores
+SemaphoreP_Object pend_main_sem;
+
 
 void rangeproc_main(void *args);
 
@@ -91,18 +103,25 @@ void freertos_main(void *args)
     if(mmwave_configSensor() == SystemP_FAILURE){
         exit(1);
     }
+
+    gDpcTask = xTaskCreateStatic(dpcTask, /* Pointer to the function that implements the task. */
+                                 "dpc_task",      /* Text name for the task.  This is to facilitate debugging only. */
+                                 DPC_TASK_STACK_SIZE,   /* Stack depth in units of StackType_t typically uint32_t on 32b CPUs */
+                                 NULL,                  /* We are not using the task parameter. */
+                                 DPC_TASK_PRI,          /* task priority, 0 is lowest priority, configMAX_PRIORITIES-1 is highest */
+                                 gDpcTaskStack,      /* pointer to stack base */
+                                 &gDpcTaskObj);         /* pointer to statically allocated task object memory */
+    configASSERT(gDpcTask != NULL);
+
+    /* Create binary semaphore to pend Main task, */
+    SemaphoreP_constructBinary(&pend_main_sem, 0);
+
     if(mmwave_startSensor() == SystemP_FAILURE){
         exit(1);
     }
     
-    /*** RUN ***/
-    DebugP_log("running rangeproc");
-    rangeproc_main(NULL);
-    DebugP_log("rangeproc finished");
-
-    /*** DEINIT ***/
-    DebugP_log("de-init components");
-    mmwave_stop_close_deinit();
+        /* Never return for this task. */
+    SemaphoreP_pend(&pend_main_sem, SystemP_WAIT_FOREVER);
 
     Board_driversClose();
     Drivers_close();

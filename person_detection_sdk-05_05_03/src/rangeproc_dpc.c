@@ -28,15 +28,17 @@ volatile unsigned long long demoStartTime;
 // TODO: ?
 uint32_t window1DCoef[NUM_ADC_SAMPLES] __attribute__((section(".l3")));
 
-int16_t radarCube[NUM_ADC_SAMPLES * NUM_CHIRPS_PER_FRAME * NUM_VIRT_ANTENNAS] __attribute((section(".l3")));
+int16_t radarCube[NUM_RANGE_BINS * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * NUM_DOPPLER_CHIRPS_PER_PROC] __attribute((section(".l3")));
 
-void rangeproc_main(void *args)
+
+void dpcTask()
 {
     int32_t retVal = -1;
     DPU_RangeProcHWA_OutParams outParams;
-
+    
+    /* configure DPUs: */
     RangeProc_config();
-
+    
     // register Frame Start ISR
     if(registerFrameStartInterrupt() != 0){
         DebugP_log("Error: Failed to register frame start interrupts\n");
@@ -51,18 +53,29 @@ void rangeproc_main(void *args)
         DebugP_log("RangeProc DPU control error %d\n", retVal);
         DebugP_assert(0);
     }
-
+    
     // while(true){
-        
     memset((void *)&outParams, 0, sizeof(DPU_RangeProcHWA_OutParams));
-    retVal = DPU_RangeProcHWA_process(rangeProcHWADpuHandle, &outParams);
 
+    retVal = DPU_RangeProcHWA_process(rangeProcHWADpuHandle, &outParams);
     if(retVal < 0){
         /* Not Expected */
         DebugP_log("RangeProc DPU process error %d\n", retVal);
         DebugP_assert(0);
     }
-
+    mmwave_stop_close_deinit();
+    
+    /* Give initial trigger for the next frame */
+    retVal = DPU_RangeProcHWA_control(rangeProcHWADpuHandle,
+                DPU_RangeProcHWA_Cmd_triggerProc, NULL, 0);
+    if(retVal < 0)
+    {
+        DebugP_log("Error: DPU_RangeProcHWA_control failed with error code %d", retVal);
+        DebugP_assert(0);
+    }
+    // }
+    /* Never return for this task. */
+    //SemaphoreP_pend(&gMmwMssMCB.TestSemHandle, SystemP_WAIT_FOREVER);
 }
 
 void rangeProc_dpuInit()
@@ -88,6 +101,10 @@ void RangeProc_config()
 
     memset((void *)&rangeProcDpuCfg, 0, sizeof(DPU_RangeProcHWA_Config));
 
+
+    // TEST SET LOW POWER MODE = 2
+    // params->lowPowerMode = LOW_POWER_MODE;
+
     /*
       For values refer to "Sensor front-end parameters" in:
       https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/MMWAVE_DEMO.html
@@ -99,12 +116,12 @@ void RangeProc_config()
     /* size of range FFT: equal to number of ADC samples*/
     params->rangeFftSize = NUM_ADC_SAMPLES;
     /* size of real part of range FFT: half of the range FFT size, since the ADC samples are real valued*/
-    params->numRangeBins = NUM_ADC_SAMPLES/2;
+    params->numRangeBins = NUM_RANGE_BINS; //NUM_ADC_SAMPLES/2;
     /* number of chirps per frame (= number of chirps per burst, if Nburst = 1) */
     params->numChirpsPerFrame = NUM_CHIRPS_PER_FRAME;
     /* number of doppler chirps per frame (derived from rangeproc init example) */
-    params->numDopplerChirpsPerFrame = params->numChirpsPerFrame/params->numTxAntennas;
-    params->numDopplerChirpsPerProc = params->numDopplerChirpsPerFrame;
+    params->numDopplerChirpsPerFrame = NUM_DOPPLER_CHIRPS_PER_FRAME;
+    params->numDopplerChirpsPerProc = NUM_DOPPLER_CHIRPS_PER_PROC; // params->numDopplerChirpsPerFrame
     /* enable BPM mode (instead of TDM) */
     params->isBpmEnabled = TRUE;
 
@@ -190,7 +207,7 @@ void RangeProc_config()
    
     /* radar cube config*/
     /* total size of radar cube in bytes*/
-    pHwConfig->radarCube.dataSize = params->numRangeBins * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * params->numDopplerChirpsPerProc;
+    pHwConfig->radarCube.dataSize = NUM_RANGE_BINS * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * NUM_DOPPLER_CHIRPS_PER_PROC;
     pHwConfig->radarCube.datafmt = DPIF_RADARCUBE_FORMAT_6;
         
     /* Further non EDMA related HWA configurations */
@@ -199,7 +216,14 @@ void RangeProc_config()
     pHwConfig->hwaCfg.hwaWinRamOffset  = DPC_OBJDET_HWA_WINDOW_RAM_OFFSET; 
     pHwConfig->hwaCfg.hwaWinSym = 1;
     pHwConfig->hwaCfg.dataInputMode = DPU_RangeProcHWA_InputMode_ISOLATED;
-    
+
+    // unnecessarily complicated logic to increment channel numbers for DMA. Here now refactored to MACROs
+    // pHwConfig->hwaCfg.dmaTrigSrcChan[0] = DPC_ObjDet_HwaDmaTrigSrcChanPoolAlloc(&gMmwMssMCB.HwaDmaChanPoolObj);
+    // pHwConfig->hwaCfg.dmaTrigSrcChan[1] = DPC_ObjDet_HwaDmaTrigSrcChanPoolAlloc(&gMmwMssMCB.HwaDmaChanPoolObj);
+    pHwConfig->hwaCfg.dmaTrigSrcChan[0] = DMA_TRIG_SRC_CHAN_0;
+    pHwConfig->hwaCfg.dmaTrigSrcChan[1] = DMA_TRIG_SRC_CHAN_1;
+
+
     /* windowing buffer is fixed, size will change*/
     rangeProcDpuCfg.staticCfg.window =  (int32_t *)&window1DCoef[0];
     
@@ -269,3 +293,4 @@ uint32_t Cycleprofiler_getTimeStamp(void)
     frameRefTimer = (uint32_t *) 0x5B000020;
     return *frameRefTimer;
 }
+
