@@ -43,9 +43,9 @@
  */
 
 /**
- * @brief Handle for the HWA
- */
-extern HWA_Handle hwaHandle;
+ * @brief sets start address and size of shared mempool
+*/
+void mempool_init(void);
 
 /**
  * @brief calls HWA_open() and thereby retrieves the HWA's handle (HWA_Handle)

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <kernel/dpl/DebugP.h>
+#include <utils/mathutils/mathutils.h>
 #include "drivers/edma/v0/edma.h"
 #include "kernel/dpl/SemaphoreP.h"
 #include "ti_drivers_config.h"
@@ -13,6 +14,7 @@
 
 #include "mmwave_basic.h"
 #include "rangeproc_dpc.h"
+#include "mem_pool.h"
 
 DPU_RangeProcHWA_Handle rangeProcHWADpuHandle;
 DPU_RangeProcHWA_Config rangeProcDpuCfg;
@@ -25,17 +27,32 @@ Edma_IntrObject intrObj_Rangeproc[2];
 
 volatile unsigned long long demoStartTime;
 
-// TODO: ?
-uint32_t window1DCoef[NUM_ADC_SAMPLES] __attribute__((section(".l3")));
+/*! @brief L3 ram memory pool object */
+extern MemPoolObj L3RamObj;
 
-int16_t radarCube[NUM_RANGE_BINS * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * NUM_DOPPLER_CHIRPS_PER_PROC] __attribute((section(".l3")));
+/*! @brief Core Local ram memory pool object */
+extern MemPoolObj CoreLocalRamObj;
 
+extern HWA_Handle hwaHandle;
+
+/*! @brief Pointer to radar cube data for easier debugging access */
+cmplx16ImRe_t * gRadarCubeDebugPtr = NULL;
+void *gAdcDataDebugPtr = NULL;
+
+uint32_t gChirpCount;
+uint32_t gFrameCount;
 
 void dpcTask()
 {
     int32_t retVal = -1;
     DPU_RangeProcHWA_OutParams outParams;
+
+    gChirpCount = 0;
+    gFrameCount = 0;
     
+    DPC_ObjDet_MemPoolReset(&L3RamObj);
+    DPC_ObjDet_MemPoolReset(&CoreLocalRamObj);
+
     /* configure DPUs: */
     RangeProc_config();
     
@@ -44,6 +61,19 @@ void dpcTask()
         DebugP_log("Error: Failed to register frame start interrupts\n");
         DebugP_assert(0);
     }
+
+    // register Chirp ISR
+    if(registerChirpInterrupt() != 0){
+        DebugP_log("Error: Failed to register chirp interrupt\n");
+        DebugP_assert(0);
+    }
+
+    // register Chirp available ISR
+    if(registerChirpAvailableInterrupts() != 0){
+        DebugP_log("Error: Failed to register chirp interrupt\n");
+        DebugP_assert(0);
+    }
+
 
     /* give initial trigger for the first frame*/
     retVal = DPU_RangeProcHWA_control(rangeProcHWADpuHandle, DPU_RangeProcHWA_Cmd_triggerProc, NULL, 0);
@@ -63,6 +93,7 @@ void dpcTask()
         DebugP_log("RangeProc DPU process error %d\n", retVal);
         DebugP_assert(0);
     }
+
     mmwave_stop_close_deinit();
     
     /* Give initial trigger for the next frame */
@@ -103,7 +134,7 @@ void RangeProc_config()
 
 
     // TEST SET LOW POWER MODE = 2
-    // params->lowPowerMode = LOW_POWER_MODE;
+    params->lowPowerMode = 0;
 
     /*
       For values refer to "Sensor front-end parameters" in:
@@ -113,8 +144,6 @@ void RangeProc_config()
     params->numTxAntennas = NUM_TX_ANTENNAS;
     /* number of RX antennas, product of TX- and RX-antennas (on the IWRL6432BOOST 2*3=6) */
     params->numVirtualAntennas = NUM_VIRT_ANTENNAS;
-    /* size of range FFT: equal to number of ADC samples*/
-    params->rangeFftSize = NUM_ADC_SAMPLES;
     /* size of real part of range FFT: half of the range FFT size, since the ADC samples are real valued*/
     params->numRangeBins = NUM_RANGE_BINS; //NUM_ADC_SAMPLES/2;
     /* number of chirps per frame (= number of chirps per burst, if Nburst = 1) */
@@ -127,40 +156,58 @@ void RangeProc_config()
 
     /* windowing */
     params->windowSize = sizeof(uint32_t) * ((NUM_ADC_SAMPLES +1 ) / 2); // symmetric window (Blackman), for real samples (therefore /2)
-    /* dataSize defines the size of buffer that holds ADC data of every frame */
-    /* ADCBufData.dataSize omitted due to forum post: https://e2e.ti.com/support/sensors-group/sensors/f/sensors-forum/1324580/awrl6432boost-adc-buffer-data-size-in-motion-and-presence-detection-demo */
-    // params->ADCBufData.dataSize = NUM_ADC_SAMPLES * NUM_RX_ANTENNAS * sizeof(uint16_t) * 2; // times 2, because of ping and pong C:\ti\mmwave-sdk\docs\MotionPresenceDetectionDemo_documentation.pdf 
-    params->ADCBufData.dataProperty.numAdcSamples = NUM_ADC_SAMPLES;
-    params->ADCBufData.dataProperty.numRxAntennas = NUM_RX_ANTENNAS;
+    params->window =  (int32_t *)DPC_ObjDet_MemPoolAlloc(&CoreLocalRamObj,
+                                                        params->windowSize,
+                                                        sizeof(uint32_t));
+
+    if (params->window == NULL) {
+        DebugP_log("Error allocating window memory");
+        return;
+    }
 
     /* adc buffer buffer, format fixed, interleave, size will change */
     params->ADCBufData.dataProperty.dataFmt = DPIF_DATAFORMAT_REAL16;
     params->ADCBufData.dataProperty.adcBits = 2U; // 12-bit only
     params->ADCBufData.dataProperty.numChirpsPerChirpEvent = 1U;
+    params->ADCBufData.data = (void *)CSL_APP_HWA_ADCBUF_RD_U_BASE;
+    params->ADCBufData.dataProperty.numRxAntennas = (uint8_t) NUM_RX_ANTENNAS;
+
+    /* dataSize defines the size of buffer that holds ADC data of every frame */
+    /* ADCBufData.dataSize omitted due to forum post: https://e2e.ti.com/support/sensors-group/sensors/f/sensors-forum/1324580/awrl6432boost-adc-buffer-data-size-in-motion-and-presence-detection-demo */
+    params->ADCBufData.dataSize = NUM_ADC_SAMPLES * NUM_RX_ANTENNAS * sizeof(uint16_t) * 2; // times 2, because of ping and pong C:\ti\mmwave-sdk\docs\MotionPresenceDetectionDemo_documentation.pdf 
+    params->ADCBufData.dataProperty.numAdcSamples = NUM_ADC_SAMPLES;
     
+    mathUtils_genWindow((uint32_t *)params->window,
+                                (uint32_t) params->ADCBufData.dataProperty.numAdcSamples,
+                                params->windowSize/sizeof(uint32_t),
+                                MATHUTILS_WIN_BLACKMAN,
+                                DPC_OBJDET_QFORMAT_RANGE_FFT);
+
     /* FFT optimizing params (derived from rangeproc DPU example) */
     params->rangeFFTtuning.fftOutputDivShift = 2;
     params->rangeFFTtuning.numLastButterflyStagesToScale = 0; /* no scaling needed as ADC is 16-bit and we have 8 bits to grow */  
 
-    /* Set Motion Mode (Minor/Major) */
-    params->enableMajorMotion = 1;
-    params->enableMinorMotion = 0;
-    params->numMinorMotionChirpsPerFrame = 0; // obsolete, not using minor motion
+    /* size of range FFT: equal to number of ADC samples*/
+    params->rangeFftSize = NUM_ADC_SAMPLES;
 
     /* bytes per RX channel (each chirp is uint_16) */
     bytesPerRxChan = NUM_ADC_SAMPLES * sizeof(uint16_t);
     bytesPerRxChan = (bytesPerRxChan + 15) / 16 * 16; // ensure that value is multiple of 16 (for EDMA?)
-    
+
     /* initialize RX channel offsets */
     uint32_t index;
     for (index = 0; index < NUM_RX_ANTENNAS; index++)
     {
         params->ADCBufData.dataProperty.rxChanOffset[index] = index * bytesPerRxChan;
     }
-    
+
     /* Further hardware config params (copied from rangeproc config example) */
     params->ADCBufData.dataProperty.interleave = DPIF_RXCHAN_NON_INTERLEAVE_MODE;
 
+    /* Set Motion Mode (Minor/Major) */
+    params->enableMajorMotion = 1;
+    params->enableMinorMotion = 0;
+    params->numMinorMotionChirpsPerFrame = 0; // obsolete, not using minor motion
 
     /* Data Input EDMA */
     pHwConfig->edmaInCfg.dataIn.channel         = DPC_OBJDET_DPU_RANGEPROC_EDMAIN_CH;
@@ -174,9 +221,6 @@ void RangeProc_config()
     // register EDMA interrupt object for rangeproc callback
     // this pointer holds 2 objects. 
     pHwConfig->intrObj = intrObj_Rangeproc;
-
-    /* edma configuration */
-    pHwConfig->edmaHandle  = gEdmaHandle[0];
  
     /* Data Output EDMA */
     pHwConfig->edmaOutCfg.path[0].evtDecim.channel = DPC_OBJDET_DPU_RANGEPROC_EVT_DECIM_PING_CH;
@@ -209,7 +253,13 @@ void RangeProc_config()
     /* total size of radar cube in bytes*/
     pHwConfig->radarCube.dataSize = NUM_RANGE_BINS * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * NUM_DOPPLER_CHIRPS_PER_PROC;
     pHwConfig->radarCube.datafmt = DPIF_RADARCUBE_FORMAT_6;
-        
+
+        /* radar cube */
+    rangeProcDpuCfg.hwRes.radarCube.data  = (cmplx16ImRe_t *) DPC_ObjDet_MemPoolAlloc(&L3RamObj,
+                                                                                        pHwConfig->radarCube.dataSize,
+                                                                                        sizeof(uint32_t));
+    // bend global radar cube debug pointer to radar cube data 
+    gRadarCubeDebugPtr = rangeProcDpuCfg.hwRes.radarCube.data;
     /* Further non EDMA related HWA configurations */
     pHwConfig->hwaCfg.paramSetStartIdx = 0;
     pHwConfig->hwaCfg.numParamSet = DPU_RANGEPROCHWA_NUM_HWA_PARAM_SETS;
@@ -220,22 +270,18 @@ void RangeProc_config()
     // unnecessarily complicated logic to increment channel numbers for DMA. Here now refactored to MACROs
     // pHwConfig->hwaCfg.dmaTrigSrcChan[0] = DPC_ObjDet_HwaDmaTrigSrcChanPoolAlloc(&gMmwMssMCB.HwaDmaChanPoolObj);
     // pHwConfig->hwaCfg.dmaTrigSrcChan[1] = DPC_ObjDet_HwaDmaTrigSrcChanPoolAlloc(&gMmwMssMCB.HwaDmaChanPoolObj);
-    pHwConfig->hwaCfg.dmaTrigSrcChan[0] = DMA_TRIG_SRC_CHAN_0;
-    pHwConfig->hwaCfg.dmaTrigSrcChan[1] = DMA_TRIG_SRC_CHAN_1;
+    pHwConfig->hwaCfg.dmaTrigSrcChan[0] = (uint8_t) DMA_TRIG_SRC_CHAN_0;
+    pHwConfig->hwaCfg.dmaTrigSrcChan[1] = (uint8_t) DMA_TRIG_SRC_CHAN_1;
 
+    /* edma configuration */
+    pHwConfig->edmaHandle  = gEdmaHandle[0];
 
-    /* windowing buffer is fixed, size will change*/
-    rangeProcDpuCfg.staticCfg.window =  (int32_t *)&window1DCoef[0];
-    
     /* adc buffer buffer, format fixed, interleave, size will change */
-    rangeProcDpuCfg.staticCfg.ADCBufData.dataProperty.dataFmt = DPIF_DATAFORMAT_REAL16;
-    rangeProcDpuCfg.staticCfg.ADCBufData.dataProperty.adcBits = 2U; // 12-bit only
-    rangeProcDpuCfg.staticCfg.ADCBufData.dataProperty.numChirpsPerChirpEvent = 1U;
-    params->ADCBufData.data = (void *)CSL_APP_HWA_ADCBUF_RD_U_BASE;
+    params->ADCBufData.dataProperty.dataFmt = DPIF_DATAFORMAT_REAL16;
+    params->ADCBufData.dataProperty.adcBits = 2U; // 12-bit only
+    params->ADCBufData.dataProperty.numChirpsPerChirpEvent = 1U;
     
-    /* radar cube */
-    rangeProcDpuCfg.hwRes.radarCube.data  = (cmplx16ImRe_t *) &radarCube[0];
-
+    gAdcDataDebugPtr = params->ADCBufData.data;
 
     /* configure HWA with set parameters */
     int32_t retVal;
@@ -247,6 +293,49 @@ void RangeProc_config()
         DebugP_assert(0);
     }
 }
+
+/**
+ *  @b Description
+ *  @n
+ *      This is to register Chirpt Interrupt
+ */
+int32_t registerChirpInterrupt(void)
+{
+    int32_t           retVal = 0;
+    int32_t           status = SystemP_SUCCESS;
+    HwiP_Params       hwiPrms;
+
+    /* Register interrupt */
+    HwiP_Params_init(&hwiPrms);
+    hwiPrms.intNum      = 16 + CSL_APPSS_INTR_MUXED_FECSS_CHIRPTIMER_CHIRP_START_AND_CHIRP_END;
+    hwiPrms.callback    = chirpStartISR;
+    /* Use this to change the priority */
+    //hwiPrms.priority    = 0;
+    hwiPrms.args        = NULL;
+    status              = HwiP_construct(&gHwiChirpAvailableHwiObject, &hwiPrms);
+
+    if(SystemP_SUCCESS != status)
+    {
+        retVal = SystemP_FAILURE;
+    }
+    else
+    {
+        HwiP_enableInt((uint32_t)CSL_APPSS_INTR_MUXED_FECSS_CHIRPTIMER_CHIRP_START_AND_CHIRP_END);
+    }
+
+    return retVal;
+}
+
+/**
+*  @b Description
+*  @n
+*    Chirp Start ISR
+*/
+void chirpStartISR(void *arg)
+{
+    HwiP_clearInt(CSL_APPSS_INTR_MUXED_FECSS_CHIRPTIMER_CHIRP_START_AND_CHIRP_END);
+}
+
 
 int32_t registerFrameStartInterrupt(void)
 {
@@ -280,8 +369,8 @@ static void frameStartISR(void *arg)
     HwiP_clearInt(CSL_APPSS_INTR_FECSS_FRAMETIMER_FRAME_START);
 
     /* Record the frame start time for profiling or other processing */
-    demoStartTime = PRCMSlowClkCtrGet();
-
+    // demoStartTime = PRCMSlowClkCtrGet();
+    gFrameCount++;
     /* Optionally, perform any other frame processing needed here */
     // For example, you might calculate the frame period or process the data further.
 }
@@ -292,5 +381,49 @@ uint32_t Cycleprofiler_getTimeStamp(void)
     uint32_t *frameRefTimer;
     frameRefTimer = (uint32_t *) 0x5B000020;
     return *frameRefTimer;
+}
+
+/**
+ *  @b Description
+ *  @n
+ *      This is to register Chirp Available Interrupt
+ */
+int32_t registerChirpAvailableInterrupts(void)
+{
+    int32_t           retVal = 0;
+    int32_t           status = SystemP_SUCCESS;
+    HwiP_Params       hwiPrms;
+
+
+    /* Register interrupt */
+    HwiP_Params_init(&hwiPrms);
+    hwiPrms.intNum      = 16 + CSL_APPSS_INTR_MUXED_FECSS_CHIRP_AVAIL_IRQ_AND_ADC_VALID_START_AND_SYNC_IN; //CSL_MSS_INTR_RSS_ADC_CAPTURE_COMPLETE;
+    hwiPrms.callback    = ChirpAvailISR;
+    /* Use this to change the priority */
+    //hwiPrms.priority    = 0;
+    hwiPrms.args        = NULL;
+    status              = HwiP_construct(&gHwiChirpAvailableHwiObject, &hwiPrms);
+
+    if(SystemP_SUCCESS != status)
+    {
+        retVal = SystemP_FAILURE;
+    }
+    else
+    {
+        HwiP_enableInt((uint32_t)CSL_APPSS_INTR_MUXED_FECSS_CHIRP_AVAIL_IRQ_AND_ADC_VALID_START_AND_SYNC_IN);
+    }
+
+    return retVal;
+}
+
+/**
+*  @b Description
+*  @n
+*    Chirp ISR
+*/
+static void ChirpAvailISR(void *arg)
+{
+    HwiP_clearInt(CSL_APPSS_INTR_MUXED_FECSS_CHIRP_AVAIL_IRQ_AND_ADC_VALID_START_AND_SYNC_IN); // CSL_MSS_INTR_RSS_ADC_CAPTURE_COMPLETE
+    gChirpCount++;
 }
 

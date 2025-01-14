@@ -1,6 +1,6 @@
 #define LOW_POWER_MODE 2
 
-/* basic configuration ( and frameCfg)*/
+/* basic configuration (frameCfg and others)*/
 #define NUM_TX_ANTENNAS 2
 #define NUM_RX_ANTENNAS 3
 #define NUM_VIRT_ANTENNAS (NUM_TX_ANTENNAS * NUM_RX_ANTENNAS)
@@ -9,14 +9,19 @@
 #define NUM_CHIRPS_PER_BURST 8 // from MOTION_AND_PRESENCE_DETECTION_DEMO
 #define NUM_CHIRPS_PER_FRAME (NUM_BURSTS_PER_FRAME * NUM_CHIRPS_PER_BURST)
 
+// channelCfg
+#define RX_CH_CTRL_BITMASK 7 // all 3 RX antennas active => 7 (0b111)
+#define TX_CH_CTRL_BITMASK 3 // all 2 TX antennas active => 3 (0b11)
+#define CHANNEL_CFG_MISC_CTRL 0
+
 // calculated defines, not in config
 #define NUM_RANGE_BINS (NUM_ADC_SAMPLES / 2)
-#define NUM_DOPPLER_CHIRPS_PER_FRAME (NUM_ADC_SAMPLES / NUM_TX_ANTENNAS)
+#define NUM_DOPPLER_CHIRPS_PER_FRAME (NUM_CHIRPS_PER_FRAME / NUM_TX_ANTENNAS)
 #define NUM_DOPPLER_CHIRPS_PER_PROC NUM_DOPPLER_CHIRPS_PER_FRAME
 ///////////////////
 
 /* chirpComnCfg */
-#define CHIRPCOMNCFG_DIG_OUTPUT_SAMP_RATE         20  // M_RL_SENS_DIG_OUT_SAMP_RATE_MAX_12P5M
+#define CHIRPCOMNCFG_DIG_OUTPUT_SAMP_RATE         20  // 5 MHz // M_RL_SENS_DIG_OUT_SAMP_RATE_MAX_12P5M
 #define CHIRPCOMNCFG_DIG_OUTPUT_BITS_SEL          0   // M_RL_SENS_DIG_OUT_12BITS_4LSB_ROUND
 #define CHIRPCOMNCFG_DFE_FIR_SEL                  0   // M_RL_SENS_DFE_FIR_LONG_FILT
 #define CHIRPCOMNCFG_NUM_OF_ADC_SAMPLES           NUM_ADC_SAMPLES // 256U; /* 2.56us */
@@ -30,17 +35,18 @@
 
 /* chirpTimingCfg */
 #define CHIRPTIMINGCFG_CHIRP_IDLE_TIME            6  // 400; 65U; /* 6.5us low res */
-#define CHIRPTIMINGCFG_CHIRP_ADC_START_TIME       28 // 30770;
+#define CHIRPTIMINGCFG_CHIRP_ADC_START_TIME       (28 << 10)// 30770;
 #define CHIRPTIMINGCFG_CHIRP_TX_START_TIME        0   // -10; /* -0.2us */
 #define CHIRPTIMINGCFG_CHIRP_RF_FREQ_SLOPE        90 // 699; 3495; /* 100MHz/us , 77G - 2621 */
-#define CHIRPTIMINGCFG_CHIRP_RF_FREQ_START        M_RL_SENS_CHIRP_RFFREQ_LR_59G
+#define CHIRPTIMINGCFG_CHIRP_RF_FREQ_START        59.75 // calculation from defines (M_RL_SENS_CHIRP_RFFREQ_LR_59G) are unclear, so use fix value 
 // not in .cfg file:
 #define CHIRPTIMINGCFG_CHIRP_TX_EN_SEL            0x3U // 2 TX enable in chirp
-#define CHIRPTIMINGCFG_CHIRP_TX_BPM_EN_SEL        0x3U // 0; 0x2U; /* TX1 BPM enable in chirp */
+#define CHIRPTIMINGCFG_CHIRP_TX_BPM_EN_SEL        0x0U // 0; 0x2U; /* TX1 BPM enable in chirp */
 ////////////////////
 #define NUM_CHIRPS_ACCUM                          0
-#define BURST_PERIODICITY                         403
-#define FRAME_PERIODICITY                         250
+#define BURST_PERIOD                              403
+#define W_BURST_PERIOD                            (10.0 * BURST_PERIOD) 
+#define FRAME_PERIOD                              (((float)(250.0) * 40000000.0)/1000.0) 
 #define NUM_FRAMES                                0
 
 /* sensorStart */

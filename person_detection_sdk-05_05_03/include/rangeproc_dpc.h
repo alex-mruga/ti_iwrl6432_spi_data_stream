@@ -12,6 +12,8 @@
 #include "dpu_res.h"
 #include "defines.h"
 
+#define DPC_OBJDET_QFORMAT_RANGE_FFT 17
+
 /**
  *  @b Description
  *  @n
@@ -74,10 +76,16 @@ void dpcTask();
  * @retval SystemP_SUCCESS on successful registration, SystemP_FAILURE on error.
  */
 int32_t registerFrameStartInterrupt(void);
-
 static void frameStartISR(void *arg);
 
+int32_t registerChirpInterrupt(void);
+void chirpStartISR(void *arg);
+
 uint32_t Cycleprofiler_getTimeStamp(void);
+
+
+int32_t registerChirpAvailableInterrupts(void);
+static void ChirpAvailISR(void *arg);
 
 
 #endif /* RANGEPROC_DPC_H */

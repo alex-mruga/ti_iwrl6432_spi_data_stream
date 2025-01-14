@@ -36,6 +36,7 @@
 #include "ti_board_open_close.h"
 #include "kernel/dpl/DebugP.h"
 #include "defines.h"
+#include "mem_pool.h"
 
 #include "mmwave_basic.h"
 
@@ -49,7 +50,7 @@ extern void Mmwave_populateDefaultStartCfg (MMWave_StrtCfg* ptrStartCfg);
 /**************************************************************************/
 
 
-HWA_Handle hwaHandle = NULL;
+HWA_Handle hwaHandle;
 
 /*! @brief This is the mmWave control handle which is used to configure the BSS. */
 MMWave_Handle gCtrlHandle;
@@ -62,6 +63,30 @@ MMWave_CtrlCfg mmwCtrlCfg;
 
 /*! @brief  Configuration for mmwave start (equal to gMmwMssMCB.sensorStart from mmwave demo project) */
 MMWave_StrtCfg sensorStartCfg;
+
+/*! @brief L3 ram memory pool object */
+MemPoolObj    L3RamObj;
+
+/*! @brief Core Local ram memory pool object */
+MemPoolObj    CoreLocalRamObj;
+
+/*! L3 RAM buffer for object detection DPC */
+#define L3_MEM_SIZE (0x40000 + 160*1024)
+uint8_t gMmwL3[L3_MEM_SIZE]  __attribute((section(".l3")));
+
+/*! Local RAM buffer for object detection DPC */
+#define MMWDEMO_OBJDET_CORE_LOCAL_MEM_SIZE ((8U+6U+4U+2U+8U) * 1024U)
+uint8_t gMmwCoreLocMem[MMWDEMO_OBJDET_CORE_LOCAL_MEM_SIZE];
+
+void mempool_init(void){
+    /* Shared memory pool for rangeproc DPU (window)*/
+    L3RamObj.cfg.addr = (void *)&gMmwL3[0];
+    L3RamObj.cfg.size = sizeof(gMmwL3);
+
+        /* Local memory pool */
+    CoreLocalRamObj.cfg.addr = (void *)&gMmwCoreLocMem[0];
+    CoreLocalRamObj.cfg.size = sizeof(gMmwCoreLocMem);
+}
 
 int32_t hwa_open_handler() {
     // Status handle for HWA_open

@@ -86,6 +86,7 @@ T_RL_API_SENS_FRAME_CFG frameCfg;
 
 static void Mmwave_populateDefaultProfileCfg (T_RL_API_SENS_CHIRP_PROF_COMN_CFG* ptrProfileCfg, T_RL_API_SENS_CHIRP_PROF_TIME_CFG* ptrProfileTimeCfg);
 static void Mmwave_populateDefaultChirpCfg (T_RL_API_SENS_PER_CHIRP_CFG* ptrChirpCfg, T_RL_API_SENS_PER_CHIRP_CTRL* ptrChirpCtrl);
+void MMWave_populateChannelCfg();
 void Mmwave_populateDefaultCalibrationCfg (MMWave_CalibrationCfg* ptrCalibrationCfg);
 void Mmwave_populateDefaultStartCfg (MMWave_StrtCfg* ptrStartCfg);
 
@@ -134,13 +135,18 @@ static void Mmwave_populateDefaultProfileCfg (T_RL_API_SENS_CHIRP_PROF_COMN_CFG*
     profileTimeCfg.h_ChirpAdcStartTime          = CHIRPTIMINGCFG_CHIRP_ADC_START_TIME;  // 300; // 30770;
     profileTimeCfg.xh_ChirpTxStartTime          = CHIRPTIMINGCFG_CHIRP_TX_START_TIME;   // 0; // -10; /* -0.2us */
     profileTimeCfg.xh_ChirpRfFreqSlope          = CHIRPTIMINGCFG_CHIRP_RF_FREQ_SLOPE;   // 419; // 699; // 3495; /* 100MHz/us , 77G - 2621 */
-    profileTimeCfg.w_ChirpRfFreqStart           = CHIRPTIMINGCFG_CHIRP_RF_FREQ_START;   // 51200; // 50347; // M_RL_SENS_CHIRP_RFFREQ_LR_57G; /* 57GHz / 76GHz low */
+    /* Front End Firmware expects Start freq (MHz) as 1 LSB = (3 x APLL_FREQ / 2^16) * 2^6 resolution  */
+    profileTimeCfg.w_ChirpRfFreqStart           = (CHIRPTIMINGCFG_CHIRP_RF_FREQ_START * 1000.0 * 256.0)/(300);
     profileTimeCfg.h_ChirpTxEnSel               = CHIRPTIMINGCFG_CHIRP_TX_EN_SEL;       // 0x3U; /* 2 TX enable in chirp */
     profileTimeCfg.h_ChirpTxBpmEnSel            = CHIRPTIMINGCFG_CHIRP_TX_BPM_EN_SEL;   // 0x3U; // 0; // 0x2U; /* TX1 BPM enable in chirp */
 
     rfBandwidth = (profileComCfg.h_ChirpRampEndTime*0.1) * CHIRPTIMINGCFG_CHIRP_RF_FREQ_SLOPE; //In MHz/usec
     rampDownTime = MIN((profileTimeCfg.h_ChirpIdleTime*0.1-1.0), 6.0); //In usec
     profileComCfg.h_CrdNSlopeMag = (uint16_t) fabs((scale * rfBandwidth / rampDownTime + 0.5));
+
+    // magic calculations, derived from demo project
+    profileTimeCfg.xh_ChirpRfFreqSlope  = (profileTimeCfg.xh_ChirpRfFreqSlope * 1048576.0)/(3* 100 * 100);
+
 
     /* Initialize the profile configuration: */
     memset ((void*)ptrProfileCfg, 0, sizeof(T_RL_API_SENS_CHIRP_PROF_COMN_CFG));
@@ -260,8 +266,7 @@ void Mmwave_populateDefaultOpenCfg (MMWave_OpenCfg* ptrOpenCfg)
     ptrOpenCfg->fecRDIFCtrlCmd.h_RdifSampleCount = NUM_ADC_SAMPLES; //profileComCfg.h_NumOfAdcSamples;
 }
 
-static void Mmwave_EnChannelSetOffset
-(
+static void Mmwave_EnChannelSetOffset(
     CSL_app_hwa_adcbuf_ctrlRegs *ptrAdcBufCtrlRegs,
     uint8_t channel,
     uint16_t offset
@@ -341,6 +346,16 @@ static void Mmwave_ADCBufConfig
     return;
 }
 
+void MMWave_populateChannelCfg()
+{
+    channelCfg.h_RxChCtrlBitMask  = RX_CH_CTRL_BITMASK;
+    channelCfg.h_TxChCtrlBitMask  = TX_CH_CTRL_BITMASK;
+    channelCfg.c_MiscCtrl         = CHANNEL_CFG_MISC_CTRL;
+
+    // omitted "calculation" of rxAntOrder, since doppler nis not used in this project
+}
+    
+
 /**
  *  @b Description
  *  @n
@@ -355,26 +370,30 @@ static void Mmwave_ADCBufConfig
  */
 void Mmwave_populateDefaultChirpControlCfg (MMWave_CtrlCfg* ptrCtrlCfg)
 {
-    T_RL_API_SENS_CHIRP_PROF_COMN_CFG      profileCfg;
-    T_RL_API_SENS_CHIRP_PROF_TIME_CFG      profileTimeCfg;
-    T_RL_API_SENS_PER_CHIRP_CFG        chirpCfg;
-    T_RL_API_SENS_PER_CHIRP_CTRL       chirpCtrl;
+    T_RL_API_SENS_CHIRP_PROF_COMN_CFG       profileCfg;
+    T_RL_API_SENS_CHIRP_PROF_TIME_CFG       profileTimeCfg;
+    T_RL_API_SENS_PER_CHIRP_CFG             chirpCfg;
+    T_RL_API_SENS_PER_CHIRP_CTRL            chirpCtrl;
     int32_t             errCode;
     MMWave_ChirpHandle  chirpHandle;
 
-    /* Populate the frame configuration: */
-   frameCfg.h_NumOfChirpsInBurst      = NUM_CHIRPS_PER_BURST;
-   frameCfg.c_NumOfChirpsAccum        = NUM_CHIRPS_ACCUM;
-   frameCfg.w_BurstPeriodicity        = BURST_PERIODICITY * 10.0; 
-   frameCfg.h_NumOfBurstsInFrame      = NUM_BURSTS_PER_FRAME;
-   frameCfg.w_FramePeriodicity        = FRAME_PERIODICITY;
-   frameCfg.h_NumOfFrames             = NUM_FRAMES;
-
+    MMWave_populateChannelCfg();
+    
     Mmwave_ADCBufConfig(channelCfg.h_RxChCtrlBitMask, (profileComCfg.h_NumOfAdcSamples *2));
 
     /* Initialize the control configuration: */
     memset ((void*)ptrCtrlCfg, 0, sizeof(MMWave_CtrlCfg));
 
+    /* Populate the frame configuration: */
+    frameCfg.h_NumOfChirpsInBurst      = NUM_CHIRPS_PER_BURST;
+    frameCfg.c_NumOfChirpsAccum        = NUM_CHIRPS_ACCUM;
+    frameCfg.w_BurstPeriodicity        = W_BURST_PERIOD; 
+    frameCfg.h_NumOfBurstsInFrame      = NUM_BURSTS_PER_FRAME;
+    frameCfg.w_FramePeriodicity        = FRAME_PERIOD;
+    frameCfg.h_NumOfFrames             = NUM_FRAMES;
+
+    
+    
     /* Populate the profile configuration: */
     Mmwave_populateDefaultProfileCfg (&profileCfg, &profileTimeCfg);
 

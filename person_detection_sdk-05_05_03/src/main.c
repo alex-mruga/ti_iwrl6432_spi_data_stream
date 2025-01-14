@@ -54,6 +54,8 @@
 
 #define DPC_TASK_PRI 5
 
+
+
 StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
 StackType_t gMainTaskStack[MAIN_TASK_SIZE] __attribute__((aligned(32)));
@@ -82,10 +84,15 @@ void freertos_main(void *args)
     /*FECSS SHRAM (96KB) has to be initialized before use as RBL does not perform initialization.*/
     SOC_memoryInit(SOC_RCM_MEMINIT_HWA_SHRAM_INIT|SOC_RCM_MEMINIT_TPCCA_INIT|SOC_RCM_MEMINIT_TPCCB_INIT|SOC_RCM_MEMINIT_FECSS_SHRAM_INIT|SOC_RCM_MEMINIT_APPSS_SHRAM0_INIT|SOC_RCM_MEMINIT_APPSS_SHRAM1_INIT);
     DebugP_log("starting init \n");
+
+    // initialize memory segments from memory pools
+    mempool_init();
+
     if(mmwave_initSensor() == SystemP_FAILURE){
         exit(1);
     }
 
+    // TODO: initialize default antenna geometry. Is omitted because this project doesnt implement doppler proc
     if(hwa_open_handler() == SystemP_FAILURE){
         exit(1);
     }
