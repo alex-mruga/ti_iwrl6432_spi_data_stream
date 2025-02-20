@@ -32,18 +32,24 @@
 
 #include <stdlib.h>
 #include <kernel/dpl/DebugP.h>
+#include "board/flash.h"
 #include "kernel/dpl/SystemP.h"
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
+#include "ti_drivers_open_close.h"
+
 #include "FreeRTOS.h"
 #include "task.h"
 
 #include <mmwavelink/mmwavelink.h>
+#include <mmwavelink/include/rl_device.h>
 
 #include <kernel/dpl/SemaphoreP.h>
 #include <datapath/dpu/rangeproc/v0/rangeprochwa.h>
 #include "rangeproc_dpc.h"
 #include "mmwave_basic.h"
+#include "mmwave_control_config.h"
+#include "factory_cal.h"
 
 // --- FRERTOS
 //#define MAIN_TASK_PRI  (configMAX_PRIORITIES-1)
@@ -54,8 +60,6 @@
 
 #define DPC_TASK_PRI 5
 
-
-
 StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
 StackType_t gMainTaskStack[MAIN_TASK_SIZE] __attribute__((aligned(32)));
@@ -64,9 +68,15 @@ StaticTask_t gDpcTaskObj;
 TaskHandle_t gDpcTask;
 StackType_t  gDpcTaskStack[DPC_TASK_STACK_SIZE] __attribute__((aligned(32)));
 
+T_RL_API_FECSS_RUNTIME_TX_CLPC_CAL_CMD fecTxclpcCalCmd;
+
 // semaphores
 SemaphoreP_Object pend_main_sem;
+SemaphoreP_Object dpcCfgDoneSemHandle;
 
+
+//external
+extern T_RL_API_FECSS_RF_PWR_CFG_CMD channelCfg;
 
 void rangeproc_main(void *args);
 
@@ -76,6 +86,10 @@ void freertos_main(void *args)
     /* Peripheral Driver Initialization */
     Drivers_open();
     Board_driversOpen();
+
+    /* Create binary semaphore to pend Main task and wait for dpu config */
+    SemaphoreP_constructBinary(&pend_main_sem, 0);
+    SemaphoreP_constructBinary(&dpcCfgDoneSemHandle, 0);
     
     // Mmwave_HwaConfig_custom();
     /* The following function call and comment is copied from the motion and presence detection demo (motion_detect.c motion_detect()) */
@@ -85,14 +99,21 @@ void freertos_main(void *args)
     SOC_memoryInit(SOC_RCM_MEMINIT_HWA_SHRAM_INIT|SOC_RCM_MEMINIT_TPCCA_INIT|SOC_RCM_MEMINIT_TPCCB_INIT|SOC_RCM_MEMINIT_FECSS_SHRAM_INIT|SOC_RCM_MEMINIT_APPSS_SHRAM0_INIT|SOC_RCM_MEMINIT_APPSS_SHRAM1_INIT);
     DebugP_log("starting init \n");
 
+    if(gFlashHandle[0] == NULL) {
+        DebugP_log("Flash initialization failed!");
+    }
+
     // initialize memory segments from memory pools
     mempool_init();
+
+    // initialize default antenna geometry
+    
 
     if(mmwave_initSensor() == SystemP_FAILURE){
         exit(1);
     }
 
-    // TODO: initialize default antenna geometry. Is omitted because this project doesnt implement doppler proc
+    
     if(hwa_open_handler() == SystemP_FAILURE){
         exit(1);
     }
@@ -101,6 +122,23 @@ void freertos_main(void *args)
     rangeProc_dpuInit();
 
     DebugP_log("init passed");
+    /* FECSS RF Power ON*/
+
+    int32_t retVal;
+    retVal = rl_fecssRfPwrOnOff(M_DFP_DEVICE_INDEX_0, &channelCfg);
+    if(retVal != M_DFP_RET_CODE_OK)
+    {
+        DebugP_log("Error: FECSS RF Power ON/OFF failed\r\n");
+        retVal = SystemP_FAILURE;
+        exit(1);
+    }
+
+    /* Check if the device is RF-Trimmed */
+    /* Checking one Trim is enough */
+    if(SOC_rcmReadSynthTrimValid() != 1U) { // 1 is valid
+        DebugP_log("Error: Device is not RF-Trimmed!\r\n");
+        exit(1);
+    }
 
     /*** CONFIG ***/
     // TODO: factory calibration (mmwDemo_factoryCal()) 
@@ -109,6 +147,14 @@ void freertos_main(void *args)
     }
     if(mmwave_configSensor() == SystemP_FAILURE){
         exit(1);
+    }
+
+    // /* Perform factory Calibrations. */
+    retVal = restoreFactoryCal();
+    if(retVal != SystemP_SUCCESS)
+    {
+        DebugP_log("Error: mmWave factory calibration failed\r\n");
+        retVal = SystemP_FAILURE;
     }
 
     gDpcTask = xTaskCreateStatic(dpcTask, /* Pointer to the function that implements the task. */
@@ -120,8 +166,7 @@ void freertos_main(void *args)
                                  &gDpcTaskObj);         /* pointer to statically allocated task object memory */
     configASSERT(gDpcTask != NULL);
 
-    /* Create binary semaphore to pend Main task, */
-    SemaphoreP_constructBinary(&pend_main_sem, 0);
+    SemaphoreP_pend(&dpcCfgDoneSemHandle, SystemP_WAIT_FOREVER);
 
     if(mmwave_startSensor() == SystemP_FAILURE){
         exit(1);

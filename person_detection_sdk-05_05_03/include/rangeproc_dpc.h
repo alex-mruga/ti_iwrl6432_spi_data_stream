@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <kernel/dpl/DebugP.h>
+#include "kernel/dpl/SemaphoreP.h"
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
@@ -13,6 +14,8 @@
 #include "defines.h"
 
 #define DPC_OBJDET_QFORMAT_RANGE_FFT 17
+
+extern SemaphoreP_Object dpcCfgDoneSemHandle;
 
 /**
  *  @b Description

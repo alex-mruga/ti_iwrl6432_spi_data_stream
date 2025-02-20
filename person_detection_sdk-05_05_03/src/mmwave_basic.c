@@ -50,26 +50,6 @@ extern void Mmwave_populateDefaultStartCfg (MMWave_StrtCfg* ptrStartCfg);
 /**************************************************************************/
 
 
-HWA_Handle hwaHandle;
-
-/*! @brief This is the mmWave control handle which is used to configure the BSS. */
-MMWave_Handle gCtrlHandle;
-
-/*! @brief  Configuration to open DFP */
-MMWave_OpenCfg mmwOpenCfg;
-
-/*! @brief  Configuration for mmwave control */
-MMWave_CtrlCfg mmwCtrlCfg;
-
-/*! @brief  Configuration for mmwave start (equal to gMmwMssMCB.sensorStart from mmwave demo project) */
-MMWave_StrtCfg sensorStartCfg;
-
-/*! @brief L3 ram memory pool object */
-MemPoolObj    L3RamObj;
-
-/*! @brief Core Local ram memory pool object */
-MemPoolObj    CoreLocalRamObj;
-
 /*! L3 RAM buffer for object detection DPC */
 #define L3_MEM_SIZE (0x40000 + 160*1024)
 uint8_t gMmwL3[L3_MEM_SIZE]  __attribute((section(".l3")));
@@ -265,64 +245,3 @@ int32_t mmwave_stop_close_deinit(void)
 
     return retVal;
 }
-
-// static int32_t CLI_MMWaveFactoryCalConfig (int32_t argc, char* argv[])
-// {
-//     #if (CLI_REMOVAL == 0)
-//     {
-//         if (argc != 6)
-//         {
-//             CLI_write ("Error: Invalid usage of the CLI command\r\n");
-//             return -1;
-//         }
-
-//         /* Populate configuration: */
-//         gMmwMssMCB.factoryCalCfg.saveEnable = (uint32_t) atoi(argv[1]);
-//         gMmwMssMCB.factoryCalCfg.restoreEnable = (uint32_t) atoi(argv[2]);
-//         gMmwMssMCB.factoryCalCfg.rxGain = (uint32_t) atoi(argv[3]);
-//         /* Front End Firmware expects in 0.5 dB resolution, hence multiplying by 2 */
-//         gMmwMssMCB.factoryCalCfg.txBackoffSel = (uint32_t)(2 * atoi(argv[4]));
-//         sscanf(argv[5], "0x%x", &gMmwMssMCB.factoryCalCfg.flashOffset);
-//     }
-//     #else
-//     {
-//         gMmwMssMCB.factoryCalCfg.saveEnable = CLI_FACCALCFG_SAVE_EN;
-//         gMmwMssMCB.factoryCalCfg.restoreEnable = CLI_FACCALCFG_RES_EN;
-//         gMmwMssMCB.factoryCalCfg.rxGain = CLI_FACCALCFG_RX_GAIN;
-//         gMmwMssMCB.factoryCalCfg.txBackoffSel = CLI_FACCALCFG_TX_BACKOFF_SEL;
-//         gMmwMssMCB.factoryCalCfg.flashOffset = CLI_FACCALCFG_FLASH_OFFSET;
-//     }
-//     #endif
-
-//     /* Validate inputs */
-//     /* <Save> and <re-store> shouldn't be enabled in CLI*/
-//     if ((gMmwMssMCB.factoryCalCfg.saveEnable == 1) && (gMmwMssMCB.factoryCalCfg.restoreEnable == 1))
-//     {
-//         CLI_write ("Error: Save and Restore can be enabled only one at a time\r\n");
-//         return -1;
-//     }
-
-//     /* Validate inputs */
-//     /* RxGain should be between 30db to 40db */
-//     if ( (gMmwMssMCB.factoryCalCfg.rxGain > 40U) || (gMmwMssMCB.factoryCalCfg.rxGain < 30U))
-//     {
-//         CLI_write ("Error: Valid RxGain should be between 30db to 40db\r\n");
-//         return -1;
-//     }
-
-//     /* txBackoffSel should be between 0db to 26db */
-//     if ((uint32_t) (gMmwMssMCB.factoryCalCfg.txBackoffSel/2) > 26U)
-//     {
-//         CLI_write ("Error: Valid txBackoffSel should be between 0db to 26db\r\n");
-//         return -1;
-//     }
-
-//     /* This check if to avoid accedently courrupt OOB Demo image. */
-//     if(gMmwMssMCB.factoryCalCfg.flashOffset < MMWDEMO_CALIB_FLASH_ADDR_1MB)
-//     {
-//         CLI_write ("Error: Valid flashOffset should be greater than 0x100000\r\n");
-//         DebugP_assert(0);
-//     }
-
-//     return 0;
-// }

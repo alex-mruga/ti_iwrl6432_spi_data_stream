@@ -57,43 +57,13 @@
 #include "defines.h"
 #include "common/sys_defs.h"
 
-
-/**************************************************************************
- *************************** Local Definitions ****************************
- **************************************************************************/
-
-/*!
- * @brief  Sensor Perchirp LUT, total 64 bytes used, 4 values per params
- */
-typedef struct
-{
-    uint32_t StartFreqHighRes[4]; /* LUT address 0 */
-    uint32_t StartFreqLowRes[4]; /* LUT address 16 */
-    int16_t ChirpSlope[4]; /* LUT address 32 */
-    uint16_t ChirpIdleTime[4]; /* LUT address 40 */
-    uint16_t ChirpAdcStartTime[4]; /* LUT address 48 */
-    int16_t ChirpTxStartTime[4]; /* LUT address 56 */
-    uint8_t ChirpTxEn[4]; /* LUT address 64 */
-    uint8_t ChirpBpmEn[4]; /* LUT address 68 */
-} T_SensPerChirpLut;
-
-// "chirpComnCfg" in SDK Documentation
-T_RL_API_SENS_CHIRP_PROF_COMN_CFG profileComCfg;
-T_RL_API_SENS_CHIRP_PROF_TIME_CFG profileTimeCfg;
-T_RL_API_FECSS_RF_PWR_CFG_CMD channelCfg;
-T_RL_API_SENS_FRAME_CFG frameCfg;
-
-
-static void Mmwave_populateDefaultProfileCfg (T_RL_API_SENS_CHIRP_PROF_COMN_CFG* ptrProfileCfg, T_RL_API_SENS_CHIRP_PROF_TIME_CFG* ptrProfileTimeCfg);
-static void Mmwave_populateDefaultChirpCfg (T_RL_API_SENS_PER_CHIRP_CFG* ptrChirpCfg, T_RL_API_SENS_PER_CHIRP_CTRL* ptrChirpCtrl);
-void MMWave_populateChannelCfg();
-void Mmwave_populateDefaultCalibrationCfg (MMWave_CalibrationCfg* ptrCalibrationCfg);
-void Mmwave_populateDefaultStartCfg (MMWave_StrtCfg* ptrStartCfg);
+#include "mmwave_control_config.h"
 
 /**************************************************************************
  ************************* Extern Declarations ****************************
  **************************************************************************/
 extern MMWave_Handle gCtrlHandle;
+extern T_RL_API_FECSS_RUNTIME_TX_CLPC_CAL_CMD fecTxclpcCalCmd;
 
 T_SensPerChirpLut* sensPerChirpLuTable = (T_SensPerChirpLut*)(0x21880000U);
 
@@ -261,6 +231,8 @@ void Mmwave_populateDefaultOpenCfg (MMWave_OpenCfg* ptrOpenCfg)
 {
     ptrOpenCfg->useRunTimeCalib = false;
     ptrOpenCfg->useCustomCalibration = false;
+    ptrOpenCfg->runTxCLPCCalib = false;
+    ptrOpenCfg->ptrfecTxclpcCalCmd = &fecTxclpcCalCmd;
     ptrOpenCfg->customCalibrationEnableMask = 0U;
     ptrOpenCfg->fecRDIFCtrlCmd.c_RdifEnable = M_RL_FECSS_RDIF_DIS;
     ptrOpenCfg->fecRDIFCtrlCmd.h_RdifSampleCount = NUM_ADC_SAMPLES; //profileComCfg.h_NumOfAdcSamples;
@@ -378,7 +350,7 @@ void Mmwave_populateDefaultChirpControlCfg (MMWave_CtrlCfg* ptrCtrlCfg)
     MMWave_ChirpHandle  chirpHandle;
 
     MMWave_populateChannelCfg();
-    
+
     Mmwave_ADCBufConfig(channelCfg.h_RxChCtrlBitMask, (profileComCfg.h_NumOfAdcSamples *2));
 
     /* Initialize the control configuration: */
@@ -398,7 +370,7 @@ void Mmwave_populateDefaultChirpControlCfg (MMWave_CtrlCfg* ptrCtrlCfg)
     Mmwave_populateDefaultProfileCfg (&profileCfg, &profileTimeCfg);
 
     /* Create the profile: */
-    ptrCtrlCfg->frameCfg[0].profileHandle[0] = MMWave_addProfile (gCtrlHandle, &profileCfg, &profileTimeCfg, &errCode);
+    ptrCtrlCfg->frameCfg[0].profileHandle[0] = MMWave_addProfile(gCtrlHandle, &profileCfg, &profileTimeCfg, &errCode);
     if (ptrCtrlCfg->frameCfg[0].profileHandle[0] == NULL)
     {
         DebugP_logError ("Error: Unable to add the profile [Error code %d]\n", errCode);

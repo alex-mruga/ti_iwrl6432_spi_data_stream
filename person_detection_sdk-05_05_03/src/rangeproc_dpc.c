@@ -55,6 +55,8 @@ void dpcTask()
 
     /* configure DPUs: */
     RangeProc_config();
+
+    SemaphoreP_post(&dpcCfgDoneSemHandle);
     
     // register Frame Start ISR
     if(registerFrameStartInterrupt() != 0){
@@ -84,27 +86,27 @@ void dpcTask()
         DebugP_assert(0);
     }
     
-    // while(true){
-    memset((void *)&outParams, 0, sizeof(DPU_RangeProcHWA_OutParams));
+    while(true){
+        memset((void *)&outParams, 0, sizeof(DPU_RangeProcHWA_OutParams));
 
-    retVal = DPU_RangeProcHWA_process(rangeProcHWADpuHandle, &outParams);
-    if(retVal < 0){
-        /* Not Expected */
-        DebugP_log("RangeProc DPU process error %d\n", retVal);
-        DebugP_assert(0);
-    }
+        retVal = DPU_RangeProcHWA_process(rangeProcHWADpuHandle, &outParams);
+        if(retVal < 0){
+            /* Not Expected */
+            DebugP_log("RangeProc DPU process error %d\n", retVal);
+            DebugP_assert(0);
+        }
 
-    mmwave_stop_close_deinit();
-    
-    /* Give initial trigger for the next frame */
-    retVal = DPU_RangeProcHWA_control(rangeProcHWADpuHandle,
-                DPU_RangeProcHWA_Cmd_triggerProc, NULL, 0);
-    if(retVal < 0)
-    {
-        DebugP_log("Error: DPU_RangeProcHWA_control failed with error code %d", retVal);
-        DebugP_assert(0);
+        // mmwave_stop_close_deinit();
+        
+        /* Give initial trigger for the next frame */
+        retVal = DPU_RangeProcHWA_control(rangeProcHWADpuHandle,
+                    DPU_RangeProcHWA_Cmd_triggerProc, NULL, 0);
+        if(retVal < 0)
+        {
+            DebugP_log("Error: DPU_RangeProcHWA_control failed with error code %d", retVal);
+            DebugP_assert(0);
+        }
     }
-    // }
     /* Never return for this task. */
     //SemaphoreP_pend(&gMmwMssMCB.TestSemHandle, SystemP_WAIT_FOREVER);
 }

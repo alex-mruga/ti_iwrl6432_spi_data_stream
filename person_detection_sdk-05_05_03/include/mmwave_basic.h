@@ -1,3 +1,6 @@
+#ifndef MMWAVE_BASIC_H
+#define MMWAVE_BASIC_H
+
 /*
  * Copyright (C) 2022-24 Texas Instruments Incorporated
  *
@@ -34,6 +37,34 @@
 #include <kernel/dpl/DebugP.h>
 #include <kernel/dpl/SystemP.h>
 #include <string.h>
+
+#include "drivers/hwa.h"
+#include "kernel/dpl/SystemP.h"
+#include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
+#include "kernel/dpl/DebugP.h"
+#include "defines.h"
+#include "mem_pool.h"
+
+HWA_Handle hwaHandle;
+
+/*! @brief This is the mmWave control handle which is used to configure the BSS. */
+MMWave_Handle gCtrlHandle;
+
+/*! @brief  Configuration to open DFP */
+MMWave_OpenCfg mmwOpenCfg;
+
+/*! @brief  Configuration for mmwave control */
+MMWave_CtrlCfg mmwCtrlCfg;
+
+/*! @brief  Configuration for mmwave start (equal to gMmwMssMCB.sensorStart from mmwave demo project) */
+MMWave_StrtCfg sensorStartCfg;
+
+/*! @brief L3 ram memory pool object */
+MemPoolObj    L3RamObj;
+
+/*! @brief Core Local ram memory pool object */
+MemPoolObj    CoreLocalRamObj;
 
 /**
  *  @b Description
@@ -78,3 +109,5 @@ int32_t mmwave_startSensor(void);
 int32_t mmwave_stop_close_deinit(void);
 
 void Mmwave_HwaConfig_custom (void);
+
+#endif //MMWAVE_BASIC_H

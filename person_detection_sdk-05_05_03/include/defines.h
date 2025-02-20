@@ -55,6 +55,11 @@
 #define SENSOR_START_FRAME_LIVE_MON_ENABLE        0
 #define SENSOR_START_FRAME_TRIG_TIMER_VAL         0
 
+/* Factory Calibration */
+#define CLI_FACCALCFG_RES_EN 0
+#define CLI_FACCALCFG_RX_GAIN 40
+#define CLI_FACCALCFG_TX_BACKOFF_SEL 0
+#define CLI_FACCALCFG_FLASH_OFFSET 0x1FF000
 
 // derived from common/syscommon.h
 /*************************************************************
