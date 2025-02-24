@@ -349,8 +349,6 @@ void Mmwave_populateDefaultChirpControlCfg (MMWave_CtrlCfg* ptrCtrlCfg)
     int32_t             errCode;
     MMWave_ChirpHandle  chirpHandle;
 
-    MMWave_populateChannelCfg();
-
     Mmwave_ADCBufConfig(channelCfg.h_RxChCtrlBitMask, (profileComCfg.h_NumOfAdcSamples *2));
 
     /* Initialize the control configuration: */

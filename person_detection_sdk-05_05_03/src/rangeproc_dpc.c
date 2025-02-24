@@ -253,7 +253,7 @@ void RangeProc_config()
    
     /* radar cube config*/
     /* total size of radar cube in bytes*/
-    pHwConfig->radarCube.dataSize = NUM_RANGE_BINS * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * NUM_DOPPLER_CHIRPS_PER_PROC;
+    pHwConfig->radarCube.dataSize = NUM_RANGE_BINS * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * NUM_DOPPLER_CHIRPS_PER_FRAME;
     pHwConfig->radarCube.datafmt = DPIF_RADARCUBE_FORMAT_6;
 
         /* radar cube */

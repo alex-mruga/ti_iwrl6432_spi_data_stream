@@ -124,6 +124,8 @@ void freertos_main(void *args)
     DebugP_log("init passed");
     /* FECSS RF Power ON*/
 
+    MMWave_populateChannelCfg();
+
     int32_t retVal;
     retVal = rl_fecssRfPwrOnOff(M_DFP_DEVICE_INDEX_0, &channelCfg);
     if(retVal != M_DFP_RET_CODE_OK)
