@@ -16,6 +16,8 @@
 #define DPC_OBJDET_QFORMAT_RANGE_FFT 17
 
 extern SemaphoreP_Object dpcCfgDoneSemHandle;
+extern SemaphoreP_Object uart_tx_start_sem;
+extern SemaphoreP_Object uart_tx_done_sem;
 
 /**
  *  @b Description
@@ -65,6 +67,7 @@ void rangeproc_main(void *args);
 
 
 void dpcTask();
+void uartTask();
 
 /**
  * @brief Registers an interrupt for the frame start event.

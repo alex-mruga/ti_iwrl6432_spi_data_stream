@@ -12,7 +12,7 @@
 // channelCfg
 #define RX_CH_CTRL_BITMASK 7 // all 3 RX antennas active => 7 (0b111)
 #define TX_CH_CTRL_BITMASK 3 // all 2 TX antennas active => 3 (0b11)
-#define CHANNEL_CFG_MISC_CTRL 
+#define CHANNEL_CFG_MISC_CTRL 0
 
 // calculated defines, not in config
 #define NUM_RANGE_BINS (NUM_ADC_SAMPLES / 2)

@@ -33,10 +33,12 @@
 #include <stdlib.h>
 #include <kernel/dpl/DebugP.h>
 #include "board/flash.h"
+#include "drivers/uart/v0/uart_sci.h"
 #include "kernel/dpl/SystemP.h"
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 #include "ti_drivers_open_close.h"
+#include "ti_drivers_config.h"
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -57,8 +59,10 @@
 
 #define MAIN_TASK_SIZE (16384U/sizeof(configSTACK_DEPTH_TYPE))
 #define DPC_TASK_STACK_SIZE 8192
+#define UART_TASK_STACK_SIZE 1024
 
 #define DPC_TASK_PRI 5
+#define UART_TASK_PRI 10
 
 StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
@@ -67,12 +71,20 @@ StackType_t gMainTaskStack[MAIN_TASK_SIZE] __attribute__((aligned(32)));
 StaticTask_t gDpcTaskObj;
 TaskHandle_t gDpcTask;
 StackType_t  gDpcTaskStack[DPC_TASK_STACK_SIZE] __attribute__((aligned(32)));
+// ---
+StaticTask_t gUartTaskObj;
+TaskHandle_t gUartTask;
+StackType_t  gUartTaskStack[UART_TASK_STACK_SIZE] __attribute__((aligned(32)));
 
 T_RL_API_FECSS_RUNTIME_TX_CLPC_CAL_CMD fecTxclpcCalCmd;
 
 // semaphores
 SemaphoreP_Object pend_main_sem;
 SemaphoreP_Object dpcCfgDoneSemHandle;
+
+SemaphoreP_Object uart_tx_start_sem;
+SemaphoreP_Object uart_tx_done_sem;
+
 
 
 //external
@@ -87,9 +99,15 @@ void freertos_main(void *args)
     Drivers_open();
     Board_driversOpen();
 
+    // init uart
+    //UART_init();
+
     /* Create binary semaphore to pend Main task and wait for dpu config */
     SemaphoreP_constructBinary(&pend_main_sem, 0);
     SemaphoreP_constructBinary(&dpcCfgDoneSemHandle, 0);
+
+    SemaphoreP_constructBinary(&uart_tx_start_sem, 0);
+    SemaphoreP_constructBinary(&uart_tx_done_sem, 0);
     
     // Mmwave_HwaConfig_custom();
     /* The following function call and comment is copied from the motion and presence detection demo (motion_detect.c motion_detect()) */
@@ -169,6 +187,15 @@ void freertos_main(void *args)
     configASSERT(gDpcTask != NULL);
 
     SemaphoreP_pend(&dpcCfgDoneSemHandle, SystemP_WAIT_FOREVER);
+
+        gUartTask = xTaskCreateStatic(uartTask, /* Pointer to the function that implements the task. */
+                                 "uart_task",      /* Text name for the task.  This is to facilitate debugging only. */
+                                 UART_TASK_STACK_SIZE,   /* Stack depth in units of StackType_t typically uint32_t on 32b CPUs */
+                                 NULL,                  /* We are not using the task parameter. */
+                                 UART_TASK_PRI,          /* task priority, 0 is lowest priority, configMAX_PRIORITIES-1 is highest */
+                                 gUartTaskStack,      /* pointer to stack base */
+                                 &gUartTaskObj);         /* pointer to statically allocated task object memory */
+    configASSERT(gUartTask != NULL);
 
     if(mmwave_startSensor() == SystemP_FAILURE){
         exit(1);

@@ -15,6 +15,8 @@
 #include "mmwave_basic.h"
 #include "rangeproc_dpc.h"
 #include "mem_pool.h"
+#include "uart_transmit.h"
+
 
 DPU_RangeProcHWA_Handle rangeProcHWADpuHandle;
 DPU_RangeProcHWA_Config rangeProcDpuCfg;
@@ -41,6 +43,38 @@ void *gAdcDataDebugPtr = NULL;
 
 uint32_t gChirpCount;
 uint32_t gFrameCount;
+
+#define APP_UART_BUFSIZE              (200U)
+#define APP_UART_RECEIVE_BUFSIZE      (8U)
+
+uint8_t gUartBuffer[APP_UART_BUFSIZE];
+uint8_t gUartReceiveBuffer[APP_UART_RECEIVE_BUFSIZE];
+volatile uint32_t gNumBytesRead = 0U, gNumBytesWritten = 0U;
+
+void uartTask(){
+    int32_t          transferOK;
+    UART_Transaction trans;
+
+    UART_Transaction_init(&trans);
+
+
+    while(true){
+        SemaphoreP_pend(&uart_tx_start_sem, SystemP_WAIT_FOREVER);
+
+        /* Send entry string */
+        gNumBytesWritten = 0U;
+        trans.buf   = &gUartBuffer[0U];
+        strncpy(trans.buf,"This is uart echo test blocking mode\r\nReceives 8 characters then echo's back. Please input..\r\n", APP_UART_BUFSIZE);
+        trans.count = strlen(trans.buf);
+        transferOK = UART_write(gUartHandle[CONFIG_UART_CONSOLE], &trans);
+
+        if(transferOK != SystemP_SUCCESS){
+            DebugP_log("Uart Tx failed");
+        }
+
+        SemaphoreP_post(&uart_tx_done_sem);
+    }
+}
 
 void dpcTask()
 {
@@ -85,8 +119,10 @@ void dpcTask()
         DebugP_log("RangeProc DPU control error %d\n", retVal);
         DebugP_assert(0);
     }
-    
+
+        
     while(true){
+        
         memset((void *)&outParams, 0, sizeof(DPU_RangeProcHWA_OutParams));
 
         retVal = DPU_RangeProcHWA_process(rangeProcHWADpuHandle, &outParams);
@@ -95,9 +131,13 @@ void dpcTask()
             DebugP_log("RangeProc DPU process error %d\n", retVal);
             DebugP_assert(0);
         }
+        // trigger Uart transmission
+        SemaphoreP_post(&uart_tx_start_sem);
 
-        // mmwave_stop_close_deinit();
-        
+        // wait for Uart transmission;
+        SemaphoreP_pend(&uart_tx_done_sem, SystemP_WAIT_FOREVER);
+
+
         /* Give initial trigger for the next frame */
         retVal = DPU_RangeProcHWA_control(rangeProcHWADpuHandle,
                     DPU_RangeProcHWA_Cmd_triggerProc, NULL, 0);
