@@ -1,6 +1,11 @@
 #ifndef UART_TRANSMIT_H
 #define UART_TRANSMIT_H
 
-void mmw_UartWrite(UART_Handle handle, uint8_t *payload, uint32_t payloadLength);
+#include "kernel/dpl/SemaphoreP.h"
+
+extern SemaphoreP_Object uart_tx_start_sem;
+extern SemaphoreP_Object uart_tx_done_sem;
+
+void uart_transmit_loop();
 
 #endif /* UART_TRANSMIT_H */
