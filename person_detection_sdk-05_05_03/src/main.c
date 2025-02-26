@@ -78,7 +78,7 @@ StackType_t  gUartTaskStack[UART_TASK_STACK_SIZE] __attribute__((aligned(32)));
 
 T_RL_API_FECSS_RUNTIME_TX_CLPC_CAL_CMD fecTxclpcCalCmd;
 
-// semaphores
+// Semaphores
 SemaphoreP_Object pend_main_sem;
 SemaphoreP_Object dpcCfgDoneSemHandle;
 

@@ -65,8 +65,20 @@ void RangeProc_config();
  */
 void rangeproc_main(void *args);
 
-
+/**
+ * @brief Task function for Data Processing Chain (DPC).
+ *
+ * This function initializes and manages the data processing chain, including
+ * configuring the DPUs, registering interrupts, and triggering UART transmission.
+ * It runs in an infinite loop, processing data frames and triggering the next frame.
+ */
 void dpcTask();
+
+/**
+ * @brief Task function for UART transmission.
+ *
+ * This function continuously transmits data over UART.
+ */
 void uartTask();
 
 /**
@@ -82,9 +94,33 @@ void uartTask();
  * @retval SystemP_SUCCESS on successful registration, SystemP_FAILURE on error.
  */
 int32_t registerFrameStartInterrupt(void);
+
+/**
+ * @brief Interrupt Service Routine for Frame Start.
+ *
+ * This ISR is called when a frame start event occurs. It clears the interrupt flag
+ * and increments the frame count.
+ *
+ * @param arg Pointer to optional arguments (unused in this implementation).
+ */
 static void frameStartISR(void *arg);
 
+/**
+ * @brief Registers the Chirp Interrupt.
+ *
+ * This function registers the interrupt for the chirp start and end events.
+ *
+ * @return int32_t Returns SystemP_SUCCESS on success, SystemP_FAILURE on failure.
+ */
 int32_t registerChirpInterrupt(void);
+
+/**
+ * @brief ISR for Chirp Start event.
+ *
+ * This ISR is triggered when the chirp start event occurs, indicating that the RF time control is functioning correctly. It does not necessarily mean the RF is actively chirping.
+ *
+ * @param arg Unused optional argument.
+ */
 void chirpStartISR(void *arg);
 
 uint32_t Cycleprofiler_getTimeStamp(void);

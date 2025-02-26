@@ -48,13 +48,15 @@ void uart_transmit_loop(){
             DebugP_log("Uart Tx failed");
         }
 
-        // send data
+        // send actual radar cube data
+        // only send data of one virtual antenna though, because only range fft is transmitted for now.
         uint32_t i;
         for (i = 0; i < NUM_RANGE_BINS; i++) {
-
-            // X[chirp][antenna][range]
             
-            // calculate address of rangebin
+            // data structure in radarCube:
+            // Cube[chirp][antenna][range]
+
+            // calculate address offset of rangebin
             uint8_t chirp_index = 1;
             uint8_t antenna_index = 0;
             uint8_t rangebin_index = i;

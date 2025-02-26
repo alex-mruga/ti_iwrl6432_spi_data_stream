@@ -65,11 +65,28 @@ extern T_RL_API_SENS_FRAME_CFG frameCfg;
 extern MMWave_Handle gCtrlHandle;
 extern T_RL_API_FECSS_RUNTIME_TX_CLPC_CAL_CMD fecTxclpcCalCmd;
 
-
+/**
+ * @brief Magic word for factory calibration data validation.
+ *
+ * This value is stored in flash alongside calibration data and checked upon 
+ * restoration to verify data integrity. It acts as a simple checksum to ensure 
+ * the calibration data is valid.
+ */
 #define MMWDEMO_CALIB_STORE_MAGIC (0x7CB28DF9U)
 
 Mmw_calibData calibData __attribute__((aligned(8))) = {0};
 
+/**
+ * @brief Restores factory calibration data from flash.
+ *
+ * This function reads the calibration data stored in flash memory and restores it.
+ * It requires that the system has been previously calibrated.
+ *
+ * Derived from `mmwDemo_factoryCal` and `MmwDemo_calibRestore` in `factory_cal.c` 
+ * from the demo project.
+ *
+ * @return SystemP_SUCCESS on success, -1 on failure.
+ */
 int32_t restoreFactoryCal(void)
 {
     uint16_t         calRfFreq = 0U;

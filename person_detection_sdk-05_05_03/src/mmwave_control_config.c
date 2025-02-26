@@ -287,6 +287,15 @@ static void Mmwave_EnChannelSetOffset(
     }
 }
 
+/**
+  * @brief  Configures the ADC buffer for enabled Rx channels
+  *
+  * @param  rxChannelEn   Enabled Rx channel bitmask
+  *
+  * @param  chanDataSize  Size of data per channel
+  *
+  * @return None
+*/
 static void Mmwave_ADCBufConfig
 (
     uint16_t rxChannelEn,
@@ -317,16 +326,20 @@ static void Mmwave_ADCBufConfig
 
     return;
 }
-
+/**
+  *  @brief  Populates the channel configuration structure
+  *  
+  *  @return None
+*/
 void MMWave_populateChannelCfg()
 {
-    channelCfg.h_RxChCtrlBitMask  = RX_CH_CTRL_BITMASK;
-    channelCfg.h_TxChCtrlBitMask  = TX_CH_CTRL_BITMASK;
-    channelCfg.c_MiscCtrl         = CHANNEL_CFG_MISC_CTRL;
+channelCfg.h_RxChCtrlBitMask  = RX_CH_CTRL_BITMASK;
+channelCfg.h_TxChCtrlBitMask  = TX_CH_CTRL_BITMASK;
+channelCfg.c_MiscCtrl         = CHANNEL_CFG_MISC_CTRL;
 
-    // omitted "calculation" of rxAntOrder, since doppler nis not used in this project
+// omitted "calculation" of rxAntOrder, since doppler is not used in this project
 }
-    
+
 
 /**
  *  @b Description

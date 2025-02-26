@@ -29,6 +29,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+ /**
+ * @file mmwave_basic.c
+ * @brief Initialization, configuration, and control functions for mmWave sensor.
+ *
+ * This file contains functions to initialize, open, configure, start, stop, 
+ * and deinitialize the mmWave sensor. It also includes memory pool setup 
+ * and HWA initialization.
+ *
+ * @note Functionality derived from motion_and_presence_detection_demo_xwrL64xx-evm_m4fss0-0_freertos_ti-arm-clang. 
+ *
+ * @details
+ * - Provides functions for mmWave sensor control.
+ * - Includes memory pool initialization for object detection processing.
+ * - Handles HWA (Hardware Accelerator) initialization.
+ * - Implements calibration restore and validation using stored magic word.
+ */
  
 #include "drivers/hwa.h"
 #include "kernel/dpl/SystemP.h"
@@ -47,16 +64,22 @@ extern void Mmwave_populateDefaultOpenCfg (MMWave_OpenCfg* ptrOpenCfg);
 extern void Mmwave_populateDefaultChirpControlCfg (MMWave_CtrlCfg* ptrCtrlCfg);
 extern void Mmwave_populateDefaultCalibrationCfg (MMWave_CalibrationCfg* ptrCalibrationCfg);
 extern void Mmwave_populateDefaultStartCfg (MMWave_StrtCfg* ptrStartCfg);
-/**************************************************************************/
 
 
-/*! L3 RAM buffer for object detection DPC */
-#define L3_MEM_SIZE (0x40000 + 160*1024)
+/*! 
+ * @brief L3 RAM buffer for object detection DPC.
+ * 
+ */
+ #define L3_MEM_SIZE (0x40000 + 160*1024)
 uint8_t gMmwL3[L3_MEM_SIZE]  __attribute((section(".l3")));
 
-/*! Local RAM buffer for object detection DPC */
-#define MMWDEMO_OBJDET_CORE_LOCAL_MEM_SIZE ((8U+6U+4U+2U+8U) * 1024U)
+/*! 
+ * @brief Local RAM buffer for object detection DPC.
+ * 
+ */
+ #define MMWDEMO_OBJDET_CORE_LOCAL_MEM_SIZE ((8U+6U+4U+2U+8U) * 1024U)
 uint8_t gMmwCoreLocMem[MMWDEMO_OBJDET_CORE_LOCAL_MEM_SIZE];
+
 
 void mempool_init(void){
     /* Shared memory pool for rangeproc DPU (window)*/
@@ -69,7 +92,6 @@ void mempool_init(void){
 }
 
 int32_t hwa_open_handler() {
-    // Status handle for HWA_open
     int32_t status = SystemP_SUCCESS;
 
     hwaHandle = HWA_open(0, NULL, &status);
@@ -82,6 +104,7 @@ int32_t hwa_open_handler() {
     DebugP_log("Successfully opened HWA");
     return status;
 }
+
 
 int32_t mmwave_initSensor()
 {
@@ -122,15 +145,10 @@ int32_t mmwave_openSensor(void)
     
 
     Mmwave_populateDefaultOpenCfg(&mmwOpenCfg);
-    /**********************************************************
-     **********************************************************/
 
     /* Open mmWave module, this is only done once */
-
-    /* Open the mmWave module: */
     if (MMWave_open (gCtrlHandle, &mmwOpenCfg, &errCode) < 0)
     {
-        /* Error: decode and Report the error */
         MMWave_decodeError (errCode, &errorLevel, &mmWaveErrorCode, &subsysErrorCode);
         DebugP_log ("Error: mmWave Open failed [Error code: %d Subsystem: %d]\n",
                         mmWaveErrorCode, subsysErrorCode);
@@ -164,6 +182,7 @@ int32_t mmwave_configSensor(void)
 
     return retVal;
 }
+
 
 int32_t mmwave_startSensor(void)
 {

@@ -92,7 +92,7 @@ void dpcTask()
         DebugP_assert(0);
     }
 
-        
+    // endless loop for continuous chirping and processing of data.   
     while(true){
         
         memset((void *)&outParams, 0, sizeof(DPU_RangeProcHWA_OutParams));
@@ -119,8 +119,6 @@ void dpcTask()
             DebugP_assert(0);
         }
     }
-    /* Never return for this task. */
-    //SemaphoreP_pend(&gMmwMssMCB.TestSemHandle, SystemP_WAIT_FOREVER);
 }
 
 void rangeProc_dpuInit()
@@ -146,8 +144,7 @@ void RangeProc_config()
 
     memset((void *)&rangeProcDpuCfg, 0, sizeof(DPU_RangeProcHWA_Config));
 
-
-    // TEST SET LOW POWER MODE = 2
+    // disable low power mode
     params->lowPowerMode = 0;
 
     /*
