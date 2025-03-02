@@ -1,8 +1,8 @@
-# TI IWRL6432BOOST mmWave minimum
+# TI IWRL6432 mmWave Radar
 
 ## Overview  
 
-This project implements a bare-minimum digital signal processing pipeline for mmWave radar data using the Texas Instruments [IWRL6432BOOST](https://www.ti.com/tool/IWRL6432BOOST) evaluation module. It is based on TI’s Motion and Presence Detection Demo but strips away unnecessary components, using only essential SDK functions to achieve a working FMCW setup.  
+This project implements a bare-minimum digital signal processing pipeline for mmWave radar data using the Texas Instruments [IWRL6432BOOST](https://www.ti.com/tool/IWRL6432BOOST) evaluation module. It is based on TI’s [Motion and Presence Detection Demo](https://dev.ti.com/tirex/explore/node?node=A__AGKSp6XJSIVonQK9nNyYLg__MMWAVE-L-SDK__BHQ90AU__LATEST) but strips away unnecessary components, using only essential SDK functions to achieve a working FMCW setup.  
 
 The project utilizes **MMWAVE-L-SDK version 05.05.03.00**. Download [here](https://www.ti.com/tool/download/MMWAVE-L-SDK).  
 
@@ -15,10 +15,6 @@ The project utilizes **MMWAVE-L-SDK version 05.05.03.00**. Download [here](https
 - **Minimal Standalone Implementation**  
   - No CLI-based reconfiguration, all parameters set in `defines.h`.  
   - Only includes necessary SDK function calls for FMCW processing.  
-
-- **Efficient Data Transmission**  
-  - Captures range profiles and sends them via UART for real-time visualization.  
-  - Can be extended to transmit the full radar cube for further processing.  
 
 - **Embedded System Considerations**  
   - Factory calibration data restored from flash.  
