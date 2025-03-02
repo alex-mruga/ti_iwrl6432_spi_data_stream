@@ -1,0 +1,99 @@
+\doxysection{src/uart\+\_\+transmit.c File Reference}
+\hypertarget{uart__transmit_8c}{}\label{uart__transmit_8c}\index{src/uart\_transmit.c@{src/uart\_transmit.c}}
+
+
+UART Transmission Implementation for Radar Data.  
+
+
+{\ttfamily \#include "{}ti\+\_\+drivers\+\_\+config.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}string.\+h"{}}\newline
+{\ttfamily \#include $<$kernel/dpl/\+Debug\+P.\+h$>$}\newline
+{\ttfamily \#include $<$utils/mathutils/mathutils.\+h$>$}\newline
+{\ttfamily \#include "{}kernel/dpl/\+Semaphore\+P.\+h"{}}\newline
+{\ttfamily \#include "{}ti\+\_\+drivers\+\_\+open\+\_\+close.\+h"{}}\newline
+{\ttfamily \#include $<$datapath/dpu/rangeproc/v0/rangeprochwa.\+h$>$}\newline
+{\ttfamily \#include "{}defines.\+h"{}}\newline
+{\ttfamily \#include "{}uart\+\_\+transmit.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{uart__transmit_8c_a2df15933b46a6ab293ddc8f06e4718aa}\label{uart__transmit_8c_a2df15933b46a6ab293ddc8f06e4718aa} 
+\#define {\bfseries APP\+\_\+\+UART\+\_\+\+BUFSIZE}~(1024)
+\item 
+\Hypertarget{uart__transmit_8c_aed456f002bad35230c31db1b091f171b}\label{uart__transmit_8c_aed456f002bad35230c31db1b091f171b} 
+\#define {\bfseries APP\+\_\+\+UART\+\_\+\+RECEIVE\+\_\+\+BUFSIZE}~(8U)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{uart__transmit_8c_a3d3a33262d55bf39da02980f3ac545a9}{uart\+\_\+transmit\+\_\+loop}} ()
+\begin{DoxyCompactList}\small\item\em UART transmission loop function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{uart__transmit_8c_aeeb8750ab1c9c27e868268df85a7d6da}\label{uart__transmit_8c_aeeb8750ab1c9c27e868268df85a7d6da} 
+uint8\+\_\+t {\bfseries g\+Uart\+Buffer} \mbox{[}APP\+\_\+\+UART\+\_\+\+BUFSIZE\mbox{]}
+\item 
+\Hypertarget{uart__transmit_8c_ac6e80ef22b4f269311467361e02296ae}\label{uart__transmit_8c_ac6e80ef22b4f269311467361e02296ae} 
+uint8\+\_\+t {\bfseries g\+Uart\+Receive\+Buffer} \mbox{[}APP\+\_\+\+UART\+\_\+\+RECEIVE\+\_\+\+BUFSIZE\mbox{]}
+\item 
+\Hypertarget{uart__transmit_8c_a2b71800cde218c90721c336cdf43dd05}\label{uart__transmit_8c_a2b71800cde218c90721c336cdf43dd05} 
+volatile uint32\+\_\+t {\bfseries g\+Num\+Bytes\+Read} = 0U
+\item 
+\Hypertarget{uart__transmit_8c_aa7d3ee81971b2d5a378cfd4718b62e17}\label{uart__transmit_8c_aa7d3ee81971b2d5a378cfd4718b62e17} 
+volatile uint32\+\_\+t {\bfseries g\+Num\+Bytes\+Written} = 0U
+\item 
+const uint8\+\_\+t \mbox{\hyperlink{uart__transmit_8c_af64dba64f9313010aa18fe44dda4981d}{header}} \mbox{[}4\mbox{]} = \{0x\+AA, 0x\+BB, 0x\+CC, 0x\+DD\}
+\begin{DoxyCompactList}\small\item\em Header and footer for each radar\+Cube transmission over UART. \end{DoxyCompactList}\item 
+\Hypertarget{uart__transmit_8c_a16c6c0e92b0a78046cc4ad77a4e6fe69}\label{uart__transmit_8c_a16c6c0e92b0a78046cc4ad77a4e6fe69} 
+const uint8\+\_\+t {\bfseries footer} \mbox{[}4\mbox{]} = \{0x\+DD, 0x\+CC, 0x\+BB, 0x\+AA\}
+\item 
+\Hypertarget{uart__transmit_8c_a459cfe87b06fd13864f258f2035586bb}\label{uart__transmit_8c_a459cfe87b06fd13864f258f2035586bb} 
+DPU\+\_\+\+Range\+Proc\+HWA\+\_\+\+Config {\bfseries range\+Proc\+Dpu\+Cfg}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+UART Transmission Implementation for Radar Data. 
+
+This file implements the UART transmission of radar cube data. It manages synchronization using semaphores, waits for transmission signals, sends data over UART, and signals completion when done.
+
+The transmission process is controlled using two semaphores\+:
+\begin{DoxyItemize}
+\item {\ttfamily uart\+\_\+tx\+\_\+start\+\_\+sem}\+: Signals the start of transmission.
+\item {\ttfamily uart\+\_\+tx\+\_\+done\+\_\+sem}\+: Signals the completion of transmission.
+\end{DoxyItemize}
+
+The function {\ttfamily \doxylink{uart__transmit_8c_a3d3a33262d55bf39da02980f3ac545a9}{uart\+\_\+transmit\+\_\+loop()}} runs continuously, waiting for {\ttfamily uart\+\_\+tx\+\_\+start\+\_\+sem} to be posted, transmitting radar cube data, and posting {\ttfamily uart\+\_\+tx\+\_\+done\+\_\+sem} upon completion.
+
+\begin{DoxyNote}{Note}
+This module relies on the SemaphoreP API from the kernel/dpl library for synchronization. 
+\end{DoxyNote}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{uart__transmit_8c_a3d3a33262d55bf39da02980f3ac545a9}\index{uart\_transmit.c@{uart\_transmit.c}!uart\_transmit\_loop@{uart\_transmit\_loop}}
+\index{uart\_transmit\_loop@{uart\_transmit\_loop}!uart\_transmit.c@{uart\_transmit.c}}
+\doxysubsubsection{\texorpdfstring{uart\_transmit\_loop()}{uart\_transmit\_loop()}}
+{\footnotesize\ttfamily \label{uart__transmit_8c_a3d3a33262d55bf39da02980f3ac545a9} 
+void uart\+\_\+transmit\+\_\+loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+UART transmission loop function. 
+
+This function continuously waits for a signal to start UART transmission, sends radar cube data over UART, and signals completion when done. 
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{uart__transmit_8c_af64dba64f9313010aa18fe44dda4981d}\index{uart\_transmit.c@{uart\_transmit.c}!header@{header}}
+\index{header@{header}!uart\_transmit.c@{uart\_transmit.c}}
+\doxysubsubsection{\texorpdfstring{header}{header}}
+{\footnotesize\ttfamily \label{uart__transmit_8c_af64dba64f9313010aa18fe44dda4981d} 
+const uint8\+\_\+t header\mbox{[}4\mbox{]} = \{0x\+AA, 0x\+BB, 0x\+CC, 0x\+DD\}}
+
+
+
+Header and footer for each radar\+Cube transmission over UART. 
+
+These markers are used to indicate the start and end of each radar\+Cube data packet during UART transmission. 

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TI IWRL6432 Boost Study: include/mmwave_control_config.h Source File</title>
+<title>TI IWRL6432 mmWave Radar: include/mmwave_control_config.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,9 +32,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TI IWRL6432 Boost Study
+   <div id="projectname">TI IWRL6432 mmWave Radar
    </div>
-   <div id="projectbrief">A minimal implementation of the processing chain of the required IWRL6432 Boos EVM board.</div>
+   <div id="projectbrief">A minimal implementation of the processing chain of the IWRL6432 Boos EVM board.</div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -125,7 +125,7 @@ $(function(){initNavTree('mmwave__control__config_8h_source.html',''); initResiz
 </div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">extern</span> MMWave_Handle gCtrlHandle;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">extern</span> MMWave_Handle <a class="code hl_variable" href="mmwave__control__config_8c.html#a06ba651c3e4b1dbbf75f213cc09bb97c">gCtrlHandle</a>;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">extern</span> <a class="code hl_struct" href="struct_t___sens_per_chirp_lut.html">T_SensPerChirpLut</a>* sensPerChirpLuTable;</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>T_RL_API_SENS_CHIRP_PROF_COMN_CFG profileComCfg;</div>
@@ -137,17 +137,19 @@ $(function(){initNavTree('mmwave__control__config_8h_source.html',''); initResiz
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">static</span> <span class="keywordtype">void</span> Mmwave_populateDefaultProfileCfg (T_RL_API_SENS_CHIRP_PROF_COMN_CFG* ptrProfileCfg, T_RL_API_SENS_CHIRP_PROF_TIME_CFG* ptrProfileTimeCfg);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">static</span> <span class="keywordtype">void</span> Mmwave_populateDefaultChirpCfg (T_RL_API_SENS_PER_CHIRP_CFG* ptrChirpCfg, T_RL_API_SENS_PER_CHIRP_CTRL* ptrChirpCtrl);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keywordtype">void</span> MMWave_populateChannelCfg();</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keywordtype">void</span> <a class="code hl_function" href="mmwave__control__config_8c.html#aae409bf1a195235535160d292b4930d4">MMWave_populateChannelCfg</a>();</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keywordtype">void</span> <a class="code hl_function" href="mmwave__basic_8c.html#a51c96860ff0de343bc4bab0db877326c">Mmwave_populateDefaultCalibrationCfg</a> (MMWave_CalibrationCfg* ptrCalibrationCfg);</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keywordtype">void</span> <a class="code hl_function" href="mmwave__basic_8c.html#a04253550c069618e610cdaa1b8839d04">Mmwave_populateDefaultStartCfg</a> (MMWave_StrtCfg* ptrStartCfg);</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keywordtype">void</span> <a class="code hl_function" href="mmwave__basic_8c.html#a7d2604e2ae505e980232a7fddb52ad78">Mmwave_populateDefaultOpenCfg</a> (MMWave_OpenCfg* ptrOpenCfg);</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keywordtype">void</span> <a class="code hl_function" href="mmwave__basic_8c.html#af5159a0a2ff032bd1253d884ac8e82f9">Mmwave_populateDefaultChirpControlCfg</a> (MMWave_CtrlCfg* ptrCtrlCfg);</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#endif </span><span class="comment">/* MMWAVE_CONTROL_CONFIG_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="ammwave__basic_8c_html_a04253550c069618e610cdaa1b8839d04"><div class="ttname"><a href="mmwave__basic_8c.html#a04253550c069618e610cdaa1b8839d04">Mmwave_populateDefaultStartCfg</a></div><div class="ttdeci">void Mmwave_populateDefaultStartCfg(MMWave_StrtCfg *ptrStartCfg)</div><div class="ttdef"><b>Definition</b> mmwave_control_config.c:456</div></div>
-<div class="ttc" id="ammwave__basic_8c_html_a51c96860ff0de343bc4bab0db877326c"><div class="ttname"><a href="mmwave__basic_8c.html#a51c96860ff0de343bc4bab0db877326c">Mmwave_populateDefaultCalibrationCfg</a></div><div class="ttdeci">void Mmwave_populateDefaultCalibrationCfg(MMWave_CalibrationCfg *ptrCalibrationCfg)</div><div class="ttdef"><b>Definition</b> mmwave_control_config.c:437</div></div>
-<div class="ttc" id="ammwave__basic_8c_html_a7d2604e2ae505e980232a7fddb52ad78"><div class="ttname"><a href="mmwave__basic_8c.html#a7d2604e2ae505e980232a7fddb52ad78">Mmwave_populateDefaultOpenCfg</a></div><div class="ttdeci">void Mmwave_populateDefaultOpenCfg(MMWave_OpenCfg *ptrOpenCfg)</div><div class="ttdef"><b>Definition</b> mmwave_control_config.c:230</div></div>
-<div class="ttc" id="ammwave__basic_8c_html_af5159a0a2ff032bd1253d884ac8e82f9"><div class="ttname"><a href="mmwave__basic_8c.html#af5159a0a2ff032bd1253d884ac8e82f9">Mmwave_populateDefaultChirpControlCfg</a></div><div class="ttdeci">void Mmwave_populateDefaultChirpControlCfg(MMWave_CtrlCfg *ptrCtrlCfg)</div><div class="ttdef"><b>Definition</b> mmwave_control_config.c:356</div></div>
+<div class="ttc" id="ammwave__basic_8c_html_a04253550c069618e610cdaa1b8839d04"><div class="ttname"><a href="mmwave__basic_8c.html#a04253550c069618e610cdaa1b8839d04">Mmwave_populateDefaultStartCfg</a></div><div class="ttdeci">void Mmwave_populateDefaultStartCfg(MMWave_StrtCfg *ptrStartCfg)</div><div class="ttdef"><b>Definition</b> mmwave_control_config.c:470</div></div>
+<div class="ttc" id="ammwave__basic_8c_html_a51c96860ff0de343bc4bab0db877326c"><div class="ttname"><a href="mmwave__basic_8c.html#a51c96860ff0de343bc4bab0db877326c">Mmwave_populateDefaultCalibrationCfg</a></div><div class="ttdeci">void Mmwave_populateDefaultCalibrationCfg(MMWave_CalibrationCfg *ptrCalibrationCfg)</div><div class="ttdef"><b>Definition</b> mmwave_control_config.c:451</div></div>
+<div class="ttc" id="ammwave__basic_8c_html_a7d2604e2ae505e980232a7fddb52ad78"><div class="ttname"><a href="mmwave__basic_8c.html#a7d2604e2ae505e980232a7fddb52ad78">Mmwave_populateDefaultOpenCfg</a></div><div class="ttdeci">void Mmwave_populateDefaultOpenCfg(MMWave_OpenCfg *ptrOpenCfg)</div><div class="ttdef"><b>Definition</b> mmwave_control_config.c:244</div></div>
+<div class="ttc" id="ammwave__basic_8c_html_af5159a0a2ff032bd1253d884ac8e82f9"><div class="ttname"><a href="mmwave__basic_8c.html#af5159a0a2ff032bd1253d884ac8e82f9">Mmwave_populateDefaultChirpControlCfg</a></div><div class="ttdeci">void Mmwave_populateDefaultChirpControlCfg(MMWave_CtrlCfg *ptrCtrlCfg)</div><div class="ttdef"><b>Definition</b> mmwave_control_config.c:370</div></div>
+<div class="ttc" id="ammwave__control__config_8c_html_a06ba651c3e4b1dbbf75f213cc09bb97c"><div class="ttname"><a href="mmwave__control__config_8c.html#a06ba651c3e4b1dbbf75f213cc09bb97c">gCtrlHandle</a></div><div class="ttdeci">MMWave_Handle gCtrlHandle</div><div class="ttdoc">This is the mmWave control handle which is used to configure the BSS.</div><div class="ttdef"><b>Definition</b> mmwave_basic.h:52</div></div>
+<div class="ttc" id="ammwave__control__config_8c_html_aae409bf1a195235535160d292b4930d4"><div class="ttname"><a href="mmwave__control__config_8c.html#aae409bf1a195235535160d292b4930d4">MMWave_populateChannelCfg</a></div><div class="ttdeci">void MMWave_populateChannelCfg()</div><div class="ttdoc">Populates the channel configuration structure.</div><div class="ttdef"><b>Definition</b> mmwave_control_config.c:348</div></div>
 <div class="ttc" id="astruct_t___sens_per_chirp_lut_html"><div class="ttname"><a href="struct_t___sens_per_chirp_lut.html">T_SensPerChirpLut</a></div><div class="ttdoc">Sensor Perchirp LUT, total 64 bytes used, 4 values per params.</div><div class="ttdef"><b>Definition</b> mmwave_control_config.h:9</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

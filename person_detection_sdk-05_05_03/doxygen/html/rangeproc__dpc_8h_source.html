@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TI IWRL6432 Boost Study: include/rangeproc_dpc.h Source File</title>
+<title>TI IWRL6432 mmWave Radar: include/rangeproc_dpc.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,9 +32,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TI IWRL6432 Boost Study
+   <div id="projectname">TI IWRL6432 mmWave Radar
    </div>
-   <div id="projectbrief">A minimal implementation of the processing chain of the required IWRL6432 Boos EVM board.</div>
+   <div id="projectbrief">A minimal implementation of the processing chain of the IWRL6432 Boos EVM board.</div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -129,7 +129,7 @@ $(function(){initNavTree('rangeproc__dpc_8h_source.html',''); initResizable(true
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">extern</span> SemaphoreP_Object <a class="code hl_variable" href="main_8c.html#aabc0faa8591ef37b89c353f5d8d8a1eb">uart_tx_done_sem</a>;</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span></div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">extern</span> DPU_RangeProcHWA_Handle rangeProcHWADpuHandle;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">extern</span> DPU_RangeProcHWA_Handle <a class="code hl_variable" href="rangeproc__dpc_8c.html#a4efd2550cefb109c0a44ede5d1913d7d">rangeProcHWADpuHandle</a>;</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span></div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keywordtype">void</span> <a class="code hl_function" href="rangeproc__dpc_8h.html#ad2a209e9090ccf9799c957ac56a38abc">rangeProc_dpuInit</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
@@ -160,15 +160,16 @@ $(function(){initNavTree('rangeproc__dpc_8h_source.html',''); initResizable(true
 <div class="ttc" id="adpu__res_8h_html"><div class="ttname"><a href="dpu__res_8h.html">dpu_res.h</a></div><div class="ttdoc">Resource definitions for Data Processing Unit (DPU) configurations.</div></div>
 <div class="ttc" id="amain_8c_html_aabc0faa8591ef37b89c353f5d8d8a1eb"><div class="ttname"><a href="main_8c.html#aabc0faa8591ef37b89c353f5d8d8a1eb">uart_tx_done_sem</a></div><div class="ttdeci">SemaphoreP_Object uart_tx_done_sem</div><div class="ttdoc">Semaphore to signal the completion of UART transmission.</div><div class="ttdef"><b>Definition</b> main.c:107</div></div>
 <div class="ttc" id="amain_8c_html_ad509a07f15c0047aadf571d87574a34e"><div class="ttname"><a href="main_8c.html#ad509a07f15c0047aadf571d87574a34e">uart_tx_start_sem</a></div><div class="ttdeci">SemaphoreP_Object uart_tx_start_sem</div><div class="ttdoc">Semaphore to signal the start of UART transmission.</div><div class="ttdef"><b>Definition</b> main.c:106</div></div>
-<div class="ttc" id="arangeproc__dpc_8h_html_a0c392f74967344bed253ee1f00f83234"><div class="ttname"><a href="rangeproc__dpc_8h.html#a0c392f74967344bed253ee1f00f83234">chirpStartISR</a></div><div class="ttdeci">void chirpStartISR(void *arg)</div><div class="ttdoc">ISR for Chirp Start event.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:345</div></div>
+<div class="ttc" id="arangeproc__dpc_8c_html_a4efd2550cefb109c0a44ede5d1913d7d"><div class="ttname"><a href="rangeproc__dpc_8c.html#a4efd2550cefb109c0a44ede5d1913d7d">rangeProcHWADpuHandle</a></div><div class="ttdeci">DPU_RangeProcHWA_Handle rangeProcHWADpuHandle</div><div class="ttdoc">Handle for Range Processing DPU.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:64</div></div>
+<div class="ttc" id="arangeproc__dpc_8h_html_a0c392f74967344bed253ee1f00f83234"><div class="ttname"><a href="rangeproc__dpc_8h.html#a0c392f74967344bed253ee1f00f83234">chirpStartISR</a></div><div class="ttdeci">void chirpStartISR(void *arg)</div><div class="ttdoc">ISR for Chirp Start event.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:388</div></div>
 <div class="ttc" id="arangeproc__dpc_8h_html_a4d93b404830d2cfdb5c9d11663112b49"><div class="ttname"><a href="rangeproc__dpc_8h.html#a4d93b404830d2cfdb5c9d11663112b49">rangeproc_main</a></div><div class="ttdeci">void rangeproc_main(void *args)</div><div class="ttdoc">Main function for Range Processing DPU.</div></div>
-<div class="ttc" id="arangeproc__dpc_8h_html_a767143ed9971286f5b1f0e2ce9721a03"><div class="ttname"><a href="rangeproc__dpc_8h.html#a767143ed9971286f5b1f0e2ce9721a03">registerFrameStartInterrupt</a></div><div class="ttdeci">int32_t registerFrameStartInterrupt(void)</div><div class="ttdoc">Registers an interrupt for the frame start event.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:351</div></div>
-<div class="ttc" id="arangeproc__dpc_8h_html_a768212da06fd6fb062e002c4c5fe230e"><div class="ttname"><a href="rangeproc__dpc_8h.html#a768212da06fd6fb062e002c4c5fe230e">dpcTask</a></div><div class="ttdeci">void dpcTask()</div><div class="ttdoc">Task function for Data Processing Chain (DPC).</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:51</div></div>
-<div class="ttc" id="arangeproc__dpc_8h_html_a9caf7b7ae3b91b4f50a7057ceaf606b3"><div class="ttname"><a href="rangeproc__dpc_8h.html#a9caf7b7ae3b91b4f50a7057ceaf606b3">registerChirpAvailableInterrupts</a></div><div class="ttdeci">int32_t registerChirpAvailableInterrupts(void)</div><div class="ttdoc">Registers the Chirp Available Interrupt.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:402</div></div>
-<div class="ttc" id="arangeproc__dpc_8h_html_ad2a209e9090ccf9799c957ac56a38abc"><div class="ttname"><a href="rangeproc__dpc_8h.html#ad2a209e9090ccf9799c957ac56a38abc">rangeProc_dpuInit</a></div><div class="ttdeci">void rangeProc_dpuInit(void)</div><div class="ttdoc">Initializes the Range Processing DPU.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:124</div></div>
-<div class="ttc" id="arangeproc__dpc_8h_html_aea10531ca5d711bb7ff820678f9eb5c4"><div class="ttname"><a href="rangeproc__dpc_8h.html#aea10531ca5d711bb7ff820678f9eb5c4">RangeProc_config</a></div><div class="ttdeci">void RangeProc_config()</div><div class="ttdoc">Configures the Range Processing DPU.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:139</div></div>
-<div class="ttc" id="arangeproc__dpc_8h_html_aec9295a802d97966a46b013a5b0083ac"><div class="ttname"><a href="rangeproc__dpc_8h.html#aec9295a802d97966a46b013a5b0083ac">registerChirpInterrupt</a></div><div class="ttdeci">int32_t registerChirpInterrupt(void)</div><div class="ttdoc">Registers the Chirp Interrupt.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:313</div></div>
-<div class="ttc" id="arangeproc__dpc_8h_html_af64eddc7833f2e6a4cf922e27a69e094"><div class="ttname"><a href="rangeproc__dpc_8h.html#af64eddc7833f2e6a4cf922e27a69e094">uartTask</a></div><div class="ttdeci">void uartTask()</div><div class="ttdoc">Task function for UART transmission.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:47</div></div>
+<div class="ttc" id="arangeproc__dpc_8h_html_a767143ed9971286f5b1f0e2ce9721a03"><div class="ttname"><a href="rangeproc__dpc_8h.html#a767143ed9971286f5b1f0e2ce9721a03">registerFrameStartInterrupt</a></div><div class="ttdeci">int32_t registerFrameStartInterrupt(void)</div><div class="ttdoc">Registers an interrupt for the frame start event.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:394</div></div>
+<div class="ttc" id="arangeproc__dpc_8h_html_a768212da06fd6fb062e002c4c5fe230e"><div class="ttname"><a href="rangeproc__dpc_8h.html#a768212da06fd6fb062e002c4c5fe230e">dpcTask</a></div><div class="ttdeci">void dpcTask()</div><div class="ttdoc">Task function for Data Processing Chain (DPC).</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:94</div></div>
+<div class="ttc" id="arangeproc__dpc_8h_html_a9caf7b7ae3b91b4f50a7057ceaf606b3"><div class="ttname"><a href="rangeproc__dpc_8h.html#a9caf7b7ae3b91b4f50a7057ceaf606b3">registerChirpAvailableInterrupts</a></div><div class="ttdeci">int32_t registerChirpAvailableInterrupts(void)</div><div class="ttdoc">Registers the Chirp Available Interrupt.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:445</div></div>
+<div class="ttc" id="arangeproc__dpc_8h_html_ad2a209e9090ccf9799c957ac56a38abc"><div class="ttname"><a href="rangeproc__dpc_8h.html#ad2a209e9090ccf9799c957ac56a38abc">rangeProc_dpuInit</a></div><div class="ttdeci">void rangeProc_dpuInit(void)</div><div class="ttdoc">Initializes the Range Processing DPU.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:167</div></div>
+<div class="ttc" id="arangeproc__dpc_8h_html_aea10531ca5d711bb7ff820678f9eb5c4"><div class="ttname"><a href="rangeproc__dpc_8h.html#aea10531ca5d711bb7ff820678f9eb5c4">RangeProc_config</a></div><div class="ttdeci">void RangeProc_config()</div><div class="ttdoc">Configures the Range Processing DPU.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:182</div></div>
+<div class="ttc" id="arangeproc__dpc_8h_html_aec9295a802d97966a46b013a5b0083ac"><div class="ttname"><a href="rangeproc__dpc_8h.html#aec9295a802d97966a46b013a5b0083ac">registerChirpInterrupt</a></div><div class="ttdeci">int32_t registerChirpInterrupt(void)</div><div class="ttdoc">Registers the Chirp Interrupt.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:356</div></div>
+<div class="ttc" id="arangeproc__dpc_8h_html_af64eddc7833f2e6a4cf922e27a69e094"><div class="ttname"><a href="rangeproc__dpc_8h.html#af64eddc7833f2e6a4cf922e27a69e094">uartTask</a></div><div class="ttdeci">void uartTask()</div><div class="ttdoc">Task function for UART transmission.</div><div class="ttdef"><b>Definition</b> rangeproc_dpc.c:90</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

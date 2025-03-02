@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TI IWRL6432 Boost Study: include/mmwave_basic.h Source File</title>
+<title>TI IWRL6432 mmWave Radar: include/mmwave_basic.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,9 +32,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TI IWRL6432 Boost Study
+   <div id="projectname">TI IWRL6432 mmWave Radar
    </div>
-   <div id="projectbrief">A minimal implementation of the processing chain of the required IWRL6432 Boos EVM board.</div>
+   <div id="projectbrief">A minimal implementation of the processing chain of the IWRL6432 Boos EVM board.</div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -156,7 +156,7 @@ $(function(){initNavTree('mmwave__basic_8h_source.html',''); initResizable(true)
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>HWA_Handle hwaHandle;</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="factory__cal_8h.html#a06ba651c3e4b1dbbf75f213cc09bb97c">   52</a></span>MMWave_Handle gCtrlHandle;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="mmwave__control__config_8c.html#a06ba651c3e4b1dbbf75f213cc09bb97c">   52</a></span>MMWave_Handle <a class="code hl_variable" href="mmwave__control__config_8c.html#a06ba651c3e4b1dbbf75f213cc09bb97c">gCtrlHandle</a>;</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span></div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>MMWave_OpenCfg mmwOpenCfg;</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span></div>
@@ -164,9 +164,9 @@ $(function(){initNavTree('mmwave__basic_8h_source.html',''); initResizable(true)
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>MMWave_StrtCfg sensorStartCfg;</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><a class="code hl_typedef" href="mem__pool_8h.html#a788ff8f9775b0058d4fbaea936649d68">MemPoolObj</a>    L3RamObj;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="rangeproc__dpc_8c.html#a4bfae273fd3408571e2de26f71e976d9">   64</a></span><a class="code hl_typedef" href="mem__pool_8h.html#a788ff8f9775b0058d4fbaea936649d68">MemPoolObj</a>    <a class="code hl_variable" href="rangeproc__dpc_8c.html#a4bfae273fd3408571e2de26f71e976d9">L3RamObj</a>;</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><a class="code hl_typedef" href="mem__pool_8h.html#a788ff8f9775b0058d4fbaea936649d68">MemPoolObj</a>    CoreLocalRamObj;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="rangeproc__dpc_8c.html#a04e6b819df83418442d7806b23ded4e9">   67</a></span><a class="code hl_typedef" href="mem__pool_8h.html#a788ff8f9775b0058d4fbaea936649d68">MemPoolObj</a>    <a class="code hl_variable" href="rangeproc__dpc_8c.html#a04e6b819df83418442d7806b23ded4e9">CoreLocalRamObj</a>;</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span></div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span></div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="keywordtype">void</span> <a class="code hl_function" href="mmwave__basic_8c.html#a678cfadb45e293722df01298b17e55bc">mempool_init</a>(<span class="keywordtype">void</span>);</div>
@@ -196,6 +196,9 @@ $(function(){initNavTree('mmwave__basic_8h_source.html',''); initResizable(true)
 <div class="ttc" id="ammwave__basic_8c_html_ae3265a6f040b79d876a70a2010ab2ae4"><div class="ttname"><a href="mmwave__basic_8c.html#ae3265a6f040b79d876a70a2010ab2ae4">hwa_open_handler</a></div><div class="ttdeci">int32_t hwa_open_handler()</div><div class="ttdoc">calls HWA_open() and thereby retrieves the HWA&#39;s handle (HWA_Handle)</div><div class="ttdef"><b>Definition</b> mmwave_basic.c:93</div></div>
 <div class="ttc" id="ammwave__basic_8c_html_aecfc0fdd6fbc6b3cad93b01b54c6f8fd"><div class="ttname"><a href="mmwave__basic_8c.html#aecfc0fdd6fbc6b3cad93b01b54c6f8fd">mmwave_configSensor</a></div><div class="ttdeci">int32_t mmwave_configSensor(void)</div><div class="ttdoc">calls the MMWave_config() function, requires the configuration for control (MMWave_CtrlCfg)</div><div class="ttdef"><b>Definition</b> mmwave_basic.c:160</div></div>
 <div class="ttc" id="ammwave__basic_8c_html_af30b8b304295c99d440820eb7fae4ef9"><div class="ttname"><a href="mmwave__basic_8c.html#af30b8b304295c99d440820eb7fae4ef9">mmwave_initSensor</a></div><div class="ttdeci">int32_t mmwave_initSensor()</div><div class="ttdoc">calls the MMWave_init() function and thereby retrieves the mmwave control handle (MMWave_Handle)</div><div class="ttdef"><b>Definition</b> mmwave_basic.c:108</div></div>
+<div class="ttc" id="ammwave__control__config_8c_html_a06ba651c3e4b1dbbf75f213cc09bb97c"><div class="ttname"><a href="mmwave__control__config_8c.html#a06ba651c3e4b1dbbf75f213cc09bb97c">gCtrlHandle</a></div><div class="ttdeci">MMWave_Handle gCtrlHandle</div><div class="ttdoc">This is the mmWave control handle which is used to configure the BSS.</div><div class="ttdef"><b>Definition</b> mmwave_basic.h:52</div></div>
+<div class="ttc" id="arangeproc__dpc_8c_html_a04e6b819df83418442d7806b23ded4e9"><div class="ttname"><a href="rangeproc__dpc_8c.html#a04e6b819df83418442d7806b23ded4e9">CoreLocalRamObj</a></div><div class="ttdeci">MemPoolObj CoreLocalRamObj</div><div class="ttdoc">Core Local ram memory pool object.</div><div class="ttdef"><b>Definition</b> mmwave_basic.h:67</div></div>
+<div class="ttc" id="arangeproc__dpc_8c_html_a4bfae273fd3408571e2de26f71e976d9"><div class="ttname"><a href="rangeproc__dpc_8c.html#a4bfae273fd3408571e2de26f71e976d9">L3RamObj</a></div><div class="ttdeci">MemPoolObj L3RamObj</div><div class="ttdoc">L3 ram memory pool object.</div><div class="ttdef"><b>Definition</b> mmwave_basic.h:64</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

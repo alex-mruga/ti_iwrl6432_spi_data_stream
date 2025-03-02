@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.13.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>TI IWRL6432 Boost Study: include/factory_cal.h Source File</title>
+<title>TI IWRL6432 mmWave Radar: include/factory_cal.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,9 +32,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">TI IWRL6432 Boost Study
+   <div id="projectname">TI IWRL6432 mmWave Radar
    </div>
-   <div id="projectbrief">A minimal implementation of the processing chain of the required IWRL6432 Boos EVM board.</div>
+   <div id="projectbrief">A minimal implementation of the processing chain of the IWRL6432 Boos EVM board.</div>
   </td>
     <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -120,7 +120,7 @@ $(function(){initNavTree('factory__cal_8h_source.html',''); initResizable(true);
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">extern</span> T_RL_API_FECSS_RF_PWR_CFG_CMD channelCfg;</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">extern</span> T_RL_API_SENS_FRAME_CFG frameCfg;</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keyword">extern</span> MMWave_Handle gCtrlHandle;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keyword">extern</span> MMWave_Handle <a class="code hl_variable" href="mmwave__control__config_8c.html#a06ba651c3e4b1dbbf75f213cc09bb97c">gCtrlHandle</a>;</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keyword">extern</span> T_RL_API_FECSS_RUNTIME_TX_CLPC_CAL_CMD fecTxclpcCalCmd;</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span></div>
@@ -138,6 +138,7 @@ $(function(){initNavTree('factory__cal_8h_source.html',''); initResizable(true);
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#endif </span><span class="comment">//FACTORY_CAL_H</span></div>
 <div class="ttc" id="afactory__cal_8h_html_a26376cc59645a60d9a1eda598969849c"><div class="ttname"><a href="factory__cal_8h.html#a26376cc59645a60d9a1eda598969849c">Mmw_calibData</a></div><div class="ttdeci">struct Mmw_calibData_t Mmw_calibData</div><div class="ttdoc">Structure holds calibration save configuration used during sensor open.</div></div>
 <div class="ttc" id="afactory__cal_8h_html_a6405a944c29067199814b66c978588a8"><div class="ttname"><a href="factory__cal_8h.html#a6405a944c29067199814b66c978588a8">restoreFactoryCal</a></div><div class="ttdeci">int32_t restoreFactoryCal(void)</div><div class="ttdoc">Restores factory calibration data from flash.</div><div class="ttdef"><b>Definition</b> factory_cal.c:74</div></div>
+<div class="ttc" id="ammwave__control__config_8c_html_a06ba651c3e4b1dbbf75f213cc09bb97c"><div class="ttname"><a href="mmwave__control__config_8c.html#a06ba651c3e4b1dbbf75f213cc09bb97c">gCtrlHandle</a></div><div class="ttdeci">MMWave_Handle gCtrlHandle</div><div class="ttdoc">This is the mmWave control handle which is used to configure the BSS.</div><div class="ttdef"><b>Definition</b> mmwave_basic.h:52</div></div>
 <div class="ttc" id="astruct_mmw__calib_data__t_html"><div class="ttname"><a href="struct_mmw__calib_data__t.html">Mmw_calibData_t</a></div><div class="ttdoc">Structure holds calibration save configuration used during sensor open.</div><div class="ttdef"><b>Definition</b> factory_cal.h:74</div></div>
 <div class="ttc" id="astruct_mmw__calib_data__t_html_a2fb6091b0b9e483005ff0924d5e6539e"><div class="ttname"><a href="struct_mmw__calib_data__t.html#a2fb6091b0b9e483005ff0924d5e6539e">Mmw_calibData_t::calibData</a></div><div class="ttdeci">T_RL_API_FECSS_RXTX_CAL_DATA calibData</div><div class="ttdoc">RX TX Calibration data.</div><div class="ttdef"><b>Definition</b> factory_cal.h:79</div></div>
 <div class="ttc" id="astruct_mmw__calib_data__t_html_a57f54349f4fd1cbbb52058812e146af2"><div class="ttname"><a href="struct_mmw__calib_data__t.html#a57f54349f4fd1cbbb52058812e146af2">Mmw_calibData_t::magic</a></div><div class="ttdeci">uint32_t magic</div><div class="ttdoc">Magic word for calibration data.</div><div class="ttdef"><b>Definition</b> factory_cal.h:76</div></div>

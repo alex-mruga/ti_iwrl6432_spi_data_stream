@@ -1,0 +1,157 @@
+\doxysection{src/mmwave\+\_\+control\+\_\+config.c File Reference}
+\hypertarget{mmwave__control__config_8c}{}\label{mmwave__control__config_8c}\index{src/mmwave\_control\_config.c@{src/mmwave\_control\_config.c}}
+
+
+Configuration and initialization for mm\+Wave chirp profiles.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$drivers/hw\+\_\+include/cslr\+\_\+adcbuf.\+h$>$}\newline
+{\ttfamily \#include $<$drivers/hw\+\_\+include/xwr\+L64xx/cslr\+\_\+soc\+\_\+baseaddress.\+h$>$}\newline
+{\ttfamily \#include $<$control/mmwave/mmwave.\+h$>$}\newline
+{\ttfamily \#include $<$kernel/dpl/\+Debug\+P.\+h$>$}\newline
+{\ttfamily \#include $<$utils/testlogger/logger.\+h$>$}\newline
+{\ttfamily \#include "{}defines.\+h"{}}\newline
+{\ttfamily \#include "{}common/sys\+\_\+defs.\+h"{}}\newline
+{\ttfamily \#include "{}mmwave\+\_\+control\+\_\+config.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{mmwave__control__config_8c_ad65fb9a156b26af7d75f81db3cfc49c3}\label{mmwave__control__config_8c_ad65fb9a156b26af7d75f81db3cfc49c3} 
+\#define {\bfseries Debug\+P\+\_\+\+LOG\+\_\+\+ENABLED}~1
+\item 
+\Hypertarget{mmwave__control__config_8c_a1a09ea29125a31e51d6dfe19a6de6650}\label{mmwave__control__config_8c_a1a09ea29125a31e51d6dfe19a6de6650} 
+\#define {\bfseries RDIF\+\_\+\+LANE\+\_\+\+RATE\+\_\+\+UPDATE}~1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{mmwave__control__config_8c_a7d2604e2ae505e980232a7fddb52ad78}{Mmwave\+\_\+populate\+Default\+Open\+Cfg}} (MMWave\+\_\+\+Open\+Cfg \texorpdfstring{$\ast$}{*}ptr\+Open\+Cfg)
+\item 
+void \mbox{\hyperlink{mmwave__control__config_8c_aae409bf1a195235535160d292b4930d4}{MMWave\+\_\+populate\+Channel\+Cfg}} ()
+\begin{DoxyCompactList}\small\item\em Populates the channel configuration structure. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{mmwave__control__config_8c_af5159a0a2ff032bd1253d884ac8e82f9}{Mmwave\+\_\+populate\+Default\+Chirp\+Control\+Cfg}} (MMWave\+\_\+\+Ctrl\+Cfg \texorpdfstring{$\ast$}{*}ptr\+Ctrl\+Cfg)
+\item 
+void \mbox{\hyperlink{mmwave__control__config_8c_a51c96860ff0de343bc4bab0db877326c}{Mmwave\+\_\+populate\+Default\+Calibration\+Cfg}} (MMWave\+\_\+\+Calibration\+Cfg \texorpdfstring{$\ast$}{*}ptr\+Calibration\+Cfg)
+\item 
+void \mbox{\hyperlink{mmwave__control__config_8c_a04253550c069618e610cdaa1b8839d04}{Mmwave\+\_\+populate\+Default\+Start\+Cfg}} (MMWave\+\_\+\+Strt\+Cfg \texorpdfstring{$\ast$}{*}ptr\+Start\+Cfg)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{mmwave__control__config_8c_a06ba651c3e4b1dbbf75f213cc09bb97c}\label{mmwave__control__config_8c_a06ba651c3e4b1dbbf75f213cc09bb97c} 
+MMWave\+\_\+\+Handle {\bfseries g\+Ctrl\+Handle}
+\begin{DoxyCompactList}\small\item\em This is the mm\+Wave control handle which is used to configure the BSS. \end{DoxyCompactList}\item 
+\Hypertarget{mmwave__control__config_8c_aa1c2096884780ed64639986343a8640d}\label{mmwave__control__config_8c_aa1c2096884780ed64639986343a8640d} 
+T\+\_\+\+RL\+\_\+\+API\+\_\+\+FECSS\+\_\+\+RUNTIME\+\_\+\+TX\+\_\+\+CLPC\+\_\+\+CAL\+\_\+\+CMD {\bfseries fec\+Txclpc\+Cal\+Cmd}
+\item 
+\Hypertarget{mmwave__control__config_8c_a462490b5f85cb5d936ff5608adad89df}\label{mmwave__control__config_8c_a462490b5f85cb5d936ff5608adad89df} 
+\mbox{\hyperlink{struct_t___sens_per_chirp_lut}{T\+\_\+\+Sens\+Per\+Chirp\+Lut}} \texorpdfstring{$\ast$}{*} {\bfseries sens\+Per\+Chirp\+Lu\+Table} = (\mbox{\hyperlink{struct_t___sens_per_chirp_lut}{T\+\_\+\+Sens\+Per\+Chirp\+Lut}}\texorpdfstring{$\ast$}{*})(0x21880000U)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Configuration and initialization for mm\+Wave chirp profiles. 
+
+This file contains functions for setting up default chirp and profile configurations for the Texas Instruments mm\+Wave radar system. It includes parameter definitions, initialization routines, and structure setup for mm\+Wave control.
+
+This file is a modified version of the original from the motion and presence detection demo project. It has been adjusted to fit the current application needs while maintaining compatibility with TI\textquotesingle{}s mm\+Wave SDK.
+
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2022-\/24 Texas Instruments Incorporated
+\end{DoxyCopyright}
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met\+:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+Neither the name of Texas Instruments Incorporated nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "{}\+AS IS"{} AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{mmwave__control__config_8c_aae409bf1a195235535160d292b4930d4}\index{mmwave\_control\_config.c@{mmwave\_control\_config.c}!MMWave\_populateChannelCfg@{MMWave\_populateChannelCfg}}
+\index{MMWave\_populateChannelCfg@{MMWave\_populateChannelCfg}!mmwave\_control\_config.c@{mmwave\_control\_config.c}}
+\doxysubsubsection{\texorpdfstring{MMWave\_populateChannelCfg()}{MMWave\_populateChannelCfg()}}
+{\footnotesize\ttfamily \label{mmwave__control__config_8c_aae409bf1a195235535160d292b4930d4} 
+void MMWave\+\_\+populate\+Channel\+Cfg (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Populates the channel configuration structure. 
+
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\Hypertarget{mmwave__control__config_8c_a51c96860ff0de343bc4bab0db877326c}\index{mmwave\_control\_config.c@{mmwave\_control\_config.c}!Mmwave\_populateDefaultCalibrationCfg@{Mmwave\_populateDefaultCalibrationCfg}}
+\index{Mmwave\_populateDefaultCalibrationCfg@{Mmwave\_populateDefaultCalibrationCfg}!mmwave\_control\_config.c@{mmwave\_control\_config.c}}
+\doxysubsubsection{\texorpdfstring{Mmwave\_populateDefaultCalibrationCfg()}{Mmwave\_populateDefaultCalibrationCfg()}}
+{\footnotesize\ttfamily \label{mmwave__control__config_8c_a51c96860ff0de343bc4bab0db877326c} 
+void Mmwave\+\_\+populate\+Default\+Calibration\+Cfg (\begin{DoxyParamCaption}\item[{MMWave\+\_\+\+Calibration\+Cfg \texorpdfstring{$\ast$}{*}}]{ptr\+Calibration\+Cfg}{}\end{DoxyParamCaption})}
+
+{\bfseries{Description}} ~\newline
+ The function is used to populate the default calibration configuration which is passed to start the mm\+Wave module
+
+
+\begin{DoxyRetVals}{Return values}
+{\em Not} & applicable \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{mmwave__control__config_8c_af5159a0a2ff032bd1253d884ac8e82f9}\index{mmwave\_control\_config.c@{mmwave\_control\_config.c}!Mmwave\_populateDefaultChirpControlCfg@{Mmwave\_populateDefaultChirpControlCfg}}
+\index{Mmwave\_populateDefaultChirpControlCfg@{Mmwave\_populateDefaultChirpControlCfg}!mmwave\_control\_config.c@{mmwave\_control\_config.c}}
+\doxysubsubsection{\texorpdfstring{Mmwave\_populateDefaultChirpControlCfg()}{Mmwave\_populateDefaultChirpControlCfg()}}
+{\footnotesize\ttfamily \label{mmwave__control__config_8c_af5159a0a2ff032bd1253d884ac8e82f9} 
+void Mmwave\+\_\+populate\+Default\+Chirp\+Control\+Cfg (\begin{DoxyParamCaption}\item[{MMWave\+\_\+\+Ctrl\+Cfg \texorpdfstring{$\ast$}{*}}]{ptr\+Ctrl\+Cfg}{}\end{DoxyParamCaption})}
+
+{\bfseries{Description}} ~\newline
+ The function is used to populate the default control configuration in chirp configuration mode
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em ptr\+Ctrl\+Cfg} & Pointer to the control configuration\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Not} & applicable \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{mmwave__control__config_8c_a7d2604e2ae505e980232a7fddb52ad78}\index{mmwave\_control\_config.c@{mmwave\_control\_config.c}!Mmwave\_populateDefaultOpenCfg@{Mmwave\_populateDefaultOpenCfg}}
+\index{Mmwave\_populateDefaultOpenCfg@{Mmwave\_populateDefaultOpenCfg}!mmwave\_control\_config.c@{mmwave\_control\_config.c}}
+\doxysubsubsection{\texorpdfstring{Mmwave\_populateDefaultOpenCfg()}{Mmwave\_populateDefaultOpenCfg()}}
+{\footnotesize\ttfamily \label{mmwave__control__config_8c_a7d2604e2ae505e980232a7fddb52ad78} 
+void Mmwave\+\_\+populate\+Default\+Open\+Cfg (\begin{DoxyParamCaption}\item[{MMWave\+\_\+\+Open\+Cfg \texorpdfstring{$\ast$}{*}}]{ptr\+Open\+Cfg}{}\end{DoxyParamCaption})}
+
+{\bfseries{Description}} ~\newline
+ The function is used to populate the default open configuration.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em ptr\+Open\+Cfg} & Pointer to the open configuration\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Not} & applicable \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{mmwave__control__config_8c_a04253550c069618e610cdaa1b8839d04}\index{mmwave\_control\_config.c@{mmwave\_control\_config.c}!Mmwave\_populateDefaultStartCfg@{Mmwave\_populateDefaultStartCfg}}
+\index{Mmwave\_populateDefaultStartCfg@{Mmwave\_populateDefaultStartCfg}!mmwave\_control\_config.c@{mmwave\_control\_config.c}}
+\doxysubsubsection{\texorpdfstring{Mmwave\_populateDefaultStartCfg()}{Mmwave\_populateDefaultStartCfg()}}
+{\footnotesize\ttfamily \label{mmwave__control__config_8c_a04253550c069618e610cdaa1b8839d04} 
+void Mmwave\+\_\+populate\+Default\+Start\+Cfg (\begin{DoxyParamCaption}\item[{MMWave\+\_\+\+Strt\+Cfg \texorpdfstring{$\ast$}{*}}]{ptr\+Start\+Cfg}{}\end{DoxyParamCaption})}
+
+{\bfseries{Description}} ~\newline
+ The function is used to populate the default start configuration which is passed to start the mm\+Wave module
+
+
+\begin{DoxyRetVals}{Return values}
+{\em Not} & applicable \\
+\hline
+\end{DoxyRetVals}

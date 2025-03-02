@@ -1,0 +1,182 @@
+\begin{theindex}
+
+  \item {chirpStartISR}
+    \subitem {rangeproc\_dpc.c}, \hyperpage{46}
+    \subitem {rangeproc\_dpc.h}, \hyperpage{25}
+
+  \indexspace
+
+  \item {DPC\_ObjDet\_MemPoolAlloc}
+    \subitem {mem\_pool.c}, \hyperpage{35}
+    \subitem {mem\_pool.h}, \hyperpage{20}
+  \item {DPC\_ObjDet\_MemPoolGetMaxUsage}
+    \subitem {mem\_pool.c}, \hyperpage{36}
+    \subitem {mem\_pool.h}, \hyperpage{21}
+  \item {DPC\_ObjDet\_MemPoolReset}
+    \subitem {mem\_pool.c}, \hyperpage{36}
+    \subitem {mem\_pool.h}, \hyperpage{21}
+  \item {DPC\_ObjectDetection\_MemCfg\_t}, \hyperpage{5}
+  \item {dpcTask}
+    \subitem {rangeproc\_dpc.c}, \hyperpage{46}
+    \subitem {rangeproc\_dpc.h}, \hyperpage{26}
+
+  \indexspace
+
+  \item {factory\_cal.c}
+    \subitem {restoreFactoryCal}, \hyperpage{32}
+  \item {factory\_cal.h}
+    \subitem {Mmw\_calibData}, \hyperpage{19}
+    \subitem {MMWDEMO\_CALIB\_STORE\_MAGIC}, \hyperpage{18}
+    \subitem {restoreFactoryCal}, \hyperpage{19}
+
+  \indexspace
+
+  \item {header}
+    \subitem {uart\_transmit.c}, \hyperpage{49}
+
+  \indexspace
+
+  \item {include/defines.h}, \hyperpage{9, 10}
+  \item {include/dpu\_res.h}, \hyperpage{11}, \hyperpage{15}
+  \item {include/factory\_cal.h}, \hyperpage{17}, \hyperpage{19}
+  \item {include/mem\_pool.h}, \hyperpage{20}, \hyperpage{22}
+  \item {include/mmwave\_basic.h}, \hyperpage{22}
+  \item {include/mmwave\_control\_config.h}, \hyperpage{23}
+  \item {include/rangeproc\_dpc.h}, \hyperpage{24}, \hyperpage{28}
+  \item {include/uart\_transmit.h}, \hyperpage{29, 30}
+
+  \indexspace
+
+  \item {main.c}
+    \subitem {uart\_tx\_done\_sem}, \hyperpage{35}
+    \subitem {uart\_tx\_start\_sem}, \hyperpage{35}
+  \item {MEM\_ALIGN}
+    \subitem {mem\_pool.h}, \hyperpage{20}
+  \item {mem\_pool.c}
+    \subitem {DPC\_ObjDet\_MemPoolAlloc}, \hyperpage{35}
+    \subitem {DPC\_ObjDet\_MemPoolGetMaxUsage}, \hyperpage{36}
+    \subitem {DPC\_ObjDet\_MemPoolReset}, \hyperpage{36}
+  \item {mem\_pool.h}
+    \subitem {DPC\_ObjDet\_MemPoolAlloc}, \hyperpage{20}
+    \subitem {DPC\_ObjDet\_MemPoolGetMaxUsage}, \hyperpage{21}
+    \subitem {DPC\_ObjDet\_MemPoolReset}, \hyperpage{21}
+    \subitem {MEM\_ALIGN}, \hyperpage{20}
+  \item {mempool\_init}
+    \subitem {mmwave\_basic.c}, \hyperpage{38}
+  \item {MemPoolObj\_t}, \hyperpage{5}
+  \item {Mmw\_calibData}
+    \subitem {factory\_cal.h}, \hyperpage{19}
+  \item {Mmw\_calibData\_t}, \hyperpage{6}
+  \item {mmwave\_basic.c}
+    \subitem {mempool\_init}, \hyperpage{38}
+    \subitem {Mmwave\_populateDefaultCalibrationCfg}, \hyperpage{38}
+    \subitem {Mmwave\_populateDefaultChirpControlCfg}, \hyperpage{40}
+    \subitem {Mmwave\_populateDefaultOpenCfg}, \hyperpage{40}
+    \subitem {Mmwave\_populateDefaultStartCfg}, \hyperpage{40}
+  \item {mmwave\_control\_config.c}
+    \subitem {MMWave\_populateChannelCfg}, \hyperpage{42}
+    \subitem {Mmwave\_populateDefaultCalibrationCfg}, \hyperpage{42}
+    \subitem {Mmwave\_populateDefaultChirpControlCfg}, \hyperpage{43}
+    \subitem {Mmwave\_populateDefaultOpenCfg}, \hyperpage{43}
+    \subitem {Mmwave\_populateDefaultStartCfg}, \hyperpage{43}
+  \item {MMWave\_populateChannelCfg}
+    \subitem {mmwave\_control\_config.c}, \hyperpage{42}
+  \item {Mmwave\_populateDefaultCalibrationCfg}
+    \subitem {mmwave\_basic.c}, \hyperpage{38}
+    \subitem {mmwave\_control\_config.c}, \hyperpage{42}
+  \item {Mmwave\_populateDefaultChirpControlCfg}
+    \subitem {mmwave\_basic.c}, \hyperpage{40}
+    \subitem {mmwave\_control\_config.c}, \hyperpage{43}
+  \item {Mmwave\_populateDefaultOpenCfg}
+    \subitem {mmwave\_basic.c}, \hyperpage{40}
+    \subitem {mmwave\_control\_config.c}, \hyperpage{43}
+  \item {Mmwave\_populateDefaultStartCfg}
+    \subitem {mmwave\_basic.c}, \hyperpage{40}
+    \subitem {mmwave\_control\_config.c}, \hyperpage{43}
+  \item {MMWDEMO\_CALIB\_STORE\_MAGIC}
+    \subitem {factory\_cal.h}, \hyperpage{18}
+
+  \indexspace
+
+  \item {RangeProc\_config}
+    \subitem {rangeproc\_dpc.c}, \hyperpage{46}
+    \subitem {rangeproc\_dpc.h}, \hyperpage{26}
+  \item {rangeproc\_dpc.c}
+    \subitem {chirpStartISR}, \hyperpage{46}
+    \subitem {dpcTask}, \hyperpage{46}
+    \subitem {RangeProc\_config}, \hyperpage{46}
+    \subitem {rangeProc\_dpuInit}, \hyperpage{46}
+    \subitem {rangeProcHWADpuHandle}, \hyperpage{48}
+    \subitem {registerChirpAvailableInterrupts}, \hyperpage{46}
+    \subitem {registerChirpInterrupt}, \hyperpage{47}
+    \subitem {registerFrameStartInterrupt}, \hyperpage{47}
+    \subitem {uartTask}, \hyperpage{47}
+  \item {rangeproc\_dpc.h}
+    \subitem {chirpStartISR}, \hyperpage{25}
+    \subitem {dpcTask}, \hyperpage{26}
+    \subitem {RangeProc\_config}, \hyperpage{26}
+    \subitem {rangeProc\_dpuInit}, \hyperpage{26}
+    \subitem {rangeproc\_main}, \hyperpage{26}
+    \subitem {rangeProcHWADpuHandle}, \hyperpage{28}
+    \subitem {registerChirpAvailableInterrupts}, \hyperpage{27}
+    \subitem {registerChirpInterrupt}, \hyperpage{27}
+    \subitem {registerFrameStartInterrupt}, \hyperpage{27}
+    \subitem {uartTask}, \hyperpage{28}
+  \item {rangeProc\_dpuInit}
+    \subitem {rangeproc\_dpc.c}, \hyperpage{46}
+    \subitem {rangeproc\_dpc.h}, \hyperpage{26}
+  \item {rangeproc\_main}
+    \subitem {rangeproc\_dpc.h}, \hyperpage{26}
+  \item {rangeProcHWADpuHandle}
+    \subitem {rangeproc\_dpc.c}, \hyperpage{48}
+    \subitem {rangeproc\_dpc.h}, \hyperpage{28}
+  \item {registerChirpAvailableInterrupts}
+    \subitem {rangeproc\_dpc.c}, \hyperpage{46}
+    \subitem {rangeproc\_dpc.h}, \hyperpage{27}
+  \item {registerChirpInterrupt}
+    \subitem {rangeproc\_dpc.c}, \hyperpage{47}
+    \subitem {rangeproc\_dpc.h}, \hyperpage{27}
+  \item {registerFrameStartInterrupt}
+    \subitem {rangeproc\_dpc.c}, \hyperpage{47}
+    \subitem {rangeproc\_dpc.h}, \hyperpage{27}
+  \item {restoreFactoryCal}
+    \subitem {factory\_cal.c}, \hyperpage{32}
+    \subitem {factory\_cal.h}, \hyperpage{19}
+
+  \indexspace
+
+  \item {src/factory\_cal.c}, \hyperpage{31}
+  \item {src/main.c}, \hyperpage{33}
+  \item {src/mem\_pool.c}, \hyperpage{35}
+  \item {src/mmwave\_basic.c}, \hyperpage{37}
+  \item {src/mmwave\_control\_config.c}, \hyperpage{41}
+  \item {src/rangeproc\_dpc.c}, \hyperpage{44}
+  \item {src/uart\_transmit.c}, \hyperpage{48}
+
+  \indexspace
+
+  \item {T\_SensPerChirpLut}, \hyperpage{6}
+
+  \indexspace
+
+  \item {uart\_transmit.c}
+    \subitem {header}, \hyperpage{49}
+    \subitem {uart\_transmit\_loop}, \hyperpage{49}
+  \item {uart\_transmit.h}
+    \subitem {uart\_transmit\_loop}, \hyperpage{30}
+    \subitem {uart\_tx\_done\_sem}, \hyperpage{30}
+    \subitem {uart\_tx\_start\_sem}, \hyperpage{30}
+  \item {uart\_transmit\_loop}
+    \subitem {uart\_transmit.c}, \hyperpage{49}
+    \subitem {uart\_transmit.h}, \hyperpage{30}
+  \item {uart\_tx\_done\_sem}
+    \subitem {main.c}, \hyperpage{35}
+    \subitem {uart\_transmit.h}, \hyperpage{30}
+  \item {uart\_tx\_start\_sem}
+    \subitem {main.c}, \hyperpage{35}
+    \subitem {uart\_transmit.h}, \hyperpage{30}
+  \item {uartTask}
+    \subitem {rangeproc\_dpc.c}, \hyperpage{47}
+    \subitem {rangeproc\_dpc.h}, \hyperpage{28}
+
+\end{theindex}

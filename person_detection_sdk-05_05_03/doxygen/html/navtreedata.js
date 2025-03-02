@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "TI IWRL6432 Boost Study", "index.html", [
+  [ "TI IWRL6432 mmWave Radar", "index.html", [
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],

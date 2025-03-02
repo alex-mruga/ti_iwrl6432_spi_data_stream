@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['size_0',['size',['../struct_d_p_c___object_detection___mem_cfg__t.html#ab2c6b258f02add8fdf4cfc7c371dd772',1,'DPC_ObjectDetection_MemCfg_t']]]
+  ['magic_0',['magic',['../struct_mmw__calib_data__t.html#a57f54349f4fd1cbbb52058812e146af2',1,'Mmw_calibData_t']]],
+  ['maxcurraddr_1',['maxCurrAddr',['../struct_mem_pool_obj__t.html#a50c67a522aec77479dd08bdc7d12c259',1,'MemPoolObj_t']]]
 ];
