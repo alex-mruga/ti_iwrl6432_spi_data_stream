@@ -1,5 +1,26 @@
-/*
- *  Copyright (C) 2018-2021 Texas Instruments Incorporated
+/**
+ * @file main.c
+ * @brief Main Program for Radar Signal Processing.
+ *
+ * This file contains the main entry point and initialization logic for the radar
+ * signal processing application. It sets up the hardware, initializes the radar
+ * sensor, configures the Data Processing Units (DPUs), and starts the FreeRTOS
+ * scheduler to manage tasks for radar processing and UART communication.
+ *
+ * The application performs the following key steps:
+ * 1. Initializes the hardware and drivers.
+ * 2. Configures the radar sensor and performs factory calibration.
+ * 3. Initializes the DPUs for range processing.
+ * 4. Creates FreeRTOS tasks for radar processing (DPC) and UART communication.
+ * 5. Starts the radar sensor and enters the FreeRTOS scheduler.
+ *
+ * This implementation is adapted from the Motion and Presence Detection Demo
+ * provided in the TI mmWave SDK.
+ *
+ * @note This module relies on the TI mmWave SDK, FreeRTOS, and various hardware
+ *       drivers for radar sensor control, DPU configuration, and UART communication.
+ *
+ * @copyright (C) 2022-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -188,7 +209,7 @@ void freertos_main(void *args)
 
     SemaphoreP_pend(&dpcCfgDoneSemHandle, SystemP_WAIT_FOREVER);
 
-        gUartTask = xTaskCreateStatic(uartTask, /* Pointer to the function that implements the task. */
+    gUartTask = xTaskCreateStatic(uartTask, /* Pointer to the function that implements the task. */
                                  "uart_task",      /* Text name for the task.  This is to facilitate debugging only. */
                                  UART_TASK_STACK_SIZE,   /* Stack depth in units of StackType_t typically uint32_t on 32b CPUs */
                                  NULL,                  /* We are not using the task parameter. */

@@ -2,8 +2,6 @@
 #define MMWAVE_CONTROL_CONFIG_H
 
 
-
-
 /*!
  * @brief  Sensor Perchirp LUT, total 64 bytes used, 4 values per params
  */

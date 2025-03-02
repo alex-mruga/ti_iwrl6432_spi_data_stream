@@ -1,5 +1,20 @@
-/*
- * Copyright (C) 2022-24 Texas Instruments Incorporated
+ /**
+ * @file mmwave_basic.c
+ * @brief Initialization, configuration, and control functions for mmWave sensor.
+ *
+ * This file contains functions to initialize, open, configure, start, stop, 
+ * and deinitialize the mmWave sensor. It also includes memory pool setup 
+ * and HWA initialization.
+ *
+ * @note Functionality derived from motion_and_presence_detection_demo_xwrL64xx-evm_m4fss0-0_freertos_ti-arm-clang. 
+ *
+ * @details
+ * - Provides functions for mmWave sensor control.
+ * - Includes memory pool initialization for object detection processing.
+ * - Handles HWA (Hardware Accelerator) initialization.
+ * - Implements calibration restore and validation using stored magic word.
+ *
+ * @copyright (C) 2022-24 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,22 +45,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- /**
- * @file mmwave_basic.c
- * @brief Initialization, configuration, and control functions for mmWave sensor.
- *
- * This file contains functions to initialize, open, configure, start, stop, 
- * and deinitialize the mmWave sensor. It also includes memory pool setup 
- * and HWA initialization.
- *
- * @note Functionality derived from motion_and_presence_detection_demo_xwrL64xx-evm_m4fss0-0_freertos_ti-arm-clang. 
- *
- * @details
- * - Provides functions for mmWave sensor control.
- * - Includes memory pool initialization for object detection processing.
- * - Handles HWA (Hardware Accelerator) initialization.
- * - Implements calibration restore and validation using stored magic word.
- */
  
 #include "drivers/hwa.h"
 #include "kernel/dpl/SystemP.h"

@@ -1,6 +1,55 @@
 #ifndef RANGEPROC_DPC_H
 #define RANGEPROC_DPC_H
 
+/**
+ * @file rangeproc_dpc.h
+ * @brief Range Processing Data Path Unit (DPU) Interface.
+ *
+ * This file defines the interface for the Range Processing Data Path Unit (DPU) and
+ * its associated functions. It includes declarations for DPU initialization, configuration,
+ * and task management, as well as interrupt handling for frame start, chirp start, and
+ * chirp available events. The module is designed to facilitate radar signal processing
+ * using the Hardware Accelerator (HWA) and UART communication for data transmission.
+ *
+ * The range processing DPU is responsible for processing radar data frames, including
+ * FFT computation, object detection, and data transmission over UART. This module
+ * integrates with the TI mmWave SDK and is derived from the Motion and Presence Detection
+ * Demo provided in the SDK.
+ *
+ * @note This module relies on the SemaphoreP API for synchronization and the HWA for
+ *       hardware-accelerated signal processing.
+ *
+ * @copyright (C) 2022-24 Texas Instruments Incorporated
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 
+ *   Redistributions of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
+ * 
+ *   Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the
+ *   distribution.
+ * 
+ *   Neither the name of Texas Instruments Incorporated nor the names of
+ *   its contributors may be used to endorse or promote products derived
+ *   from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 #include <stdint.h>
 #include <kernel/dpl/DebugP.h>
 #include "kernel/dpl/SemaphoreP.h"
@@ -125,7 +174,13 @@ void chirpStartISR(void *arg);
 
 uint32_t Cycleprofiler_getTimeStamp(void);
 
-
+/**
+ * @brief Registers the Chirp Available Interrupt.
+ *
+ * This function registers the interrupt for the chirp available event.
+ *
+ * @return int32_t Returns SystemP_SUCCESS on success, SystemP_FAILURE on failure.
+ */
 int32_t registerChirpAvailableInterrupts(void);
 static void ChirpAvailISR(void *arg);
 

@@ -1,15 +1,13 @@
 /**
-
-@file defines.h
-
-@brief Configuration macros for the radar system.
-
-This file contains macro definitions for antenna settings, chirp configurations,
-
-timing parameters, and system-level settings.
-
-The configuration settings can be generated with the "mmWave Sensing Estimator" tool (https://dev.ti.com/gallery/view/mmwave/mmWaveSensingEstimator/ver/2.4.0/) 
-
+*
+* @file defines.h
+*
+* @brief Configuration macros for the radar system.
+*
+* This file contains macro definitions for antenna settings, chirp configurations, timing parameters, and system-level settings.
+*
+* The configuration settings can be generated with the "mmWave Sensing Estimator" tool (https://dev.ti.com/gallery/view/mmwave/mmWaveSensingEstimator/ver/2.4.0/) 
+*
 */
 
 

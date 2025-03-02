@@ -1,5 +1,19 @@
-/*
- * Copyright (C) 2022-23 Texas Instruments Incorporated
+/**
+ * @file factory_cal.c
+ * @brief Factory Calibration Restoration and Configuration.
+ *
+ * This file implements the functionality to restore factory calibration data
+ * for the radar system. It reads calibration data from flash memory, validates
+ * its integrity using a magic number, and configures the radar front-end
+ * (FECSS) with the restored calibration parameters. The calibration process
+ * ensures optimal performance of the radar system by compensating for
+ * manufacturing variations and environmental factors.
+ *
+ *
+ * @note This function in this file is adapted from the Motion and Presence Detection Demo:
+ *       ${MMWAVE_SDK_INSTALL_PATH}\examples\mmw_demo\motion_and_presence_detection\source\calibration\factory_cal.c
+ *
+ * @copyright (C) 2022-24 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,9 +44,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**************************************************************************
- *************************** Include Files ********************************
- **************************************************************************/
 
 /* Standard Include Files. */
 #include <stdint.h>
@@ -56,37 +67,10 @@
 #include "mmwave_control_config.h"
 #include "defines.h"
 
-// external
-extern T_RL_API_SENS_CHIRP_PROF_COMN_CFG profileComCfg;
-extern T_RL_API_SENS_CHIRP_PROF_TIME_CFG profileTimeCfg;
-extern T_RL_API_FECSS_RF_PWR_CFG_CMD channelCfg;
-extern T_RL_API_SENS_FRAME_CFG frameCfg;
-
-extern MMWave_Handle gCtrlHandle;
-extern T_RL_API_FECSS_RUNTIME_TX_CLPC_CAL_CMD fecTxclpcCalCmd;
-
-/**
- * @brief Magic word for factory calibration data validation.
- *
- * This value is stored in flash alongside calibration data and checked upon 
- * restoration to verify data integrity. It acts as a simple checksum to ensure 
- * the calibration data is valid.
- */
-#define MMWDEMO_CALIB_STORE_MAGIC (0x7CB28DF9U)
 
 Mmw_calibData calibData __attribute__((aligned(8))) = {0};
 
-/**
- * @brief Restores factory calibration data from flash.
- *
- * This function reads the calibration data stored in flash memory and restores it.
- * It requires that the system has been previously calibrated.
- *
- * Derived from `mmwDemo_factoryCal` and `MmwDemo_calibRestore` in `factory_cal.c` 
- * from the demo project.
- *
- * @return SystemP_SUCCESS on success, -1 on failure.
- */
+
 int32_t restoreFactoryCal(void)
 {
     uint16_t         calRfFreq = 0U;
