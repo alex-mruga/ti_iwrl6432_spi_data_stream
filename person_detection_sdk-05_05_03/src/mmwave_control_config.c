@@ -1,5 +1,19 @@
-/*
- * Copyright (C) 2022-24 Texas Instruments Incorporated
+/**
+ * @file mmwave_control_config.c
+ * @brief Configuration and initialization for mmWave chirp profiles.
+ *
+ * This file contains functions for setting up default chirp and profile
+ * configurations for the Texas Instruments mmWave radar system. It includes
+ * parameter definitions, initialization routines, and structure setup for
+ * mmWave control.
+ *
+ * 
+ * @details
+ * This file is a modified version of the original from the motion and presence 
+ * detection demo project. It has been adjusted to fit the current application 
+ * needs while maintaining compatibility with TI's mmWave SDK.
+ *
+ * @copyright Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions

@@ -1,0 +1,42 @@
+\doxysection{mmwave\+\_\+control\+\_\+config.\+h}
+\hypertarget{mmwave__control__config_8h_source}{}\label{mmwave__control__config_8h_source}\index{include/mmwave\_control\_config.h@{include/mmwave\_control\_config.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ MMWAVE\_CONTROL\_CONFIG\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ MMWAVE\_CONTROL\_CONFIG\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ uint32\_t\ StartFreqHighRes[4];\ \textcolor{comment}{/*\ LUT\ address\ 0\ */}}
+\DoxyCodeLine{00011\ \ \ \ \ uint32\_t\ StartFreqLowRes[4];\ \textcolor{comment}{/*\ LUT\ address\ 16\ */}}
+\DoxyCodeLine{00012\ \ \ \ \ int16\_t\ ChirpSlope[4];\ \textcolor{comment}{/*\ LUT\ address\ 32\ */}}
+\DoxyCodeLine{00013\ \ \ \ \ uint16\_t\ ChirpIdleTime[4];\ \textcolor{comment}{/*\ LUT\ address\ 40\ */}}
+\DoxyCodeLine{00014\ \ \ \ \ uint16\_t\ ChirpAdcStartTime[4];\ \textcolor{comment}{/*\ LUT\ address\ 48\ */}}
+\DoxyCodeLine{00015\ \ \ \ \ int16\_t\ ChirpTxStartTime[4];\ \textcolor{comment}{/*\ LUT\ address\ 56\ */}}
+\DoxyCodeLine{00016\ \ \ \ \ uint8\_t\ ChirpTxEn[4];\ \textcolor{comment}{/*\ LUT\ address\ 64\ */}}
+\DoxyCodeLine{00017\ \ \ \ \ uint8\_t\ ChirpBpmEn[4];\ \textcolor{comment}{/*\ LUT\ address\ 68\ */}}
+\DoxyCodeLine{00018\ \}\ \mbox{\hyperlink{struct_t___sens_per_chirp_lut}{T\_SensPerChirpLut}};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{extern}\ MMWave\_Handle\ gCtrlHandle;}
+\DoxyCodeLine{00022\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{struct_t___sens_per_chirp_lut}{T\_SensPerChirpLut}}*\ sensPerChirpLuTable;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ T\_RL\_API\_SENS\_CHIRP\_PROF\_COMN\_CFG\ profileComCfg;}
+\DoxyCodeLine{00025\ T\_RL\_API\_SENS\_CHIRP\_PROF\_TIME\_CFG\ profileTimeCfg;}
+\DoxyCodeLine{00026\ T\_RL\_API\_FECSS\_RF\_PWR\_CFG\_CMD\ channelCfg;}
+\DoxyCodeLine{00027\ T\_RL\_API\_SENS\_FRAME\_CFG\ frameCfg;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Mmwave\_populateDefaultProfileCfg\ (T\_RL\_API\_SENS\_CHIRP\_PROF\_COMN\_CFG*\ ptrProfileCfg,\ T\_RL\_API\_SENS\_CHIRP\_PROF\_TIME\_CFG*\ ptrProfileTimeCfg);}
+\DoxyCodeLine{00032\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Mmwave\_populateDefaultChirpCfg\ (T\_RL\_API\_SENS\_PER\_CHIRP\_CFG*\ ptrChirpCfg,\ T\_RL\_API\_SENS\_PER\_CHIRP\_CTRL*\ ptrChirpCtrl);}
+\DoxyCodeLine{00033\ \textcolor{keywordtype}{void}\ MMWave\_populateChannelCfg();}
+\DoxyCodeLine{00034\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mmwave__basic_8c_a51c96860ff0de343bc4bab0db877326c}{Mmwave\_populateDefaultCalibrationCfg}}\ (MMWave\_CalibrationCfg*\ ptrCalibrationCfg);}
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mmwave__basic_8c_a04253550c069618e610cdaa1b8839d04}{Mmwave\_populateDefaultStartCfg}}\ (MMWave\_StrtCfg*\ ptrStartCfg);}
+\DoxyCodeLine{00036\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mmwave__basic_8c_a7d2604e2ae505e980232a7fddb52ad78}{Mmwave\_populateDefaultOpenCfg}}\ (MMWave\_OpenCfg*\ ptrOpenCfg);}
+\DoxyCodeLine{00037\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{mmwave__basic_8c_af5159a0a2ff032bd1253d884ac8e82f9}{Mmwave\_populateDefaultChirpControlCfg}}\ (MMWave\_CtrlCfg*\ ptrCtrlCfg);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ MMWAVE\_CONTROL\_CONFIG\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

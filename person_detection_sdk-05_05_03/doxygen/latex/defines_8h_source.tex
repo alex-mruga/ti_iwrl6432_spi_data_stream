@@ -1,0 +1,86 @@
+\doxysection{defines.\+h}
+\hypertarget{defines_8h_source}{}\label{defines_8h_source}\index{include/defines.h@{include/defines.h}}
+\mbox{\hyperlink{defines_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ LOW\_POWER\_MODE\ 2}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{/*\ basic\ configuration\ (frameCfg\ and\ others)*/}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ NUM\_TX\_ANTENNAS\ 2}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ NUM\_RX\_ANTENNAS\ 3}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ NUM\_VIRT\_ANTENNAS\ (NUM\_TX\_ANTENNAS\ *\ NUM\_RX\_ANTENNAS)}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ NUM\_ADC\_SAMPLES\ 256\ }\textcolor{comment}{//\ 128\ //\ number\ of\ adc\ samples\ per\ chirp\ hardcoded\ in\ https://dev.ti.com/gallery/view/mmwave/mmWaveSensingEstimator/ver/2.4.0/\ and\ also\ used\ in\ MOTION\_AND\_PRESENCE\_DETECTION\_DEMO}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ NUM\_BURSTS\_PER\_FRAME\ 1\ }\textcolor{comment}{//\ from\ MOTION\_AND\_PRESENCE\_DETECTION\_DEMO}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ NUM\_CHIRPS\_PER\_BURST\ 8\ }\textcolor{comment}{//\ from\ MOTION\_AND\_PRESENCE\_DETECTION\_DEMO}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ NUM\_CHIRPS\_PER\_FRAME\ (NUM\_BURSTS\_PER\_FRAME\ *\ NUM\_CHIRPS\_PER\_BURST)}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ channelCfg}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ RX\_CH\_CTRL\_BITMASK\ 7\ }\textcolor{comment}{//\ all\ 3\ RX\ antennas\ active\ =>\ 7\ (0b111)}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ TX\_CH\_CTRL\_BITMASK\ 3\ }\textcolor{comment}{//\ all\ 2\ TX\ antennas\ active\ =>\ 3\ (0b11)}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ CHANNEL\_CFG\_MISC\_CTRL\ 0}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ calculated\ defines,\ not\ in\ config}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ NUM\_RANGE\_BINS\ (NUM\_ADC\_SAMPLES\ /\ 2)}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ NUM\_DOPPLER\_CHIRPS\_PER\_FRAME\ (NUM\_CHIRPS\_PER\_FRAME\ /\ NUM\_TX\_ANTENNAS)}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ NUM\_DOPPLER\_CHIRPS\_PER\_PROC\ NUM\_DOPPLER\_CHIRPS\_PER\_FRAME}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{/*\ chirpComnCfg\ */}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ CHIRPCOMNCFG\_DIG\_OUTPUT\_SAMP\_RATE\ \ \ \ \ \ \ \ \ 20\ \ }\textcolor{comment}{//\ 5\ MHz\ //\ M\_RL\_SENS\_DIG\_OUT\_SAMP\_RATE\_MAX\_12P5M}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ CHIRPCOMNCFG\_DIG\_OUTPUT\_BITS\_SEL\ \ \ \ \ \ \ \ \ \ 0\ \ \ }\textcolor{comment}{//\ M\_RL\_SENS\_DIG\_OUT\_12BITS\_4LSB\_ROUND}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ CHIRPCOMNCFG\_DFE\_FIR\_SEL\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0\ \ \ }\textcolor{comment}{//\ M\_RL\_SENS\_DFE\_FIR\_LONG\_FILT}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ CHIRPCOMNCFG\_NUM\_OF\_ADC\_SAMPLES\ \ \ \ \ \ \ \ \ \ \ NUM\_ADC\_SAMPLES\ }\textcolor{comment}{//\ 256U;\ /*\ 2.56us\ */}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ CHIRPCOMNCFG\_CHIRP\_TX\_MIMO\_PAT\_SEL\ \ \ \ \ \ \ \ 4\ \ \ }\textcolor{comment}{//\ 0;\ M\_RL\_SENS\_TX\_MIMO\_PATRN\_DIS}}
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ not\ in\ .cfg\ file:}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ CHIRPCOMNCFG\_MISC\_SETTINGS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ M\_RL\_SENS\_MISC\_HPF\_FAST\_INIT\_DIS\_BIT\ \ \ }\textcolor{comment}{//\ 0U;\ /*\ HPF\ FINIT,\ CRD\ ena,\ PA\ blank\ dis\ */}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ CHIRPCOMNCFG\_HPF\_FAST\_INIT\_DURATION\ \ \ \ \ \ \ 15U\ \ }\textcolor{comment}{//\ 15U;\ /*\ 1.5us\ */}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ CHIRPCOMNCFG\_CHIRP\_RAMP\_END\_TIME\ \ \ \ \ \ \ \ \ \ 60.0\ }\textcolor{comment}{//30.0\ //\ 600;\ 250U;\ /*\ 25us\ low\ res\ */}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ CHIRPCOMNCFG\_CHIRP\_RX\_HPF\_SEL\ \ \ \ \ \ \ \ \ \ \ \ \ M\_RL\_SENS\_RX\_HPF\_SEL\_300KHZ\ \ \ }\textcolor{comment}{//\ M\_RL\_SENS\_RX\_HPF\_SEL\_350KHZ}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{/*\ chirpTimingCfg\ */}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ CHIRPTIMINGCFG\_CHIRP\_IDLE\_TIME\ \ \ \ \ \ \ \ \ \ \ \ 6\ \ }\textcolor{comment}{//\ 400;\ 65U;\ /*\ 6.5us\ low\ res\ */}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ CHIRPTIMINGCFG\_CHIRP\_ADC\_START\_TIME\ \ \ \ \ \ \ (28\ <<\ 10)}\textcolor{comment}{//\ 30770;}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ CHIRPTIMINGCFG\_CHIRP\_TX\_START\_TIME\ \ \ \ \ \ \ \ 0\ \ \ }\textcolor{comment}{//\ -\/10;\ /*\ -\/0.2us\ */}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ CHIRPTIMINGCFG\_CHIRP\_RF\_FREQ\_SLOPE\ \ \ \ \ \ \ \ 65\ }\textcolor{comment}{//\ 699;\ 3495;\ /*\ 100MHz/us\ ,\ 77G\ -\/\ 2621\ */}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ CHIRPTIMINGCFG\_CHIRP\_RF\_FREQ\_START\ \ \ \ \ \ \ \ 59.75\ }\textcolor{comment}{//\ calculation\ from\ defines\ (M\_RL\_SENS\_CHIRP\_RFFREQ\_LR\_59G)\ are\ unclear,\ so\ use\ fix\ value\ }}
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ not\ in\ .cfg\ file:}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ CHIRPTIMINGCFG\_CHIRP\_TX\_EN\_SEL\ \ \ \ \ \ \ \ \ \ \ \ 0x3U\ }\textcolor{comment}{//\ 2\ TX\ enable\ in\ chirp}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ CHIRPTIMINGCFG\_CHIRP\_TX\_BPM\_EN\_SEL\ \ \ \ \ \ \ \ 0x0U\ }\textcolor{comment}{//\ 0;\ 0x2U;\ /*\ TX1\ BPM\ enable\ in\ chirp\ */}}
+\DoxyCodeLine{00059\ \#define\ NUM\_CHIRPS\_ACCUM\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ BURST\_PERIOD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 643\ }\textcolor{comment}{//\ 403}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ W\_BURST\_PERIOD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (10.0\ *\ BURST\_PERIOD)\ }}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ FRAME\_PERIOD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (((float)(250.0)\ *\ 40000000.0)/1000.0)\ }}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#define\ NUM\_FRAMES\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{comment}{/*\ sensorStart\ */}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ SENSOR\_START\_FRAME\_TRIG\_MODE\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#define\ SENSOR\_START\_CHIRP\_START\_SIG\_LB\_ENABLE\ \ \ \ 0}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#define\ SENSOR\_START\_FRAME\_LIVE\_MON\_ENABLE\ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#define\ SENSOR\_START\_FRAME\_TRIG\_TIMER\_VAL\ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{comment}{/*\ Factory\ Calibration\ */}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#define\ CLI\_FACCALCFG\_RES\_EN\ 0}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#define\ CLI\_FACCALCFG\_RX\_GAIN\ 40}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#define\ CLI\_FACCALCFG\_TX\_BACKOFF\_SEL\ 0}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#define\ CLI\_FACCALCFG\_FLASH\_OFFSET\ 0x1FF000}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{comment}{//\ derived\ from\ common/syscommon.h}}
+\DoxyCodeLine{00078\ \textcolor{comment}{/*************************************************************}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ *\ MMWAVE\ System\ level\ defines}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ *************************************************************/}}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#define\ SYS\_COMMON\_NUM\_RX\_CHANNEL\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 3U}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#define\ SYS\_COMMON\_CQ\_MAX\_CHIRP\_THRESHOLD\ \ \ \ \ \ \ \ \ \ \ 8U}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{comment}{/*\ This\ is\ the\ size\ of\ the\ Chirp\ Parameters\ (CP)\ in\ CBUFF\ Units\ */}}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#define\ SYS\_COMMON\_CP\_SIZE\_CBUFF\_UNITS\ \ \ \ \ \ \ \ \ \ \ \ \ \ 2U}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{comment}{//\ DMA\ channel\ defines}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#define\ DMA\_TRIG\_SRC\_CHAN\_0\ 0}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#define\ DMA\_TRIG\_SRC\_CHAN\_1\ 1}}
+
+\end{DoxyCode}

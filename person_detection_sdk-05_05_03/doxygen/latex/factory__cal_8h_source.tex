@@ -1,0 +1,34 @@
+\doxysection{factory\+\_\+cal.\+h}
+\hypertarget{factory__cal_8h_source}{}\label{factory__cal_8h_source}\index{include/factory\_cal.h@{include/factory\_cal.h}}
+\mbox{\hyperlink{factory__cal_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ FACTORY\_CAL\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ FACTORY\_CAL\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ MMWDEMO\_CALIB\_STORE\_MAGIC\ (0x7CB28DF9U)}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ externals}}
+\DoxyCodeLine{00057\ \textcolor{keyword}{extern}\ T\_RL\_API\_SENS\_CHIRP\_PROF\_COMN\_CFG\ profileComCfg;}
+\DoxyCodeLine{00058\ \textcolor{keyword}{extern}\ T\_RL\_API\_SENS\_CHIRP\_PROF\_TIME\_CFG\ profileTimeCfg;}
+\DoxyCodeLine{00059\ \textcolor{keyword}{extern}\ T\_RL\_API\_FECSS\_RF\_PWR\_CFG\_CMD\ channelCfg;}
+\DoxyCodeLine{00060\ \textcolor{keyword}{extern}\ T\_RL\_API\_SENS\_FRAME\_CFG\ frameCfg;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{keyword}{extern}\ MMWave\_Handle\ gCtrlHandle;}
+\DoxyCodeLine{00063\ \textcolor{keyword}{extern}\ T\_RL\_API\_FECSS\_RUNTIME\_TX\_CLPC\_CAL\_CMD\ fecTxclpcCalCmd;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_mmw__calib_data__t}{Mmw\_calibData\_t}}}
+\DoxyCodeLine{00074\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ uint32\_t\ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_mmw__calib_data__t_a57f54349f4fd1cbbb52058812e146af2}{magic}};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00079\ \ \ \ \ T\_RL\_API\_FECSS\_RXTX\_CAL\_DATA\ \ \mbox{\hyperlink{struct_mmw__calib_data__t_a2fb6091b0b9e483005ff0924d5e6539e}{calibData}};}
+\DoxyCodeLine{00080\ \}\ \mbox{\hyperlink{factory__cal_8h_a26376cc59645a60d9a1eda598969849c}{Mmw\_calibData}};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00093\ int32\_t\ \mbox{\hyperlink{factory__cal_8h_a6405a944c29067199814b66c978588a8}{restoreFactoryCal}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//FACTORY\_CAL\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,56 @@
+\doxysection{rangeproc\+\_\+dpc.\+h}
+\hypertarget{rangeproc__dpc_8h_source}{}\label{rangeproc__dpc_8h_source}\index{include/rangeproc\_dpc.h@{include/rangeproc\_dpc.h}}
+\mbox{\hyperlink{rangeproc__dpc_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ RANGEPROC\_DPC\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ RANGEPROC\_DPC\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#include\ <kernel/dpl/DebugP.h>}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#include\ "{}kernel/dpl/SemaphoreP.h"{}}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#include\ "{}ti\_drivers\_config.h"{}}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#include\ "{}ti\_drivers\_open\_close.h"{}}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#include\ "{}ti\_board\_open\_close.h"{}}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#include\ <datapath/dpu/rangeproc/v0/rangeprochwa.h>}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#include\ "{}drivers/hwa.h"{}}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{dpu__res_8h}{dpu\_res.h}}"{}}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{defines_8h}{defines.h}}"{}}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_QFORMAT\_RANGE\_FFT\ 17}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{extern}\ SemaphoreP\_Object\ dpcCfgDoneSemHandle;}
+\DoxyCodeLine{00068\ \textcolor{keyword}{extern}\ SemaphoreP\_Object\ \mbox{\hyperlink{main_8c_ad509a07f15c0047aadf571d87574a34e}{uart\_tx\_start\_sem}};}
+\DoxyCodeLine{00069\ \textcolor{keyword}{extern}\ SemaphoreP\_Object\ \mbox{\hyperlink{main_8c_aabc0faa8591ef37b89c353f5d8d8a1eb}{uart\_tx\_done\_sem}};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{extern}\ DPU\_RangeProcHWA\_Handle\ rangeProcHWADpuHandle;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00092\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{rangeproc__dpc_8h_ad2a209e9090ccf9799c957ac56a38abc}{rangeProc\_dpuInit}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00102\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{rangeproc__dpc_8h_aea10531ca5d711bb7ff820678f9eb5c4}{RangeProc\_config}}();}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00115\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{rangeproc__dpc_8h_a4d93b404830d2cfdb5c9d11663112b49}{rangeproc\_main}}(\textcolor{keywordtype}{void}\ *args);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00124\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{rangeproc__dpc_8h_a768212da06fd6fb062e002c4c5fe230e}{dpcTask}}();}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00131\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{rangeproc__dpc_8h_af64eddc7833f2e6a4cf922e27a69e094}{uartTask}}();}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00145\ int32\_t\ \mbox{\hyperlink{rangeproc__dpc_8h_a767143ed9971286f5b1f0e2ce9721a03}{registerFrameStartInterrupt}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00155\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ frameStartISR(\textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00164\ int32\_t\ \mbox{\hyperlink{rangeproc__dpc_8h_aec9295a802d97966a46b013a5b0083ac}{registerChirpInterrupt}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00173\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{rangeproc__dpc_8h_a0c392f74967344bed253ee1f00f83234}{chirpStartISR}}(\textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ uint32\_t\ Cycleprofiler\_getTimeStamp(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00184\ int32\_t\ \mbox{\hyperlink{rangeproc__dpc_8h_a9caf7b7ae3b91b4f50a7057ceaf606b3}{registerChirpAvailableInterrupts}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00185\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ ChirpAvailISR(\textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ RANGEPROC\_DPC\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

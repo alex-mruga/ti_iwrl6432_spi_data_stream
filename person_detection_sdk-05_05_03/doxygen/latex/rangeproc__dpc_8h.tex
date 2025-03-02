@@ -1,0 +1,250 @@
+\doxysection{include/rangeproc\+\_\+dpc.h File Reference}
+\hypertarget{rangeproc__dpc_8h}{}\label{rangeproc__dpc_8h}\index{include/rangeproc\_dpc.h@{include/rangeproc\_dpc.h}}
+
+
+Range Processing Data Path Unit (DPU) Interface.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$kernel/dpl/\+Debug\+P.\+h$>$}\newline
+{\ttfamily \#include "{}kernel/dpl/\+Semaphore\+P.\+h"{}}\newline
+{\ttfamily \#include "{}ti\+\_\+drivers\+\_\+config.\+h"{}}\newline
+{\ttfamily \#include "{}ti\+\_\+drivers\+\_\+open\+\_\+close.\+h"{}}\newline
+{\ttfamily \#include "{}ti\+\_\+board\+\_\+open\+\_\+close.\+h"{}}\newline
+{\ttfamily \#include $<$datapath/dpu/rangeproc/v0/rangeprochwa.\+h$>$}\newline
+{\ttfamily \#include "{}drivers/hwa.\+h"{}}\newline
+{\ttfamily \#include "{}dpu\+\_\+res.\+h"{}}\newline
+{\ttfamily \#include "{}defines.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{rangeproc__dpc_8h_afe6e82123974674e97724f5f71e581ae}\label{rangeproc__dpc_8h_afe6e82123974674e97724f5f71e581ae} 
+\#define {\bfseries DPC\+\_\+\+OBJDET\+\_\+\+QFORMAT\+\_\+\+RANGE\+\_\+\+FFT}~17
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{rangeproc__dpc_8h_ad2a209e9090ccf9799c957ac56a38abc}{range\+Proc\+\_\+dpu\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Initializes the Range Processing DPU. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{rangeproc__dpc_8h_aea10531ca5d711bb7ff820678f9eb5c4}{Range\+Proc\+\_\+config}} ()
+\begin{DoxyCompactList}\small\item\em Configures the Range Processing DPU. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{rangeproc__dpc_8h_a4d93b404830d2cfdb5c9d11663112b49}{rangeproc\+\_\+main}} (void \texorpdfstring{$\ast$}{*}args)
+\begin{DoxyCompactList}\small\item\em Main function for Range Processing DPU. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{rangeproc__dpc_8h_a768212da06fd6fb062e002c4c5fe230e}{dpc\+Task}} ()
+\begin{DoxyCompactList}\small\item\em Task function for Data Processing Chain (DPC). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{rangeproc__dpc_8h_af64eddc7833f2e6a4cf922e27a69e094}{uart\+Task}} ()
+\begin{DoxyCompactList}\small\item\em Task function for UART transmission. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{rangeproc__dpc_8h_a767143ed9971286f5b1f0e2ce9721a03}{register\+Frame\+Start\+Interrupt}} (void)
+\begin{DoxyCompactList}\small\item\em Registers an interrupt for the frame start event. \end{DoxyCompactList}\item 
+int32\+\_\+t \mbox{\hyperlink{rangeproc__dpc_8h_aec9295a802d97966a46b013a5b0083ac}{register\+Chirp\+Interrupt}} (void)
+\begin{DoxyCompactList}\small\item\em Registers the Chirp Interrupt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{rangeproc__dpc_8h_a0c392f74967344bed253ee1f00f83234}{chirp\+Start\+ISR}} (void \texorpdfstring{$\ast$}{*}arg)
+\begin{DoxyCompactList}\small\item\em ISR for Chirp Start event. \end{DoxyCompactList}\item 
+\Hypertarget{rangeproc__dpc_8h_a9446e1d17c0c4355b00d0598bf8ee6a0}\label{rangeproc__dpc_8h_a9446e1d17c0c4355b00d0598bf8ee6a0} 
+uint32\+\_\+t {\bfseries Cycleprofiler\+\_\+get\+Time\+Stamp} (void)
+\item 
+int32\+\_\+t \mbox{\hyperlink{rangeproc__dpc_8h_a9caf7b7ae3b91b4f50a7057ceaf606b3}{register\+Chirp\+Available\+Interrupts}} (void)
+\begin{DoxyCompactList}\small\item\em Registers the Chirp Available Interrupt. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{rangeproc__dpc_8h_ae4af3699ac74ebcc6598978e7b01beac}\label{rangeproc__dpc_8h_ae4af3699ac74ebcc6598978e7b01beac} 
+Semaphore\+P\+\_\+\+Object {\bfseries dpc\+Cfg\+Done\+Sem\+Handle}
+\item 
+\Hypertarget{rangeproc__dpc_8h_ad509a07f15c0047aadf571d87574a34e}\label{rangeproc__dpc_8h_ad509a07f15c0047aadf571d87574a34e} 
+Semaphore\+P\+\_\+\+Object {\bfseries uart\+\_\+tx\+\_\+start\+\_\+sem}
+\item 
+\Hypertarget{rangeproc__dpc_8h_aabc0faa8591ef37b89c353f5d8d8a1eb}\label{rangeproc__dpc_8h_aabc0faa8591ef37b89c353f5d8d8a1eb} 
+Semaphore\+P\+\_\+\+Object {\bfseries uart\+\_\+tx\+\_\+done\+\_\+sem}
+\item 
+DPU\+\_\+\+Range\+Proc\+HWA\+\_\+\+Handle \mbox{\hyperlink{rangeproc__dpc_8h_a4efd2550cefb109c0a44ede5d1913d7d}{range\+Proc\+HWADpu\+Handle}}
+\begin{DoxyCompactList}\small\item\em Handle for Range Processing DPU. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Range Processing Data Path Unit (DPU) Interface. 
+
+This file defines the interface for the Range Processing Data Path Unit (DPU) and its associated functions. It includes declarations for DPU initialization, configuration, and task management, as well as interrupt handling for frame start, chirp start, and chirp available events. The module is designed to facilitate radar signal processing using the Hardware Accelerator (HWA) and UART communication for data transmission.
+
+The range processing DPU is responsible for processing radar data frames, including FFT computation, object detection, and data transmission over UART. This module integrates with the TI mm\+Wave SDK and is derived from the Motion and Presence Detection Demo provided in the SDK.
+
+\begin{DoxyNote}{Note}
+This module relies on the SemaphoreP API for synchronization and the HWA for hardware-\/accelerated signal processing.
+\end{DoxyNote}
+\begin{DoxyCopyright}{Copyright}
+(C) 2022-\/24 Texas Instruments Incorporated
+\end{DoxyCopyright}
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met\+:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+Neither the name of Texas Instruments Incorporated nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "{}\+AS IS"{} AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{rangeproc__dpc_8h_a0c392f74967344bed253ee1f00f83234}\index{rangeproc\_dpc.h@{rangeproc\_dpc.h}!chirpStartISR@{chirpStartISR}}
+\index{chirpStartISR@{chirpStartISR}!rangeproc\_dpc.h@{rangeproc\_dpc.h}}
+\doxysubsubsection{\texorpdfstring{chirpStartISR()}{chirpStartISR()}}
+{\footnotesize\ttfamily \label{rangeproc__dpc_8h_a0c392f74967344bed253ee1f00f83234} 
+void chirp\+Start\+ISR (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{arg}{}\end{DoxyParamCaption})}
+
+
+
+ISR for Chirp Start event. 
+
+This ISR is triggered when the chirp start event occurs, indicating that the RF time control is functioning correctly. It does not necessarily mean the RF is actively chirping.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Unused optional argument.\\
+\hline
+\end{DoxyParams}
+{\bfseries{Description}} ~\newline
+ Chirp Start ISR \Hypertarget{rangeproc__dpc_8h_a768212da06fd6fb062e002c4c5fe230e}\index{rangeproc\_dpc.h@{rangeproc\_dpc.h}!dpcTask@{dpcTask}}
+\index{dpcTask@{dpcTask}!rangeproc\_dpc.h@{rangeproc\_dpc.h}}
+\doxysubsubsection{\texorpdfstring{dpcTask()}{dpcTask()}}
+{\footnotesize\ttfamily \label{rangeproc__dpc_8h_a768212da06fd6fb062e002c4c5fe230e} 
+void dpc\+Task (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Task function for Data Processing Chain (DPC). 
+
+This function initializes and manages the data processing chain, including configuring the DPUs, registering interrupts, and triggering UART transmission. It runs in an infinite loop, processing data frames and triggering the next frame. \Hypertarget{rangeproc__dpc_8h_aea10531ca5d711bb7ff820678f9eb5c4}\index{rangeproc\_dpc.h@{rangeproc\_dpc.h}!RangeProc\_config@{RangeProc\_config}}
+\index{RangeProc\_config@{RangeProc\_config}!rangeproc\_dpc.h@{rangeproc\_dpc.h}}
+\doxysubsubsection{\texorpdfstring{RangeProc\_config()}{RangeProc\_config()}}
+{\footnotesize\ttfamily \label{rangeproc__dpc_8h_aea10531ca5d711bb7ff820678f9eb5c4} 
+void Range\+Proc\+\_\+config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Configures the Range Processing DPU. 
+
+This function configures the range processing DPU (Data Path Unit) and the HWA It is derived from the dpc.\+c of the mmwavedemo project.
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{rangeproc__dpc_8h_ad2a209e9090ccf9799c957ac56a38abc}\index{rangeproc\_dpc.h@{rangeproc\_dpc.h}!rangeProc\_dpuInit@{rangeProc\_dpuInit}}
+\index{rangeProc\_dpuInit@{rangeProc\_dpuInit}!rangeproc\_dpc.h@{rangeproc\_dpc.h}}
+\doxysubsubsection{\texorpdfstring{rangeProc\_dpuInit()}{rangeProc\_dpuInit()}}
+{\footnotesize\ttfamily \label{rangeproc__dpc_8h_ad2a209e9090ccf9799c957ac56a38abc} 
+void range\+Proc\+\_\+dpu\+Init (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the Range Processing DPU. 
+
+This function initializes the range processing DPU (Data Path Unit) and sets up the required handles for HWA (Hardware Accelerator) and DPU. It is derived from the dpc.\+c of the mmwavedemo project.
+
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{rangeproc__dpc_8h_a4d93b404830d2cfdb5c9d11663112b49}\index{rangeproc\_dpc.h@{rangeproc\_dpc.h}!rangeproc\_main@{rangeproc\_main}}
+\index{rangeproc\_main@{rangeproc\_main}!rangeproc\_dpc.h@{rangeproc\_dpc.h}}
+\doxysubsubsection{\texorpdfstring{rangeproc\_main()}{rangeproc\_main()}}
+{\footnotesize\ttfamily \label{rangeproc__dpc_8h_a4d93b404830d2cfdb5c9d11663112b49} 
+void rangeproc\+\_\+main (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{args}{}\end{DoxyParamCaption})}
+
+
+
+Main function for Range Processing DPU. 
+
+This function opens the necessary drivers, initializes the HWA, calls the range processing DPU initialization, and closes all drivers after execution. It is the entry point for the range processing task.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em args} & Arguments passed to the function (if any).\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em None} & \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{rangeproc__dpc_8h_a9caf7b7ae3b91b4f50a7057ceaf606b3}\index{rangeproc\_dpc.h@{rangeproc\_dpc.h}!registerChirpAvailableInterrupts@{registerChirpAvailableInterrupts}}
+\index{registerChirpAvailableInterrupts@{registerChirpAvailableInterrupts}!rangeproc\_dpc.h@{rangeproc\_dpc.h}}
+\doxysubsubsection{\texorpdfstring{registerChirpAvailableInterrupts()}{registerChirpAvailableInterrupts()}}
+{\footnotesize\ttfamily \label{rangeproc__dpc_8h_a9caf7b7ae3b91b4f50a7057ceaf606b3} 
+int32\+\_\+t register\+Chirp\+Available\+Interrupts (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Registers the Chirp Available Interrupt. 
+
+This function registers the interrupt for the chirp available event.
+
+\begin{DoxyReturn}{Returns}
+int32\+\_\+t Returns System\+P\+\_\+\+SUCCESS on success, System\+P\+\_\+\+FAILURE on failure.
+\end{DoxyReturn}
+{\bfseries{Description}} ~\newline
+ This is to register Chirp Available Interrupt \Hypertarget{rangeproc__dpc_8h_aec9295a802d97966a46b013a5b0083ac}\index{rangeproc\_dpc.h@{rangeproc\_dpc.h}!registerChirpInterrupt@{registerChirpInterrupt}}
+\index{registerChirpInterrupt@{registerChirpInterrupt}!rangeproc\_dpc.h@{rangeproc\_dpc.h}}
+\doxysubsubsection{\texorpdfstring{registerChirpInterrupt()}{registerChirpInterrupt()}}
+{\footnotesize\ttfamily \label{rangeproc__dpc_8h_aec9295a802d97966a46b013a5b0083ac} 
+int32\+\_\+t register\+Chirp\+Interrupt (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Registers the Chirp Interrupt. 
+
+This function registers the interrupt for the chirp start and end events.
+
+\begin{DoxyReturn}{Returns}
+int32\+\_\+t Returns System\+P\+\_\+\+SUCCESS on success, System\+P\+\_\+\+FAILURE on failure.
+\end{DoxyReturn}
+{\bfseries{Description}} ~\newline
+ This is to register Chirpt Interrupt \Hypertarget{rangeproc__dpc_8h_a767143ed9971286f5b1f0e2ce9721a03}\index{rangeproc\_dpc.h@{rangeproc\_dpc.h}!registerFrameStartInterrupt@{registerFrameStartInterrupt}}
+\index{registerFrameStartInterrupt@{registerFrameStartInterrupt}!rangeproc\_dpc.h@{rangeproc\_dpc.h}}
+\doxysubsubsection{\texorpdfstring{registerFrameStartInterrupt()}{registerFrameStartInterrupt()}}
+{\footnotesize\ttfamily \label{rangeproc__dpc_8h_a767143ed9971286f5b1f0e2ce9721a03} 
+int32\+\_\+t register\+Frame\+Start\+Interrupt (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Registers an interrupt for the frame start event. 
+
+This function configures and registers the interrupt handler for the frame start event, which is triggered by the frame timer. It sets up the interrupt priority and callback function, then enables the interrupt to trigger the corresponding handler. Copied from \$\{MMWAVE\+\_\+\+SDK\+\_\+\+INSTALL\+\_\+\+PATH\}\textbackslash{}examples\textbackslash{}mmw\+\_\+demo\textbackslash{}motion\+\_\+and\+\_\+presence\+\_\+detection\textbackslash{}source\textbackslash{}interrupts.c
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em System\+P\+\_\+\+SUCCESS} & on successful registration, System\+P\+\_\+\+FAILURE on error. \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{rangeproc__dpc_8h_af64eddc7833f2e6a4cf922e27a69e094}\index{rangeproc\_dpc.h@{rangeproc\_dpc.h}!uartTask@{uartTask}}
+\index{uartTask@{uartTask}!rangeproc\_dpc.h@{rangeproc\_dpc.h}}
+\doxysubsubsection{\texorpdfstring{uartTask()}{uartTask()}}
+{\footnotesize\ttfamily \label{rangeproc__dpc_8h_af64eddc7833f2e6a4cf922e27a69e094} 
+void uart\+Task (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Task function for UART transmission. 
+
+This function continuously transmits data over UART. 
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{rangeproc__dpc_8h_a4efd2550cefb109c0a44ede5d1913d7d}\index{rangeproc\_dpc.h@{rangeproc\_dpc.h}!rangeProcHWADpuHandle@{rangeProcHWADpuHandle}}
+\index{rangeProcHWADpuHandle@{rangeProcHWADpuHandle}!rangeproc\_dpc.h@{rangeproc\_dpc.h}}
+\doxysubsubsection{\texorpdfstring{rangeProcHWADpuHandle}{rangeProcHWADpuHandle}}
+{\footnotesize\ttfamily \label{rangeproc__dpc_8h_a4efd2550cefb109c0a44ede5d1913d7d} 
+DPU\+\_\+\+Range\+Proc\+HWA\+\_\+\+Handle range\+Proc\+HWADpu\+Handle\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Handle for Range Processing DPU. 
+
+{\bfseries{Description}} ~\newline
+ This header file defines the interface for range processing DPU initialization and related functions. 

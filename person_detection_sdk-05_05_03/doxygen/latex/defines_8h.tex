@@ -1,0 +1,162 @@
+\doxysection{include/defines.h File Reference}
+\hypertarget{defines_8h}{}\label{defines_8h}\index{include/defines.h@{include/defines.h}}
+
+
+Configuration macros for the radar system.  
+
+
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{defines_8h_aa3670ccf1c0318d91d5c20cfc35dce86}\label{defines_8h_aa3670ccf1c0318d91d5c20cfc35dce86} 
+\#define {\bfseries LOW\+\_\+\+POWER\+\_\+\+MODE}~2
+\item 
+\Hypertarget{defines_8h_a299b64f02e3b4cbc65162ec7ed737b94}\label{defines_8h_a299b64f02e3b4cbc65162ec7ed737b94} 
+\#define {\bfseries NUM\+\_\+\+TX\+\_\+\+ANTENNAS}~2
+\item 
+\Hypertarget{defines_8h_a2cb906e267c40d02e23f7aef2dd88773}\label{defines_8h_a2cb906e267c40d02e23f7aef2dd88773} 
+\#define {\bfseries NUM\+\_\+\+RX\+\_\+\+ANTENNAS}~3
+\item 
+\Hypertarget{defines_8h_a04ee81571d2e4173ebd17cc15f677006}\label{defines_8h_a04ee81571d2e4173ebd17cc15f677006} 
+\#define {\bfseries NUM\+\_\+\+VIRT\+\_\+\+ANTENNAS}~(NUM\+\_\+\+TX\+\_\+\+ANTENNAS \texorpdfstring{$\ast$}{*} NUM\+\_\+\+RX\+\_\+\+ANTENNAS)
+\item 
+\Hypertarget{defines_8h_aecb0c138f036f6d110cf01908c05f066}\label{defines_8h_aecb0c138f036f6d110cf01908c05f066} 
+\#define {\bfseries NUM\+\_\+\+ADC\+\_\+\+SAMPLES}~256
+\item 
+\Hypertarget{defines_8h_ae9ceb1affead7992fff7fa878c337009}\label{defines_8h_ae9ceb1affead7992fff7fa878c337009} 
+\#define {\bfseries NUM\+\_\+\+BURSTS\+\_\+\+PER\+\_\+\+FRAME}~1
+\item 
+\Hypertarget{defines_8h_a2124a6d7c87c2c33e0762744b0b9ed3c}\label{defines_8h_a2124a6d7c87c2c33e0762744b0b9ed3c} 
+\#define {\bfseries NUM\+\_\+\+CHIRPS\+\_\+\+PER\+\_\+\+BURST}~8
+\item 
+\Hypertarget{defines_8h_a993a0153ad5505a8d10f572106a85942}\label{defines_8h_a993a0153ad5505a8d10f572106a85942} 
+\#define {\bfseries NUM\+\_\+\+CHIRPS\+\_\+\+PER\+\_\+\+FRAME}~(NUM\+\_\+\+BURSTS\+\_\+\+PER\+\_\+\+FRAME \texorpdfstring{$\ast$}{*} NUM\+\_\+\+CHIRPS\+\_\+\+PER\+\_\+\+BURST)
+\item 
+\Hypertarget{defines_8h_a9de47a6b68191d1640d022b3371cc439}\label{defines_8h_a9de47a6b68191d1640d022b3371cc439} 
+\#define {\bfseries RX\+\_\+\+CH\+\_\+\+CTRL\+\_\+\+BITMASK}~7
+\item 
+\Hypertarget{defines_8h_a10cac3b03906d83e82fd23de02c3169b}\label{defines_8h_a10cac3b03906d83e82fd23de02c3169b} 
+\#define {\bfseries TX\+\_\+\+CH\+\_\+\+CTRL\+\_\+\+BITMASK}~3
+\item 
+\Hypertarget{defines_8h_a8f58af13a94e7b32359a1a0be9e41023}\label{defines_8h_a8f58af13a94e7b32359a1a0be9e41023} 
+\#define {\bfseries CHANNEL\+\_\+\+CFG\+\_\+\+MISC\+\_\+\+CTRL}~0
+\item 
+\Hypertarget{defines_8h_a96552b64a9569975755d87cc998646d0}\label{defines_8h_a96552b64a9569975755d87cc998646d0} 
+\#define {\bfseries NUM\+\_\+\+RANGE\+\_\+\+BINS}~(NUM\+\_\+\+ADC\+\_\+\+SAMPLES / 2)
+\item 
+\Hypertarget{defines_8h_a7603ab67e4bde2bcbfdc385ea957a457}\label{defines_8h_a7603ab67e4bde2bcbfdc385ea957a457} 
+\#define {\bfseries NUM\+\_\+\+DOPPLER\+\_\+\+CHIRPS\+\_\+\+PER\+\_\+\+FRAME}~(NUM\+\_\+\+CHIRPS\+\_\+\+PER\+\_\+\+FRAME / NUM\+\_\+\+TX\+\_\+\+ANTENNAS)
+\item 
+\Hypertarget{defines_8h_afa67d9c9d763a30e467c0459a8b6b566}\label{defines_8h_afa67d9c9d763a30e467c0459a8b6b566} 
+\#define {\bfseries NUM\+\_\+\+DOPPLER\+\_\+\+CHIRPS\+\_\+\+PER\+\_\+\+PROC}~NUM\+\_\+\+DOPPLER\+\_\+\+CHIRPS\+\_\+\+PER\+\_\+\+FRAME
+\item 
+\Hypertarget{defines_8h_acaee0226c8f00a8b6f96edd1b6965834}\label{defines_8h_acaee0226c8f00a8b6f96edd1b6965834} 
+\#define {\bfseries CHIRPCOMNCFG\+\_\+\+DIG\+\_\+\+OUTPUT\+\_\+\+SAMP\+\_\+\+RATE}~20
+\item 
+\Hypertarget{defines_8h_a5f14b012f5c4b2d9e103bf41fb9f408b}\label{defines_8h_a5f14b012f5c4b2d9e103bf41fb9f408b} 
+\#define {\bfseries CHIRPCOMNCFG\+\_\+\+DIG\+\_\+\+OUTPUT\+\_\+\+BITS\+\_\+\+SEL}~0
+\item 
+\Hypertarget{defines_8h_a973d07480dba1b5f20ff96c09f8575e2}\label{defines_8h_a973d07480dba1b5f20ff96c09f8575e2} 
+\#define {\bfseries CHIRPCOMNCFG\+\_\+\+DFE\+\_\+\+FIR\+\_\+\+SEL}~0
+\item 
+\Hypertarget{defines_8h_adcae9460c9c4799234d1327a9088d5ba}\label{defines_8h_adcae9460c9c4799234d1327a9088d5ba} 
+\#define {\bfseries CHIRPCOMNCFG\+\_\+\+NUM\+\_\+\+OF\+\_\+\+ADC\+\_\+\+SAMPLES}~NUM\+\_\+\+ADC\+\_\+\+SAMPLES
+\item 
+\Hypertarget{defines_8h_a1e69369da80e175751b1ce8fb61726c2}\label{defines_8h_a1e69369da80e175751b1ce8fb61726c2} 
+\#define {\bfseries CHIRPCOMNCFG\+\_\+\+CHIRP\+\_\+\+TX\+\_\+\+MIMO\+\_\+\+PAT\+\_\+\+SEL}~4
+\item 
+\Hypertarget{defines_8h_a1c3ae3f81dd264925093cdc117a5ed99}\label{defines_8h_a1c3ae3f81dd264925093cdc117a5ed99} 
+\#define {\bfseries CHIRPCOMNCFG\+\_\+\+MISC\+\_\+\+SETTINGS}~M\+\_\+\+RL\+\_\+\+SENS\+\_\+\+MISC\+\_\+\+HPF\+\_\+\+FAST\+\_\+\+INIT\+\_\+\+DIS\+\_\+\+BIT
+\item 
+\Hypertarget{defines_8h_a67b18fddf011128ffc49d342820e5cf9}\label{defines_8h_a67b18fddf011128ffc49d342820e5cf9} 
+\#define {\bfseries CHIRPCOMNCFG\+\_\+\+HPF\+\_\+\+FAST\+\_\+\+INIT\+\_\+\+DURATION}~15U
+\item 
+\Hypertarget{defines_8h_a2f62682b3c3e41567e26e3461b472257}\label{defines_8h_a2f62682b3c3e41567e26e3461b472257} 
+\#define {\bfseries CHIRPCOMNCFG\+\_\+\+CHIRP\+\_\+\+RAMP\+\_\+\+END\+\_\+\+TIME}~60.\+0
+\item 
+\Hypertarget{defines_8h_a7e81d734131202302a0343a9842d6e78}\label{defines_8h_a7e81d734131202302a0343a9842d6e78} 
+\#define {\bfseries CHIRPCOMNCFG\+\_\+\+CHIRP\+\_\+\+RX\+\_\+\+HPF\+\_\+\+SEL}~M\+\_\+\+RL\+\_\+\+SENS\+\_\+\+RX\+\_\+\+HPF\+\_\+\+SEL\+\_\+300\+KHZ
+\item 
+\Hypertarget{defines_8h_a44f9074cdbed2913e8c72f478eb84851}\label{defines_8h_a44f9074cdbed2913e8c72f478eb84851} 
+\#define {\bfseries CHIRPTIMINGCFG\+\_\+\+CHIRP\+\_\+\+IDLE\+\_\+\+TIME}~6
+\item 
+\Hypertarget{defines_8h_a28bab31eae3d2706f8380faac8d6c599}\label{defines_8h_a28bab31eae3d2706f8380faac8d6c599} 
+\#define {\bfseries CHIRPTIMINGCFG\+\_\+\+CHIRP\+\_\+\+ADC\+\_\+\+START\+\_\+\+TIME}~(28 $<$$<$ 10)
+\item 
+\Hypertarget{defines_8h_a0818529f2517f775a2ad293e72bea351}\label{defines_8h_a0818529f2517f775a2ad293e72bea351} 
+\#define {\bfseries CHIRPTIMINGCFG\+\_\+\+CHIRP\+\_\+\+TX\+\_\+\+START\+\_\+\+TIME}~0
+\item 
+\Hypertarget{defines_8h_a66d25b44f16b0c63470709da095febdf}\label{defines_8h_a66d25b44f16b0c63470709da095febdf} 
+\#define {\bfseries CHIRPTIMINGCFG\+\_\+\+CHIRP\+\_\+\+RF\+\_\+\+FREQ\+\_\+\+SLOPE}~65
+\item 
+\Hypertarget{defines_8h_a4e655927bcbdd368c6a0d84b04f73eb6}\label{defines_8h_a4e655927bcbdd368c6a0d84b04f73eb6} 
+\#define {\bfseries CHIRPTIMINGCFG\+\_\+\+CHIRP\+\_\+\+RF\+\_\+\+FREQ\+\_\+\+START}~59.\+75
+\item 
+\Hypertarget{defines_8h_a30238809ea4d20e9087419184437d86f}\label{defines_8h_a30238809ea4d20e9087419184437d86f} 
+\#define {\bfseries CHIRPTIMINGCFG\+\_\+\+CHIRP\+\_\+\+TX\+\_\+\+EN\+\_\+\+SEL}~0x3U
+\item 
+\Hypertarget{defines_8h_a41fcfd67ee5727ab983f84de5d7ba896}\label{defines_8h_a41fcfd67ee5727ab983f84de5d7ba896} 
+\#define {\bfseries CHIRPTIMINGCFG\+\_\+\+CHIRP\+\_\+\+TX\+\_\+\+BPM\+\_\+\+EN\+\_\+\+SEL}~0x0U
+\item 
+\Hypertarget{defines_8h_abc67460aed0ed5dae8709c6a44264697}\label{defines_8h_abc67460aed0ed5dae8709c6a44264697} 
+\#define {\bfseries NUM\+\_\+\+CHIRPS\+\_\+\+ACCUM}~0
+\item 
+\Hypertarget{defines_8h_ab301d1438b9b9610144a98976f028dcc}\label{defines_8h_ab301d1438b9b9610144a98976f028dcc} 
+\#define {\bfseries BURST\+\_\+\+PERIOD}~643
+\item 
+\Hypertarget{defines_8h_a45c57eadbaea185fd1f92ba37d0a09cb}\label{defines_8h_a45c57eadbaea185fd1f92ba37d0a09cb} 
+\#define {\bfseries W\+\_\+\+BURST\+\_\+\+PERIOD}~(10.\+0 \texorpdfstring{$\ast$}{*} BURST\+\_\+\+PERIOD)
+\item 
+\Hypertarget{defines_8h_a1801d5568d7c8f585d4a53ef9993f17c}\label{defines_8h_a1801d5568d7c8f585d4a53ef9993f17c} 
+\#define {\bfseries FRAME\+\_\+\+PERIOD}~(((float)(250.\+0) \texorpdfstring{$\ast$}{*} 40000000.\+0)/1000.\+0)
+\item 
+\Hypertarget{defines_8h_a966cb2eed4436763c207af4b32b08f53}\label{defines_8h_a966cb2eed4436763c207af4b32b08f53} 
+\#define {\bfseries NUM\+\_\+\+FRAMES}~0
+\item 
+\Hypertarget{defines_8h_af15c785b3cf14a4ee534f40a57d9b2da}\label{defines_8h_af15c785b3cf14a4ee534f40a57d9b2da} 
+\#define {\bfseries SENSOR\+\_\+\+START\+\_\+\+FRAME\+\_\+\+TRIG\+\_\+\+MODE}~0
+\item 
+\Hypertarget{defines_8h_a1751f5e2b498c4b8b6ae9befd8ad9841}\label{defines_8h_a1751f5e2b498c4b8b6ae9befd8ad9841} 
+\#define {\bfseries SENSOR\+\_\+\+START\+\_\+\+CHIRP\+\_\+\+START\+\_\+\+SIG\+\_\+\+LB\+\_\+\+ENABLE}~0
+\item 
+\Hypertarget{defines_8h_ac13fb5b476f7219d638eddaedbe4c6bf}\label{defines_8h_ac13fb5b476f7219d638eddaedbe4c6bf} 
+\#define {\bfseries SENSOR\+\_\+\+START\+\_\+\+FRAME\+\_\+\+LIVE\+\_\+\+MON\+\_\+\+ENABLE}~0
+\item 
+\Hypertarget{defines_8h_a497cc44b26f891a2e706843b2ee49841}\label{defines_8h_a497cc44b26f891a2e706843b2ee49841} 
+\#define {\bfseries SENSOR\+\_\+\+START\+\_\+\+FRAME\+\_\+\+TRIG\+\_\+\+TIMER\+\_\+\+VAL}~0
+\item 
+\Hypertarget{defines_8h_ad053107efc0df81c174d3ac1023f797b}\label{defines_8h_ad053107efc0df81c174d3ac1023f797b} 
+\#define {\bfseries CLI\+\_\+\+FACCALCFG\+\_\+\+RES\+\_\+\+EN}~0
+\item 
+\Hypertarget{defines_8h_a1b1a0ad786984216261b021954dd5916}\label{defines_8h_a1b1a0ad786984216261b021954dd5916} 
+\#define {\bfseries CLI\+\_\+\+FACCALCFG\+\_\+\+RX\+\_\+\+GAIN}~40
+\item 
+\Hypertarget{defines_8h_a1949faef45abc698925ce372a7a25007}\label{defines_8h_a1949faef45abc698925ce372a7a25007} 
+\#define {\bfseries CLI\+\_\+\+FACCALCFG\+\_\+\+TX\+\_\+\+BACKOFF\+\_\+\+SEL}~0
+\item 
+\Hypertarget{defines_8h_ac063c67e7721a6be0849c273bf90b8fe}\label{defines_8h_ac063c67e7721a6be0849c273bf90b8fe} 
+\#define {\bfseries CLI\+\_\+\+FACCALCFG\+\_\+\+FLASH\+\_\+\+OFFSET}~0x1\+FF000
+\item 
+\Hypertarget{defines_8h_a2152ef4f6eebd69a9bf301476c67f662}\label{defines_8h_a2152ef4f6eebd69a9bf301476c67f662} 
+\#define {\bfseries SYS\+\_\+\+COMMON\+\_\+\+NUM\+\_\+\+RX\+\_\+\+CHANNEL}~3U
+\item 
+\Hypertarget{defines_8h_a9c0bb7bf70db46e2f39722eb2c846e7d}\label{defines_8h_a9c0bb7bf70db46e2f39722eb2c846e7d} 
+\#define {\bfseries SYS\+\_\+\+COMMON\+\_\+\+CQ\+\_\+\+MAX\+\_\+\+CHIRP\+\_\+\+THRESHOLD}~8U
+\item 
+\Hypertarget{defines_8h_a8f901a8e3092bf16090080cc61293725}\label{defines_8h_a8f901a8e3092bf16090080cc61293725} 
+\#define {\bfseries SYS\+\_\+\+COMMON\+\_\+\+CP\+\_\+\+SIZE\+\_\+\+CBUFF\+\_\+\+UNITS}~2U
+\item 
+\Hypertarget{defines_8h_a5ca7c9f6ac796a1fb268b8177567cedb}\label{defines_8h_a5ca7c9f6ac796a1fb268b8177567cedb} 
+\#define {\bfseries DMA\+\_\+\+TRIG\+\_\+\+SRC\+\_\+\+CHAN\+\_\+0}~0
+\item 
+\Hypertarget{defines_8h_aa60ce20fa7f20ed709f8169bbf5ad55e}\label{defines_8h_aa60ce20fa7f20ed709f8169bbf5ad55e} 
+\#define {\bfseries DMA\+\_\+\+TRIG\+\_\+\+SRC\+\_\+\+CHAN\+\_\+1}~1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Configuration macros for the radar system. 
+
+This file contains macro definitions for antenna settings, chirp configurations, timing parameters, and system-\/level settings.
+
+The configuration settings can be generated with the "{}mm\+Wave Sensing Estimator"{} tool (\href{https://dev.ti.com/gallery/view/mmwave/mmWaveSensingEstimator/ver/2.4.0/}{\texttt{ https\+://dev.\+ti.\+com/gallery/view/mmwave/mm\+Wave\+Sensing\+Estimator/ver/2.\+4.\+0/}}) 

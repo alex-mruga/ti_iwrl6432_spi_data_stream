@@ -1,0 +1,73 @@
+\doxysection{src/factory\+\_\+cal.c File Reference}
+\hypertarget{factory__cal_8c}{}\label{factory__cal_8c}\index{src/factory\_cal.c@{src/factory\_cal.c}}
+
+
+Factory Calibration Restoration and Configuration.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}kernel/dpl/\+Debug\+P.\+h"{}}\newline
+{\ttfamily \#include "{}kernel/dpl/\+System\+P.\+h"{}}\newline
+{\ttfamily \#include "{}control/mmwave/mmwave.\+h"{}}\newline
+{\ttfamily \#include "{}ti\+\_\+board\+\_\+open\+\_\+close.\+h"{}}\newline
+{\ttfamily \#include $<$board/flash.\+h$>$}\newline
+{\ttfamily \#include $<$mmwavelink/mmwavelink.\+h$>$}\newline
+{\ttfamily \#include $<$mmwavelink/include/rl\+\_\+device.\+h$>$}\newline
+{\ttfamily \#include $<$mmwavelink/include/rl\+\_\+sensor.\+h$>$}\newline
+{\ttfamily \#include $<$kernel/dpl/\+Cache\+P.\+h$>$}\newline
+{\ttfamily \#include "{}factory\+\_\+cal.\+h"{}}\newline
+{\ttfamily \#include "{}mmwave\+\_\+basic.\+h"{}}\newline
+{\ttfamily \#include "{}mmwave\+\_\+control\+\_\+config.\+h"{}}\newline
+{\ttfamily \#include "{}defines.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{factory__cal_8c_a163e577040bc4eced4a7d03256508cc8}\label{factory__cal_8c_a163e577040bc4eced4a7d03256508cc8} 
+\mbox{\hyperlink{factory__cal_8h_a26376cc59645a60d9a1eda598969849c}{Mmw\+\_\+calib\+Data}} calib\+Data {\bfseries \+\_\+\+\_\+attribute\+\_\+\+\_\+} ((aligned(8)))
+\item 
+int32\+\_\+t \mbox{\hyperlink{factory__cal_8c_a6405a944c29067199814b66c978588a8}{restore\+Factory\+Cal}} (void)
+\begin{DoxyCompactList}\small\item\em Restores factory calibration data from flash. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Factory Calibration Restoration and Configuration. 
+
+This file implements the functionality to restore factory calibration data for the radar system. It reads calibration data from flash memory, validates its integrity using a magic number, and configures the radar front-\/end (FECSS) with the restored calibration parameters. The calibration process ensures optimal performance of the radar system by compensating for manufacturing variations and environmental factors.
+
+\begin{DoxyNote}{Note}
+This function in this file is adapted from the Motion and Presence Detection Demo\+: \$\{MMWAVE\+\_\+\+SDK\+\_\+\+INSTALL\+\_\+\+PATH\}\textbackslash{}examples\textbackslash{}mmw\+\_\+demo\textbackslash{}motion\+\_\+and\+\_\+presence\+\_\+detection\textbackslash{}source\textbackslash{}calibration\textbackslash{}factory\+\_\+cal.c
+\end{DoxyNote}
+\begin{DoxyCopyright}{Copyright}
+(C) 2022-\/24 Texas Instruments Incorporated
+\end{DoxyCopyright}
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met\+:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+Neither the name of Texas Instruments Incorporated nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "{}\+AS IS"{} AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{factory__cal_8c_a6405a944c29067199814b66c978588a8}\index{factory\_cal.c@{factory\_cal.c}!restoreFactoryCal@{restoreFactoryCal}}
+\index{restoreFactoryCal@{restoreFactoryCal}!factory\_cal.c@{factory\_cal.c}}
+\doxysubsubsection{\texorpdfstring{restoreFactoryCal()}{restoreFactoryCal()}}
+{\footnotesize\ttfamily \label{factory__cal_8c_a6405a944c29067199814b66c978588a8} 
+int32\+\_\+t restore\+Factory\+Cal (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Restores factory calibration data from flash. 
+
+This function reads the calibration data stored in flash memory and restores it. It requires that the system has been previously calibrated.
+
+Derived from {\ttfamily mmw\+Demo\+\_\+factory\+Cal} and {\ttfamily Mmw\+Demo\+\_\+calib\+Restore} in {\ttfamily \doxylink{factory__cal_8c}{factory\+\_\+cal.\+c}} from the demo project.
+
+\begin{DoxyReturn}{Returns}
+System\+P\+\_\+\+SUCCESS on success, -\/1 on failure. 
+\end{DoxyReturn}

@@ -1,3 +1,23 @@
+/**
+ * @file uart_transmit.c
+ * @brief UART Transmission Implementation for Radar Data.
+ *
+ * This file implements the UART transmission of radar cube data.
+ * It manages synchronization using semaphores, waits for transmission signals,
+ * sends data over UART, and signals completion when done.
+ *
+ * The transmission process is controlled using two semaphores:
+ * - `uart_tx_start_sem`: Signals the start of transmission.
+ * - `uart_tx_done_sem`: Signals the completion of transmission.
+ *
+ * The function `uart_transmit_loop()` runs continuously, waiting for
+ * `uart_tx_start_sem` to be posted, transmitting radar cube data, and posting
+ * `uart_tx_done_sem` upon completion.
+ *
+ * @note This module relies on the SemaphoreP API from the kernel/dpl library
+ *       for synchronization.
+ */
+
 #include "ti_drivers_config.h"
 #include <stdio.h>
 #include "string.h"
@@ -19,6 +39,12 @@ uint8_t gUartBuffer[APP_UART_BUFSIZE];
 uint8_t gUartReceiveBuffer[APP_UART_RECEIVE_BUFSIZE];
 volatile uint32_t gNumBytesRead = 0U, gNumBytesWritten = 0U;
 
+/**
+ * @brief Header and footer for each radarCube transmission over UART.
+ *
+ * These markers are used to indicate the start and end of each radarCube 
+ * data packet during UART transmission.
+ */
 const uint8_t header[4] = {0xAA, 0xBB, 0xCC, 0xDD};
 const uint8_t footer[4] = {0xDD, 0xCC, 0xBB, 0xAA};
 

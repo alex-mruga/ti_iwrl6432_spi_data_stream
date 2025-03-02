@@ -1,0 +1,69 @@
+\doxysection{include/uart\+\_\+transmit.h File Reference}
+\hypertarget{uart__transmit_8h}{}\label{uart__transmit_8h}\index{include/uart\_transmit.h@{include/uart\_transmit.h}}
+
+
+UART Transmission Interface for Radar Data.  
+
+
+{\ttfamily \#include "{}kernel/dpl/\+Semaphore\+P.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{uart__transmit_8h_a3d3a33262d55bf39da02980f3ac545a9}{uart\+\_\+transmit\+\_\+loop}} ()
+\begin{DoxyCompactList}\small\item\em UART transmission loop function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Semaphore\+P\+\_\+\+Object \mbox{\hyperlink{uart__transmit_8h_ad509a07f15c0047aadf571d87574a34e}{uart\+\_\+tx\+\_\+start\+\_\+sem}}
+\begin{DoxyCompactList}\small\item\em Semaphore to signal the start of UART transmission. \end{DoxyCompactList}\item 
+Semaphore\+P\+\_\+\+Object \mbox{\hyperlink{uart__transmit_8h_aabc0faa8591ef37b89c353f5d8d8a1eb}{uart\+\_\+tx\+\_\+done\+\_\+sem}}
+\begin{DoxyCompactList}\small\item\em Semaphore to signal the completion of UART transmission. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+UART Transmission Interface for Radar Data. 
+
+This file defines the interface for transmitting radar cube data over UART. It includes the declaration of semaphores used to synchronize the UART transmission process and the function prototype for the UART transmission loop.
+
+The UART transmission loop waits for a signal to start transmission, sends radar cube data over UART, and signals completion when done. This module is designed to facilitate communication between the radar processing unit and external systems via UART.
+
+\begin{DoxyNote}{Note}
+This module relies on the SemaphoreP API from the kernel/dpl library for synchronization. 
+\end{DoxyNote}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{uart__transmit_8h_a3d3a33262d55bf39da02980f3ac545a9}\index{uart\_transmit.h@{uart\_transmit.h}!uart\_transmit\_loop@{uart\_transmit\_loop}}
+\index{uart\_transmit\_loop@{uart\_transmit\_loop}!uart\_transmit.h@{uart\_transmit.h}}
+\doxysubsubsection{\texorpdfstring{uart\_transmit\_loop()}{uart\_transmit\_loop()}}
+{\footnotesize\ttfamily \label{uart__transmit_8h_a3d3a33262d55bf39da02980f3ac545a9} 
+void uart\+\_\+transmit\+\_\+loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+UART transmission loop function. 
+
+This function continuously waits for a signal to start UART transmission, sends radar cube data over UART, and signals completion when done. 
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{uart__transmit_8h_aabc0faa8591ef37b89c353f5d8d8a1eb}\index{uart\_transmit.h@{uart\_transmit.h}!uart\_tx\_done\_sem@{uart\_tx\_done\_sem}}
+\index{uart\_tx\_done\_sem@{uart\_tx\_done\_sem}!uart\_transmit.h@{uart\_transmit.h}}
+\doxysubsubsection{\texorpdfstring{uart\_tx\_done\_sem}{uart\_tx\_done\_sem}}
+{\footnotesize\ttfamily \label{uart__transmit_8h_aabc0faa8591ef37b89c353f5d8d8a1eb} 
+Semaphore\+P\+\_\+\+Object uart\+\_\+tx\+\_\+done\+\_\+sem\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Semaphore to signal the completion of UART transmission. 
+
+This semaphore is posted when the UART transmission is complete. \Hypertarget{uart__transmit_8h_ad509a07f15c0047aadf571d87574a34e}\index{uart\_transmit.h@{uart\_transmit.h}!uart\_tx\_start\_sem@{uart\_tx\_start\_sem}}
+\index{uart\_tx\_start\_sem@{uart\_tx\_start\_sem}!uart\_transmit.h@{uart\_transmit.h}}
+\doxysubsubsection{\texorpdfstring{uart\_tx\_start\_sem}{uart\_tx\_start\_sem}}
+{\footnotesize\ttfamily \label{uart__transmit_8h_ad509a07f15c0047aadf571d87574a34e} 
+Semaphore\+P\+\_\+\+Object uart\+\_\+tx\+\_\+start\+\_\+sem\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Semaphore to signal the start of UART transmission. 
+
+This semaphore is used to trigger the UART transmission process. 

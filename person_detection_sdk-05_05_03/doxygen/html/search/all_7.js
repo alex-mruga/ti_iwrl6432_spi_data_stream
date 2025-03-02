@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['magic_0',['magic',['../struct_mmw__calib_data__t.html#a57f54349f4fd1cbbb52058812e146af2',1,'Mmw_calibData_t']]],
+  ['main_2ec_1',['main.c',['../main_8c.html',1,'']]],
+  ['maxcurraddr_2',['maxCurrAddr',['../struct_mem_pool_obj__t.html#a50c67a522aec77479dd08bdc7d12c259',1,'MemPoolObj_t']]],
+  ['mem_5fpool_2ec_3',['mem_pool.c',['../mem__pool_8c.html',1,'']]],
+  ['mem_5fpool_2eh_4',['mem_pool.h',['../mem__pool_8h.html',1,'']]],
+  ['mempool_5finit_5',['mempool_init',['../mmwave__basic_8c.html#a678cfadb45e293722df01298b17e55bc',1,'mmwave_basic.c']]],
+  ['mempoolobj_6',['MemPoolObj',['../mem__pool_8h.html#a788ff8f9775b0058d4fbaea936649d68',1,'mem_pool.h']]],
+  ['mempoolobj_5ft_7',['MemPoolObj_t',['../struct_mem_pool_obj__t.html',1,'']]],
+  ['mmw_5fcalibdata_8',['Mmw_calibData',['../factory__cal_8h.html#a26376cc59645a60d9a1eda598969849c',1,'factory_cal.h']]],
+  ['mmw_5fcalibdata_5ft_9',['Mmw_calibData_t',['../struct_mmw__calib_data__t.html',1,'']]],
+  ['mmwave_5fbasic_2ec_10',['mmwave_basic.c',['../mmwave__basic_8c.html',1,'']]],
+  ['mmwave_5fconfigsensor_11',['mmwave_configSensor',['../mmwave__basic_8c.html#aecfc0fdd6fbc6b3cad93b01b54c6f8fd',1,'mmwave_basic.c']]],
+  ['mmwave_5finitsensor_12',['mmwave_initSensor',['../mmwave__basic_8c.html#af30b8b304295c99d440820eb7fae4ef9',1,'mmwave_basic.c']]],
+  ['mmwave_5fopensensor_13',['mmwave_openSensor',['../mmwave__basic_8c.html#a2a5ccf35d4cd315c45f62542ad59bbd7',1,'mmwave_basic.c']]],
+  ['mmwave_5fpopulatedefaultcalibrationcfg_14',['Mmwave_populateDefaultCalibrationCfg',['../mmwave__basic_8c.html#a51c96860ff0de343bc4bab0db877326c',1,'mmwave_control_config.c']]],
+  ['mmwave_5fpopulatedefaultchirpcontrolcfg_15',['Mmwave_populateDefaultChirpControlCfg',['../mmwave__basic_8c.html#af5159a0a2ff032bd1253d884ac8e82f9',1,'mmwave_control_config.c']]],
+  ['mmwave_5fpopulatedefaultopencfg_16',['Mmwave_populateDefaultOpenCfg',['../mmwave__basic_8c.html#a7d2604e2ae505e980232a7fddb52ad78',1,'mmwave_control_config.c']]],
+  ['mmwave_5fpopulatedefaultstartcfg_17',['Mmwave_populateDefaultStartCfg',['../mmwave__basic_8c.html#a04253550c069618e610cdaa1b8839d04',1,'mmwave_control_config.c']]],
+  ['mmwave_5fstartsensor_18',['mmwave_startSensor',['../mmwave__basic_8c.html#a643dba2b7f1466c8287dfe089cb50509',1,'mmwave_basic.c']]],
+  ['mmwave_5fstop_5fclose_5fdeinit_19',['mmwave_stop_close_deinit',['../mmwave__basic_8c.html#ad8242f3ca1393fd5ac65c186785f0328',1,'mmwave_basic.c']]],
+  ['mmwdemo_5fcalib_5fstore_5fmagic_20',['MMWDEMO_CALIB_STORE_MAGIC',['../factory__cal_8h.html#a3bd976203b617ae6dd882f94a50a3949',1,'factory_cal.h']]],
+  ['mmwdemo_5fobjdet_5fcore_5flocal_5fmem_5fsize_21',['MMWDEMO_OBJDET_CORE_LOCAL_MEM_SIZE',['../mmwave__basic_8c.html#a34f5a73dd92c07d3906d6d0375809e7a',1,'mmwave_basic.c']]]
+];

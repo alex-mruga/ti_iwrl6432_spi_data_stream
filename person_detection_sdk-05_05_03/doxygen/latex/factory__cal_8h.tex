@@ -1,0 +1,115 @@
+\doxysection{include/factory\+\_\+cal.h File Reference}
+\hypertarget{factory__cal_8h}{}\label{factory__cal_8h}\index{include/factory\_cal.h@{include/factory\_cal.h}}
+
+
+Factory calibration realted functions.  
+
+
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_mmw__calib_data__t}{Mmw\+\_\+calib\+Data\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Structure holds calibration save configuration used during sensor open. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{factory__cal_8h_a3bd976203b617ae6dd882f94a50a3949}{MMWDEMO\+\_\+\+CALIB\+\_\+\+STORE\+\_\+\+MAGIC}}~(0x7\+CB28\+DF9U)
+\begin{DoxyCompactList}\small\item\em Magic word for factory calibration data validation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{struct_mmw__calib_data__t}{Mmw\+\_\+calib\+Data\+\_\+t}} \mbox{\hyperlink{factory__cal_8h_a26376cc59645a60d9a1eda598969849c}{Mmw\+\_\+calib\+Data}}
+\begin{DoxyCompactList}\small\item\em Structure holds calibration save configuration used during sensor open. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int32\+\_\+t \mbox{\hyperlink{factory__cal_8h_a6405a944c29067199814b66c978588a8}{restore\+Factory\+Cal}} (void)
+\begin{DoxyCompactList}\small\item\em Restores factory calibration data from flash. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{factory__cal_8h_a412c436aac0a1ddaf5cf0275889265bd}\label{factory__cal_8h_a412c436aac0a1ddaf5cf0275889265bd} 
+T\+\_\+\+RL\+\_\+\+API\+\_\+\+SENS\+\_\+\+CHIRP\+\_\+\+PROF\+\_\+\+COMN\+\_\+\+CFG {\bfseries profile\+Com\+Cfg}
+\item 
+\Hypertarget{factory__cal_8h_a2afed090ad4c9cfa7462b0fa15236a3b}\label{factory__cal_8h_a2afed090ad4c9cfa7462b0fa15236a3b} 
+T\+\_\+\+RL\+\_\+\+API\+\_\+\+SENS\+\_\+\+CHIRP\+\_\+\+PROF\+\_\+\+TIME\+\_\+\+CFG {\bfseries profile\+Time\+Cfg}
+\item 
+\Hypertarget{factory__cal_8h_aea0e2360f8bc72c7fc1a75fd36c72607}\label{factory__cal_8h_aea0e2360f8bc72c7fc1a75fd36c72607} 
+T\+\_\+\+RL\+\_\+\+API\+\_\+\+FECSS\+\_\+\+RF\+\_\+\+PWR\+\_\+\+CFG\+\_\+\+CMD {\bfseries channel\+Cfg}
+\item 
+\Hypertarget{factory__cal_8h_a05d0309253ab89a0db0105cb2073e89a}\label{factory__cal_8h_a05d0309253ab89a0db0105cb2073e89a} 
+T\+\_\+\+RL\+\_\+\+API\+\_\+\+SENS\+\_\+\+FRAME\+\_\+\+CFG {\bfseries frame\+Cfg}
+\item 
+\Hypertarget{factory__cal_8h_a06ba651c3e4b1dbbf75f213cc09bb97c}\label{factory__cal_8h_a06ba651c3e4b1dbbf75f213cc09bb97c} 
+MMWave\+\_\+\+Handle {\bfseries g\+Ctrl\+Handle}
+\begin{DoxyCompactList}\small\item\em This is the mm\+Wave control handle which is used to configure the BSS. \end{DoxyCompactList}\item 
+\Hypertarget{factory__cal_8h_aa1c2096884780ed64639986343a8640d}\label{factory__cal_8h_aa1c2096884780ed64639986343a8640d} 
+T\+\_\+\+RL\+\_\+\+API\+\_\+\+FECSS\+\_\+\+RUNTIME\+\_\+\+TX\+\_\+\+CLPC\+\_\+\+CAL\+\_\+\+CMD {\bfseries fec\+Txclpc\+Cal\+Cmd}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Factory calibration realted functions. 
+
+This header defines data structure and function to hold calibration data.
+
+\begin{DoxyNote}{Note}
+This function in this file is adapted from the Motion and Presence Detection Demo\+: \$\{MMWAVE\+\_\+\+SDK\+\_\+\+INSTALL\+\_\+\+PATH\}\textbackslash{}examples\textbackslash{}mmw\+\_\+demo\textbackslash{}motion\+\_\+and\+\_\+presence\+\_\+detection\textbackslash{}source\textbackslash{}calibration\textbackslash{}factory\+\_\+cal.c
+\end{DoxyNote}
+\begin{DoxyCopyright}{Copyright}
+Copyright (C) 2022-\/24 Texas Instruments Incorporated
+\end{DoxyCopyright}
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met\+:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+Neither the name of Texas Instruments Incorporated nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "{}\+AS IS"{} AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{factory__cal_8h_a3bd976203b617ae6dd882f94a50a3949}\index{factory\_cal.h@{factory\_cal.h}!MMWDEMO\_CALIB\_STORE\_MAGIC@{MMWDEMO\_CALIB\_STORE\_MAGIC}}
+\index{MMWDEMO\_CALIB\_STORE\_MAGIC@{MMWDEMO\_CALIB\_STORE\_MAGIC}!factory\_cal.h@{factory\_cal.h}}
+\doxysubsubsection{\texorpdfstring{MMWDEMO\_CALIB\_STORE\_MAGIC}{MMWDEMO\_CALIB\_STORE\_MAGIC}}
+{\footnotesize\ttfamily \label{factory__cal_8h_a3bd976203b617ae6dd882f94a50a3949} 
+\#define MMWDEMO\+\_\+\+CALIB\+\_\+\+STORE\+\_\+\+MAGIC~(0x7\+CB28\+DF9U)}
+
+
+
+Magic word for factory calibration data validation. 
+
+This value is stored in flash alongside calibration data and checked upon restoration to verify data integrity. It acts as a simple checksum to ensure the calibration data is valid. 
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{factory__cal_8h_a26376cc59645a60d9a1eda598969849c}\index{factory\_cal.h@{factory\_cal.h}!Mmw\_calibData@{Mmw\_calibData}}
+\index{Mmw\_calibData@{Mmw\_calibData}!factory\_cal.h@{factory\_cal.h}}
+\doxysubsubsection{\texorpdfstring{Mmw\_calibData}{Mmw\_calibData}}
+{\footnotesize\ttfamily \label{factory__cal_8h_a26376cc59645a60d9a1eda598969849c} 
+typedef struct \mbox{\hyperlink{struct_mmw__calib_data__t}{Mmw\+\_\+calib\+Data\+\_\+t}} \mbox{\hyperlink{factory__cal_8h_a26376cc59645a60d9a1eda598969849c}{Mmw\+\_\+calib\+Data}}}
+
+
+
+Structure holds calibration save configuration used during sensor open. 
+
+The structure holds calibration save configuration. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{factory__cal_8h_a6405a944c29067199814b66c978588a8}\index{factory\_cal.h@{factory\_cal.h}!restoreFactoryCal@{restoreFactoryCal}}
+\index{restoreFactoryCal@{restoreFactoryCal}!factory\_cal.h@{factory\_cal.h}}
+\doxysubsubsection{\texorpdfstring{restoreFactoryCal()}{restoreFactoryCal()}}
+{\footnotesize\ttfamily \label{factory__cal_8h_a6405a944c29067199814b66c978588a8} 
+int32\+\_\+t restore\+Factory\+Cal (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Restores factory calibration data from flash. 
+
+This function reads the calibration data stored in flash memory and restores it. It requires that the system has been previously calibrated.
+
+Derived from {\ttfamily mmw\+Demo\+\_\+factory\+Cal} and {\ttfamily Mmw\+Demo\+\_\+calib\+Restore} in {\ttfamily \doxylink{factory__cal_8c}{factory\+\_\+cal.\+c}} from the demo project.
+
+\begin{DoxyReturn}{Returns}
+System\+P\+\_\+\+SUCCESS on success, -\/1 on failure. 
+\end{DoxyReturn}

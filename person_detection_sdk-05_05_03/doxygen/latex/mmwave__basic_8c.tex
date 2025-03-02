@@ -1,0 +1,173 @@
+\doxysection{src/mmwave\+\_\+basic.c File Reference}
+\hypertarget{mmwave__basic_8c}{}\label{mmwave__basic_8c}\index{src/mmwave\_basic.c@{src/mmwave\_basic.c}}
+
+
+Initialization, configuration, and control functions for mm\+Wave sensor.  
+
+
+{\ttfamily \#include "{}drivers/hwa.\+h"{}}\newline
+{\ttfamily \#include "{}kernel/dpl/\+System\+P.\+h"{}}\newline
+{\ttfamily \#include "{}ti\+\_\+drivers\+\_\+open\+\_\+close.\+h"{}}\newline
+{\ttfamily \#include "{}ti\+\_\+board\+\_\+open\+\_\+close.\+h"{}}\newline
+{\ttfamily \#include "{}kernel/dpl/\+Debug\+P.\+h"{}}\newline
+{\ttfamily \#include "{}defines.\+h"{}}\newline
+{\ttfamily \#include "{}mem\+\_\+pool.\+h"{}}\newline
+{\ttfamily \#include "{}mmwave\+\_\+basic.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{mmwave__basic_8c_a45c7f465cdc7dd8a8f8b5a849098dca6}\label{mmwave__basic_8c_a45c7f465cdc7dd8a8f8b5a849098dca6} 
+\#define {\bfseries L3\+\_\+\+MEM\+\_\+\+SIZE}~(0x40000 + 160\texorpdfstring{$\ast$}{*}1024)
+\begin{DoxyCompactList}\small\item\em L3 RAM buffer for object detection DPC. \end{DoxyCompactList}\item 
+\Hypertarget{mmwave__basic_8c_a34f5a73dd92c07d3906d6d0375809e7a}\label{mmwave__basic_8c_a34f5a73dd92c07d3906d6d0375809e7a} 
+\#define {\bfseries MMWDEMO\+\_\+\+OBJDET\+\_\+\+CORE\+\_\+\+LOCAL\+\_\+\+MEM\+\_\+\+SIZE}~((8U+6U+4U+2U+8U) \texorpdfstring{$\ast$}{*} 1024U)
+\begin{DoxyCompactList}\small\item\em Local RAM buffer for object detection DPC. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{mmwave__basic_8c_a7d2604e2ae505e980232a7fddb52ad78}{Mmwave\+\_\+populate\+Default\+Open\+Cfg}} (MMWave\+\_\+\+Open\+Cfg \texorpdfstring{$\ast$}{*}ptr\+Open\+Cfg)
+\item 
+void \mbox{\hyperlink{mmwave__basic_8c_af5159a0a2ff032bd1253d884ac8e82f9}{Mmwave\+\_\+populate\+Default\+Chirp\+Control\+Cfg}} (MMWave\+\_\+\+Ctrl\+Cfg \texorpdfstring{$\ast$}{*}ptr\+Ctrl\+Cfg)
+\item 
+void \mbox{\hyperlink{mmwave__basic_8c_a51c96860ff0de343bc4bab0db877326c}{Mmwave\+\_\+populate\+Default\+Calibration\+Cfg}} (MMWave\+\_\+\+Calibration\+Cfg \texorpdfstring{$\ast$}{*}ptr\+Calibration\+Cfg)
+\item 
+void \mbox{\hyperlink{mmwave__basic_8c_a04253550c069618e610cdaa1b8839d04}{Mmwave\+\_\+populate\+Default\+Start\+Cfg}} (MMWave\+\_\+\+Strt\+Cfg \texorpdfstring{$\ast$}{*}ptr\+Start\+Cfg)
+\item 
+\Hypertarget{mmwave__basic_8c_a6a662710b3bdb0b16f603aecb9189aba}\label{mmwave__basic_8c_a6a662710b3bdb0b16f603aecb9189aba} 
+uint8\+\_\+t g\+Mmw\+L3\mbox{[}\mbox{\hyperlink{mmwave__basic_8c_a45c7f465cdc7dd8a8f8b5a849098dca6}{L3\+\_\+\+MEM\+\_\+\+SIZE}}\mbox{]} {\bfseries \+\_\+\+\_\+attribute} ((section("{}.l3"{})))
+\item 
+void \mbox{\hyperlink{mmwave__basic_8c_a678cfadb45e293722df01298b17e55bc}{mempool\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em sets start address and size of shared mempool \end{DoxyCompactList}\item 
+\Hypertarget{mmwave__basic_8c_ae3265a6f040b79d876a70a2010ab2ae4}\label{mmwave__basic_8c_ae3265a6f040b79d876a70a2010ab2ae4} 
+int32\+\_\+t {\bfseries hwa\+\_\+open\+\_\+handler} ()
+\begin{DoxyCompactList}\small\item\em calls HWA\+\_\+open() and thereby retrieves the HWA\textquotesingle{}s handle (HWA\+\_\+\+Handle) \end{DoxyCompactList}\item 
+\Hypertarget{mmwave__basic_8c_af30b8b304295c99d440820eb7fae4ef9}\label{mmwave__basic_8c_af30b8b304295c99d440820eb7fae4ef9} 
+int32\+\_\+t {\bfseries mmwave\+\_\+init\+Sensor} ()
+\begin{DoxyCompactList}\small\item\em calls the MMWave\+\_\+init() function and thereby retrieves the mmwave control handle (MMWave\+\_\+\+Handle) \end{DoxyCompactList}\item 
+\Hypertarget{mmwave__basic_8c_a2a5ccf35d4cd315c45f62542ad59bbd7}\label{mmwave__basic_8c_a2a5ccf35d4cd315c45f62542ad59bbd7} 
+int32\+\_\+t {\bfseries mmwave\+\_\+open\+Sensor} (void)
+\begin{DoxyCompactList}\small\item\em calls the MMWave\+\_\+open() function, requires the configuration for open (MMWave\+\_\+\+Open\+Cfg) \end{DoxyCompactList}\item 
+\Hypertarget{mmwave__basic_8c_aecfc0fdd6fbc6b3cad93b01b54c6f8fd}\label{mmwave__basic_8c_aecfc0fdd6fbc6b3cad93b01b54c6f8fd} 
+int32\+\_\+t {\bfseries mmwave\+\_\+config\+Sensor} (void)
+\begin{DoxyCompactList}\small\item\em calls the MMWave\+\_\+config() function, requires the configuration for control (MMWave\+\_\+\+Ctrl\+Cfg) \end{DoxyCompactList}\item 
+\Hypertarget{mmwave__basic_8c_a643dba2b7f1466c8287dfe089cb50509}\label{mmwave__basic_8c_a643dba2b7f1466c8287dfe089cb50509} 
+int32\+\_\+t {\bfseries mmwave\+\_\+start\+Sensor} (void)
+\begin{DoxyCompactList}\small\item\em calls the MMWave\+\_\+start() function, requires the configuration for start (MMWave\+\_\+\+Start\+Cfg) \end{DoxyCompactList}\item 
+\Hypertarget{mmwave__basic_8c_ad8242f3ca1393fd5ac65c186785f0328}\label{mmwave__basic_8c_ad8242f3ca1393fd5ac65c186785f0328} 
+int32\+\_\+t {\bfseries mmwave\+\_\+stop\+\_\+close\+\_\+deinit} (void)
+\begin{DoxyCompactList}\small\item\em calls the MMWave\+\_\+stop(), MMWave\+\_\+close() and MMWave\+\_\+deinit() function \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{mmwave__basic_8c_a6cfd275ae37b407ca5cafa39b33a2d96}\label{mmwave__basic_8c_a6cfd275ae37b407ca5cafa39b33a2d96} 
+uint8\+\_\+t {\bfseries g\+Mmw\+Core\+Loc\+Mem} \mbox{[}\mbox{\hyperlink{mmwave__basic_8c_a34f5a73dd92c07d3906d6d0375809e7a}{MMWDEMO\+\_\+\+OBJDET\+\_\+\+CORE\+\_\+\+LOCAL\+\_\+\+MEM\+\_\+\+SIZE}}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Initialization, configuration, and control functions for mm\+Wave sensor. 
+
+This file contains functions to initialize, open, configure, start, stop, and deinitialize the mm\+Wave sensor. It also includes memory pool setup and HWA initialization.
+
+\begin{DoxyNote}{Note}
+Functionality derived from motion\+\_\+and\+\_\+presence\+\_\+detection\+\_\+demo\+\_\+xwr\+L64xx-\/evm\+\_\+m4fss0-\/0\+\_\+freertos\+\_\+ti-\/arm-\/clang.
+\end{DoxyNote}
+
+\begin{DoxyItemize}
+\item Provides functions for mm\+Wave sensor control.
+\item Includes memory pool initialization for object detection processing.
+\item Handles HWA (Hardware Accelerator) initialization.
+\item Implements calibration restore and validation using stored magic word.
+\end{DoxyItemize}
+
+\begin{DoxyCopyright}{Copyright}
+(C) 2022-\/24 Texas Instruments Incorporated
+\end{DoxyCopyright}
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met\+:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+Neither the name of Texas Instruments Incorporated nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "{}\+AS IS"{} AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{mmwave__basic_8c_a678cfadb45e293722df01298b17e55bc}\index{mmwave\_basic.c@{mmwave\_basic.c}!mempool\_init@{mempool\_init}}
+\index{mempool\_init@{mempool\_init}!mmwave\_basic.c@{mmwave\_basic.c}}
+\doxysubsubsection{\texorpdfstring{mempool\_init()}{mempool\_init()}}
+{\footnotesize\ttfamily \label{mmwave__basic_8c_a678cfadb45e293722df01298b17e55bc} 
+void mempool\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+sets start address and size of shared mempool 
+
+{\bfseries{Description}} ~\newline
+ This header file defines the interface for the basic mmwave initialization functionality on the basis of which the DPUs can be used. \Hypertarget{mmwave__basic_8c_a51c96860ff0de343bc4bab0db877326c}\index{mmwave\_basic.c@{mmwave\_basic.c}!Mmwave\_populateDefaultCalibrationCfg@{Mmwave\_populateDefaultCalibrationCfg}}
+\index{Mmwave\_populateDefaultCalibrationCfg@{Mmwave\_populateDefaultCalibrationCfg}!mmwave\_basic.c@{mmwave\_basic.c}}
+\doxysubsubsection{\texorpdfstring{Mmwave\_populateDefaultCalibrationCfg()}{Mmwave\_populateDefaultCalibrationCfg()}}
+{\footnotesize\ttfamily \label{mmwave__basic_8c_a51c96860ff0de343bc4bab0db877326c} 
+void Mmwave\+\_\+populate\+Default\+Calibration\+Cfg (\begin{DoxyParamCaption}\item[{MMWave\+\_\+\+Calibration\+Cfg \texorpdfstring{$\ast$}{*}}]{ptr\+Calibration\+Cfg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+{\bfseries{Description}} ~\newline
+ The function is used to populate the default calibration configuration which is passed to start the mm\+Wave module
+
+
+\begin{DoxyRetVals}{Return values}
+{\em Not} & applicable \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{mmwave__basic_8c_af5159a0a2ff032bd1253d884ac8e82f9}\index{mmwave\_basic.c@{mmwave\_basic.c}!Mmwave\_populateDefaultChirpControlCfg@{Mmwave\_populateDefaultChirpControlCfg}}
+\index{Mmwave\_populateDefaultChirpControlCfg@{Mmwave\_populateDefaultChirpControlCfg}!mmwave\_basic.c@{mmwave\_basic.c}}
+\doxysubsubsection{\texorpdfstring{Mmwave\_populateDefaultChirpControlCfg()}{Mmwave\_populateDefaultChirpControlCfg()}}
+{\footnotesize\ttfamily \label{mmwave__basic_8c_af5159a0a2ff032bd1253d884ac8e82f9} 
+void Mmwave\+\_\+populate\+Default\+Chirp\+Control\+Cfg (\begin{DoxyParamCaption}\item[{MMWave\+\_\+\+Ctrl\+Cfg \texorpdfstring{$\ast$}{*}}]{ptr\+Ctrl\+Cfg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+{\bfseries{Description}} ~\newline
+ The function is used to populate the default control configuration in chirp configuration mode
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em ptr\+Ctrl\+Cfg} & Pointer to the control configuration\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Not} & applicable \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{mmwave__basic_8c_a7d2604e2ae505e980232a7fddb52ad78}\index{mmwave\_basic.c@{mmwave\_basic.c}!Mmwave\_populateDefaultOpenCfg@{Mmwave\_populateDefaultOpenCfg}}
+\index{Mmwave\_populateDefaultOpenCfg@{Mmwave\_populateDefaultOpenCfg}!mmwave\_basic.c@{mmwave\_basic.c}}
+\doxysubsubsection{\texorpdfstring{Mmwave\_populateDefaultOpenCfg()}{Mmwave\_populateDefaultOpenCfg()}}
+{\footnotesize\ttfamily \label{mmwave__basic_8c_a7d2604e2ae505e980232a7fddb52ad78} 
+void Mmwave\+\_\+populate\+Default\+Open\+Cfg (\begin{DoxyParamCaption}\item[{MMWave\+\_\+\+Open\+Cfg \texorpdfstring{$\ast$}{*}}]{ptr\+Open\+Cfg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+{\bfseries{Description}} ~\newline
+ The function is used to populate the default open configuration.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em ptr\+Open\+Cfg} & Pointer to the open configuration\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Return values}
+{\em Not} & applicable \\
+\hline
+\end{DoxyRetVals}
+\Hypertarget{mmwave__basic_8c_a04253550c069618e610cdaa1b8839d04}\index{mmwave\_basic.c@{mmwave\_basic.c}!Mmwave\_populateDefaultStartCfg@{Mmwave\_populateDefaultStartCfg}}
+\index{Mmwave\_populateDefaultStartCfg@{Mmwave\_populateDefaultStartCfg}!mmwave\_basic.c@{mmwave\_basic.c}}
+\doxysubsubsection{\texorpdfstring{Mmwave\_populateDefaultStartCfg()}{Mmwave\_populateDefaultStartCfg()}}
+{\footnotesize\ttfamily \label{mmwave__basic_8c_a04253550c069618e610cdaa1b8839d04} 
+void Mmwave\+\_\+populate\+Default\+Start\+Cfg (\begin{DoxyParamCaption}\item[{MMWave\+\_\+\+Strt\+Cfg \texorpdfstring{$\ast$}{*}}]{ptr\+Start\+Cfg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+{\bfseries{Description}} ~\newline
+ The function is used to populate the default start configuration which is passed to start the mm\+Wave module
+
+
+\begin{DoxyRetVals}{Return values}
+{\em Not} & applicable \\
+\hline
+\end{DoxyRetVals}

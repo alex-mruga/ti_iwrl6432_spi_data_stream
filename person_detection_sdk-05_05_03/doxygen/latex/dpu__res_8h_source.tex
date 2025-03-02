@@ -1,0 +1,145 @@
+\doxysection{dpu\+\_\+res.\+h}
+\hypertarget{dpu__res_8h_source}{}\label{dpu__res_8h_source}\index{include/dpu\_res.h@{include/dpu\_res.h}}
+\mbox{\hyperlink{dpu__res_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DPU\_RES\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DPU\_RES\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00054\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#include\ <drivers/edma.h>}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#include\ <drivers/hw\_include/cslr\_soc.h>}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ *\ Resources\ for\ Object\ Detection\ DPC,\ currently\ the\ only\ DPC\ and\ hwa/edma}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ *\ resource\ used\ in\ the\ demo.}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ *******************************************************************************/}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_HWA\_WINDOW\_RAM\_OFFSET\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SOC\_EDMA\_NUM\_DMACH}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{comment}{/*\ Range\ DPU\ */}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAIN\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_CHIRP\_AVAIL\_IRQ}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAIN\_SHADOW\_PING\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 0)}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAIN\_SHADOW\_PONG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 1)}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAIN\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAIN\_SIG\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_0}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAIN\_SIG\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 2)}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAIN\_SIG\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MAJOR\_PING\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_HWA\_DMA\_REQ0}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MAJOR\_PING\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 3)}}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MAJOR\_PING\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MINOR\_PING\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_1}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MINOR\_PING\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 4)}}
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MINOR\_PING\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EVT\_DECIM\_PING\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_2}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EVT\_DECIM\_PING\_SHADOW\_0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 5)}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EVT\_DECIM\_PING\_SHADOW\_1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 6)}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EVT\_DECIM\_PING\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MAJOR\_PONG\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_HWA\_DMA\_REQ1}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MAJOR\_PONG\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 7)}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MAJOR\_PONG\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MINOR\_PONG\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_3}}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MINOR\_PONG\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 8)}}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EDMAOUT\_MINOR\_PONG\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EVT\_DECIM\_PONG\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_4}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EVT\_DECIM\_PONG\_SHADOW\_0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 9)}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EVT\_DECIM\_PONG\_SHADOW\_1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 10)}}
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_RANGEPROC\_EVT\_DECIM\_PONG\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \textcolor{comment}{/*\ DoA\ DPU\ */}}
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAIN\_PING\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_5}}
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAIN\_PING\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 11)}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAIN\_PING\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAIN\_PONG\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_6}}
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAIN\_PONG\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 12)}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAIN\_PONG\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMA\_HOT\_SIG\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_7}}
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMA\_HOT\_SIG\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 13)}}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMA\_HOT\_SIG\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAOUT\_DET\_MATRIX\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_HWA\_DMA\_REQ2}}
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAOUT\_DET\_MATRIX\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 14)}}
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAOUT\_DET\_MATRIX\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAOUT\_ELEVIND\_MATRIX\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_8}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAOUT\_ELEVIND\_MATRIX\_SHADOW\ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 15)}}
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAOUT\_ELEVIND\_MATRIX\_EVENT\_QUE\ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAOUT\_DOPIND\_MATRIX\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_9}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAOUT\_DOPIND\_MATRIX\_SHADOW\ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 16)}}
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_EDMAOUT\_DOPIND\_MATRIX\_EVENT\_QUE\ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMAOUT\_DET\_MATRIX\_CH\ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_HWA\_DMA\_REQ3}}
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMAOUT\_DET\_MATRIX\_SHADOW\ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 17)}}
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMAOUT\_DET\_MATRIX\_EVENT\_QUE\ \ \ 0}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMAIN\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_10}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMAIN\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 18)}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMAIN\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMA\_HOT\_SIG\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_11}}
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMA\_HOT\_SIG\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 19)}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMA\_HOT\_SIG\_EVENT\_QUE\ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMA\_CHAIN\_BACK\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_12}}
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMA\_CHAIN\_BACK\_SHADOW\ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 20)}}
+\DoxyCodeLine{00143\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_DOAPROC\_INTER\_LOOP\_EDMA\_CHAIN\_BACK\_EVENT\_QUE\ \ \ \ \ \ 0}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \textcolor{comment}{/*\ CFAR\ DPU\ */}}
+\DoxyCodeLine{00146\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_CFAR\_PROC\_EDMAIN\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_13}}
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_CFAR\_PROC\_EDMAIN\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 21)}}
+\DoxyCodeLine{00148\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_CFAR\_PROC\_EDMAIN\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_CFAR\_PROC\_EDMAIN\_SIG\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_14}}
+\DoxyCodeLine{00151\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_CFAR\_PROC\_EDMAIN\_SIG\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 22)}}
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_CFAR\_PROC\_EDMAIN\_SIG\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_CFAR\_PROC\_EDMAOUT\_RNG\_PROFILE\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_HWA\_DMA\_REQ4}}
+\DoxyCodeLine{00155\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_CFAR\_PROC\_EDMAOUT\_RNG\_PROFILE\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 23)}}
+\DoxyCodeLine{00156\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_CFAR\_PROC\_EDMAOUT\_RNG\_PROFILE\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \textcolor{comment}{/*\ Micro\ Doppler\ DPU\ */}}
+\DoxyCodeLine{00159\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMA\_RESET\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_15}}
+\DoxyCodeLine{00160\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMA\_RESET\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 24)}}
+\DoxyCodeLine{00161\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMARESET\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAIN\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_16}}
+\DoxyCodeLine{00164\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAIN\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 25)}}
+\DoxyCodeLine{00165\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAIN\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAIN\_SIG\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_17}}
+\DoxyCodeLine{00168\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAIN\_SIG\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 26)}}
+\DoxyCodeLine{00169\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAIN\_SIG\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAOUT\_CHAIN\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_HWA\_DMA\_REQ5}}
+\DoxyCodeLine{00172\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAOUT\_CHAIN0\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 27)}}
+\DoxyCodeLine{00173\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAOUT\_CHAIN1\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 28)}}
+\DoxyCodeLine{00174\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAOUT\_CHAIN\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAOUT\_UDOPPLER\_CH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EDMA\_APPSS\_TPCC\_B\_EVT\_FREE\_18}}
+\DoxyCodeLine{00177\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAOUT\_UDOPPLER\_SHADOW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (DPC\_OBJDET\_EDMA\_SHADOW\_BASE\ +\ 29)}}
+\DoxyCodeLine{00178\ \textcolor{preprocessor}{\#define\ DPC\_OBJDET\_DPU\_UDOP\_PROC\_EDMAOUT\_UDOPPLER\_EVENT\_QUE\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00181\ \}}
+\DoxyCodeLine{00182\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ DPU\_RES\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00185\ }
+
+\end{DoxyCode}
