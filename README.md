@@ -3,13 +3,17 @@
 ## Overview  
 
 
-<img src="docs/images/range-FFT_mag.png" alt="screenshot of python script" width="30%" style="float: left; margin-right: 30px;" />
+
 
 This university project implements a bare-minimum digital signal processing pipeline for mmWave radar data using the Texas Instruments [IWRL6432BOOST](https://www.ti.com/tool/IWRL6432BOOST) evaluation module. It is based on TI’s [Motion and Presence Detection Demo](https://dev.ti.com/tirex/explore/node?node=A__AGKSp6XJSIVonQK9nNyYLg__MMWAVE-L-SDK__BHQ90AU__LATEST) but strips away unnecessary components, using only essential SDK functions to achieve a working FMCW setup.
 It only implements the rangeproc DPU using the Major Motion mode only, yielding a radar cube for each frame.
 For demonstration purposes a range profile of one chirp and one (virtual) Rx antenna is transmitted via UART and displayed via a python script.
 
 The project utilizes **MMWAVE-L-SDK version 05.05.03.00**. Download [here](https://www.ti.com/tool/download/MMWAVE-L-SDK).  
+
+<div style="text-align: center;">
+  <img src="docs/images/range-FFT_mag.png" alt="screenshot of python script" width="40%"/>
+</div>
 
 ### Key Features  
 
