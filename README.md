@@ -1,8 +1,13 @@
-# TI IWRL6432 mmWave Radar
+# TI IWRL6432 mmWave Radar Minimum Rangeproc Implementation
 
 ## Overview  
 
-This project implements a bare-minimum digital signal processing pipeline for mmWave radar data using the Texas Instruments [IWRL6432BOOST](https://www.ti.com/tool/IWRL6432BOOST) evaluation module. It is based on TI’s [Motion and Presence Detection Demo](https://dev.ti.com/tirex/explore/node?node=A__AGKSp6XJSIVonQK9nNyYLg__MMWAVE-L-SDK__BHQ90AU__LATEST) but strips away unnecessary components, using only essential SDK functions to achieve a working FMCW setup.  
+
+<img src="docs/images/range-FFT_mag.png" alt="screenshot of python script" width="30%" style="float: left; margin-right: 30px;" />
+
+This university project implements a bare-minimum digital signal processing pipeline for mmWave radar data using the Texas Instruments [IWRL6432BOOST](https://www.ti.com/tool/IWRL6432BOOST) evaluation module. It is based on TI’s [Motion and Presence Detection Demo](https://dev.ti.com/tirex/explore/node?node=A__AGKSp6XJSIVonQK9nNyYLg__MMWAVE-L-SDK__BHQ90AU__LATEST) but strips away unnecessary components, using only essential SDK functions to achieve a working FMCW setup.
+It only implements the rangeproc DPU using the Major Motion mode only, yielding a radar cube for each frame.
+For demonstration purposes a range profile of one chirp and one (virtual) Rx antenna is transmitted via UART and displayed via a python script.
 
 The project utilizes **MMWAVE-L-SDK version 05.05.03.00**. Download [here](https://www.ti.com/tool/download/MMWAVE-L-SDK).  
 
@@ -26,9 +31,9 @@ The project utilizes **MMWAVE-L-SDK version 05.05.03.00**. Download [here](https
 /person_detecton_sdk-05_05_03
 ├── src/                    # Source files
 ├── include/                # Header files
-├── doxygen/                # Doxygen documentation
 ├── example.syscfg          # configuration file for configuring the MCU drivers
-/docs                       # project report in LateX         
+/docs            
+├── /report.pdf             # project report   
 /uart_range_plotter 
 ├── uart_range_plotter.py   # python script to visualize sent range radar cube data
 ```
@@ -53,4 +58,5 @@ Detailed documentation can be found in form of Doxygen comments in the source fi
 
 | `/person_detection_sdk-05_05_03/include/`           |  |
 |--------------|-------------|
+| [`system.h`](./person_detection_sdk-05_05_03/include/system.h)  | Holds most global handles and configs. |
 | [`defines.h`](./person_detection_sdk-05_05_03/include/defines.h)  | Defines system parameters (antenna settings, chirp configurations, timing). Configurations can be generated using the [mmWave Sensing Estimator](https://dev.ti.com/gallery/view/mmwave/mmWaveSensingEstimator/ver/2.4.0/). |
