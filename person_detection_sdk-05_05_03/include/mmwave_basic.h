@@ -1,8 +1,8 @@
 #ifndef MMWAVE_BASIC_H
 #define MMWAVE_BASIC_H
 
-/*
- * Copyright (C) 2022-24 Texas Instruments Incorporated
+/**
+* @copyright Copyright (C) 2022-24 Texas Instruments Incorporated
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
