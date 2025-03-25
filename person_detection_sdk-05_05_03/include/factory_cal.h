@@ -53,14 +53,6 @@
  */
 #define MMWDEMO_CALIB_STORE_MAGIC (0x7CB28DF9U)
 
-// externals
-extern T_RL_API_SENS_CHIRP_PROF_COMN_CFG profileComCfg;
-extern T_RL_API_SENS_CHIRP_PROF_TIME_CFG profileTimeCfg;
-extern T_RL_API_FECSS_RF_PWR_CFG_CMD channelCfg;
-extern T_RL_API_SENS_FRAME_CFG frameCfg;
-
-extern MMWave_Handle gCtrlHandle;
-extern T_RL_API_FECSS_RUNTIME_TX_CLPC_CAL_CMD fecTxclpcCalCmd;
 
 
 /*!

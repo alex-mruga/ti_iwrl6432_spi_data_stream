@@ -50,17 +50,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdint.h>
-#include <kernel/dpl/DebugP.h>
-#include "kernel/dpl/SemaphoreP.h"
-#include "ti_drivers_config.h"
-#include "ti_drivers_open_close.h"
-#include "ti_board_open_close.h"
-#include <datapath/dpu/rangeproc/v0/rangeprochwa.h>
-#include "drivers/hwa.h"
 
-#include "dpu_res.h"
-#include "defines.h"
 
 #define DPC_OBJDET_QFORMAT_RANGE_FFT 17
 
@@ -74,11 +64,6 @@ extern SemaphoreP_Object uart_tx_done_sem;
  *    This header file defines the interface for range processing
  *    DPU initialization and related functions.
  */
-
-/**
- * @brief Handle for Range Processing DPU
- */
-extern DPU_RangeProcHWA_Handle rangeProcHWADpuHandle;
 
 /**
  * @brief Initializes the Range Processing DPU

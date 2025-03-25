@@ -58,7 +58,7 @@
 ////////////////////
 #define NUM_CHIRPS_ACCUM                          0
 #define BURST_PERIOD                              643 // 403
-#define W_BURST_PERIOD                            (10.0 * BURST_PERIOD) 
+#define W_BURST_PERIOD                            (10.0 * BURST_PERIOD)
 #define FRAME_PERIOD                              (((float)(250.0) * 40000000.0)/1000.0) 
 #define NUM_FRAMES                                0
 

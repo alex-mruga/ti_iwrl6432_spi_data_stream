@@ -18,8 +18,6 @@
  *       for synchronization.
 */
 
-#include "kernel/dpl/SemaphoreP.h"
-
 /**
  * @brief Semaphore to signal the start of UART transmission.
  *

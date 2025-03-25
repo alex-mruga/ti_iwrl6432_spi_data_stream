@@ -45,16 +45,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- 
+
 #include "drivers/hwa.h"
-#include "kernel/dpl/SystemP.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-#include "kernel/dpl/DebugP.h"
+#include <control/mmwave/mmwave.h>
+#include <string.h>
+
+#include "system.h"
 #include "defines.h"
 #include "mem_pool.h"
-
 #include "mmwave_basic.h"
+
+
 
 /**************************************************************************
  ************************** Extern Definitions ****************************
@@ -69,33 +72,32 @@ extern void Mmwave_populateDefaultStartCfg (MMWave_StrtCfg* ptrStartCfg);
  * @brief L3 RAM buffer for object detection DPC.
  * 
  */
- #define L3_MEM_SIZE (0x40000 + 160*1024)
+#define L3_MEM_SIZE (0x40000 + 160*1024)
 uint8_t gMmwL3[L3_MEM_SIZE]  __attribute((section(".l3")));
 
 /*! 
  * @brief Local RAM buffer for object detection DPC.
  * 
  */
- #define MMWDEMO_OBJDET_CORE_LOCAL_MEM_SIZE ((8U+6U+4U+2U+8U) * 1024U)
+#define MMWDEMO_OBJDET_CORE_LOCAL_MEM_SIZE ((8U+6U+4U+2U+8U) * 1024U)
 uint8_t gMmwCoreLocMem[MMWDEMO_OBJDET_CORE_LOCAL_MEM_SIZE];
 
 
-void mempool_init(void){
+void mempool_init(void) {
     /* Shared memory pool for rangeproc DPU (window)*/
-    L3RamObj.cfg.addr = (void *)&gMmwL3[0];
-    L3RamObj.cfg.size = sizeof(gMmwL3);
+    gSysContext.L3RamObj.cfg.addr = (void *)&gMmwL3[0];
+    gSysContext.L3RamObj.cfg.size = sizeof(gMmwL3);
 
         /* Local memory pool */
-    CoreLocalRamObj.cfg.addr = (void *)&gMmwCoreLocMem[0];
-    CoreLocalRamObj.cfg.size = sizeof(gMmwCoreLocMem);
+    gSysContext.CoreLocalRamObj.cfg.addr = (void *)&gMmwCoreLocMem[0];
+    gSysContext.CoreLocalRamObj.cfg.size = sizeof(gMmwCoreLocMem);
 }
 
 int32_t hwa_open_handler() {
     int32_t status = SystemP_SUCCESS;
 
-    hwaHandle = HWA_open(0, NULL, &status);
-    if (hwaHandle == NULL)
-    {
+    gSysContext.hwaHandle = HWA_open(0, NULL, &status);
+    if (gSysContext.hwaHandle == NULL) {
         DebugP_log("Error: Unable to open the HWA Instance err:%d\n", status);
         DebugP_assert(0);
         status = SystemP_FAILURE;
@@ -105,8 +107,7 @@ int32_t hwa_open_handler() {
 }
 
 
-int32_t mmwave_initSensor()
-{
+int32_t mmwave_initSensor() {
     int32_t             errCode;
     int32_t             retVal = SystemP_SUCCESS;
     MMWave_InitCfg      initCfg;
@@ -120,9 +121,8 @@ int32_t mmwave_initSensor()
     initCfg.iswarmstart = false;
 
     /* Initialize and setup the mmWave Control module */
-    gCtrlHandle = MMWave_init(&initCfg, &errCode);
-    if (gCtrlHandle == NULL)
-    {
+    gSysContext.gCtrlHandle = MMWave_init(&initCfg, &errCode);
+    if (gSysContext.gCtrlHandle == NULL) {
         /* Error: Unable to initialize the mmWave control module */
         MMWave_decodeError(errCode, &errorLevel, &mmWaveErrorCode, &subsysErrorCode);
 
@@ -134,8 +134,7 @@ int32_t mmwave_initSensor()
     return retVal;
 }
 
-int32_t mmwave_openSensor(void)
-{
+int32_t mmwave_openSensor(void) {
     int32_t             errCode;
     MMWave_ErrorLevel   errorLevel;
     int16_t             mmWaveErrorCode;
@@ -143,11 +142,10 @@ int32_t mmwave_openSensor(void)
     int32_t             retVal = SystemP_SUCCESS;
     
 
-    Mmwave_populateDefaultOpenCfg(&mmwOpenCfg);
+    Mmwave_populateDefaultOpenCfg(&gSysContext.mmwOpenCfg);
 
     /* Open mmWave module, this is only done once */
-    if (MMWave_open (gCtrlHandle, &mmwOpenCfg, &errCode) < 0)
-    {
+    if (MMWave_open (gSysContext.gCtrlHandle, &gSysContext.mmwOpenCfg, &errCode) < 0) {
         MMWave_decodeError (errCode, &errorLevel, &mmWaveErrorCode, &subsysErrorCode);
         DebugP_log ("Error: mmWave Open failed [Error code: %d Subsystem: %d]\n",
                         mmWaveErrorCode, subsysErrorCode);
@@ -157,16 +155,14 @@ int32_t mmwave_openSensor(void)
     return retVal;
 }
 
-int32_t mmwave_configSensor(void)
-{
+int32_t mmwave_configSensor(void) {
     int32_t     errCode;
     int32_t     retVal = SystemP_SUCCESS;
 
-    Mmwave_populateDefaultChirpControlCfg (&mmwCtrlCfg); /* regular frame config */
+    Mmwave_populateDefaultChirpControlCfg (&gSysContext.mmwCtrlCfg); /* regular frame config */
 
     /* Configure the mmWave module: */
-    if (MMWave_config (gCtrlHandle, &mmwCtrlCfg, &errCode) < 0)
-    {
+    if (MMWave_config (gSysContext.gCtrlHandle, &gSysContext.mmwCtrlCfg, &errCode) < 0) {
         MMWave_ErrorLevel   errorLevel;
         int16_t             mmWaveErrorCode;
         int16_t             subsysErrorCode;
@@ -183,8 +179,7 @@ int32_t mmwave_configSensor(void)
 }
 
 
-int32_t mmwave_startSensor(void)
-{
+int32_t mmwave_startSensor(void) {
     MMWave_CalibrationCfg   calibrationCfg;
     int32_t                 retVal = SystemP_SUCCESS;
     int32_t                 errCode;
@@ -198,13 +193,12 @@ int32_t mmwave_startSensor(void)
     Mmwave_populateDefaultCalibrationCfg(&calibrationCfg);
 
     /* Populate the start configuration: */
-    Mmwave_populateDefaultStartCfg(&sensorStartCfg);
+    Mmwave_populateDefaultStartCfg(&gSysContext.sensorStartCfg);
 
     DebugP_log("App: MMWave_start Issued\n");
 
     /* Start the mmWave module: The configuration has been applied successfully. */
-    if (MMWave_start(gCtrlHandle, &calibrationCfg, &sensorStartCfg, &errCode) < 0)
-    {
+    if (MMWave_start(gSysContext.gCtrlHandle, &calibrationCfg, &gSysContext.sensorStartCfg, &errCode) < 0) {
         MMWave_ErrorLevel   errorLevel;
         int16_t             mmWaveErrorCode;
         int16_t             subsysErrorCode;
@@ -220,13 +214,11 @@ int32_t mmwave_startSensor(void)
     return retVal;
 }
 
-int32_t mmwave_stop_close_deinit(void)
-{
+int32_t mmwave_stop_close_deinit(void) {
     int32_t                 errCode;
     int32_t                 retVal = SystemP_SUCCESS;
 
-    if (MMWave_stop(gCtrlHandle,&errCode) < 0)
-    {
+    if (MMWave_stop(gSysContext.gCtrlHandle,&errCode) < 0) {
         MMWave_ErrorLevel   errorLevel;
         int16_t             mmWaveErrorCode;
         int16_t             subsysErrorCode;
@@ -237,8 +229,7 @@ int32_t mmwave_stop_close_deinit(void)
         retVal = SystemP_FAILURE;
     }
 
-    if (MMWave_close(gCtrlHandle,&errCode) < 0)
-    {
+    if (MMWave_close(gSysContext.gCtrlHandle,&errCode) < 0) {
         MMWave_ErrorLevel   errorLevel;
         int16_t             mmWaveErrorCode;
         int16_t             subsysErrorCode;
@@ -249,8 +240,7 @@ int32_t mmwave_stop_close_deinit(void)
         retVal = SystemP_FAILURE;
     }
 
-    if (MMWave_deinit(gCtrlHandle,&errCode) < 0)
-    {
+    if (MMWave_deinit(gSysContext.gCtrlHandle,&errCode) < 0) {
         MMWave_ErrorLevel   errorLevel;
         int16_t             mmWaveErrorCode;
         int16_t             subsysErrorCode;

@@ -59,20 +59,21 @@
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
 #include "ti_drivers_open_close.h"
+#include "ti_board_open_close.h"
 #include "ti_drivers_config.h"
-
 #include "FreeRTOS.h"
 #include "task.h"
-
 #include <mmwavelink/mmwavelink.h>
 #include <mmwavelink/include/rl_device.h>
-
 #include <kernel/dpl/SemaphoreP.h>
 #include <datapath/dpu/rangeproc/v0/rangeprochwa.h>
+
+#include "system.h"
 #include "rangeproc_dpc.h"
 #include "mmwave_basic.h"
 #include "mmwave_control_config.h"
 #include "factory_cal.h"
+
 
 // --- FRERTOS
 //#define MAIN_TASK_PRI  (configMAX_PRIORITIES-1)
@@ -84,6 +85,9 @@
 
 #define DPC_TASK_PRI 5
 #define UART_TASK_PRI 10
+
+
+SystemContext_t gSysContext;
 
 StaticTask_t gMainTaskObj;
 TaskHandle_t gMainTask;
@@ -97,8 +101,6 @@ StaticTask_t gUartTaskObj;
 TaskHandle_t gUartTask;
 StackType_t  gUartTaskStack[UART_TASK_STACK_SIZE] __attribute__((aligned(32)));
 
-T_RL_API_FECSS_RUNTIME_TX_CLPC_CAL_CMD fecTxclpcCalCmd;
-
 // Semaphores
 SemaphoreP_Object pend_main_sem;
 SemaphoreP_Object dpcCfgDoneSemHandle;
@@ -107,21 +109,13 @@ SemaphoreP_Object uart_tx_start_sem;
 SemaphoreP_Object uart_tx_done_sem;
 
 
-
-//external
-extern T_RL_API_FECSS_RF_PWR_CFG_CMD channelCfg;
-
 void rangeproc_main(void *args);
 
-void freertos_main(void *args)
-{
+void freertos_main(void *args) {
     /*** INIT ***/
     /* Peripheral Driver Initialization */
     Drivers_open();
     Board_driversOpen();
-
-    // init uart
-    //UART_init();
 
     /* Create binary semaphore to pend Main task and wait for dpu config */
     SemaphoreP_constructBinary(&pend_main_sem, 0);
@@ -138,37 +132,36 @@ void freertos_main(void *args)
     SOC_memoryInit(SOC_RCM_MEMINIT_HWA_SHRAM_INIT|SOC_RCM_MEMINIT_TPCCA_INIT|SOC_RCM_MEMINIT_TPCCB_INIT|SOC_RCM_MEMINIT_FECSS_SHRAM_INIT|SOC_RCM_MEMINIT_APPSS_SHRAM0_INIT|SOC_RCM_MEMINIT_APPSS_SHRAM1_INIT);
     DebugP_log("starting init \n");
 
-    if(gFlashHandle[0] == NULL) {
+
+    // Check if flash handle provided by SDK is null
+    if (gFlashHandle[0] == NULL) {
         DebugP_log("Flash initialization failed!");
     }
 
     // initialize memory segments from memory pools
     mempool_init();
 
-    // initialize default antenna geometry
+    // TODO: initialize default antenna geometry
     
-
-    if(mmwave_initSensor() == SystemP_FAILURE){
+    if (mmwave_initSensor() == SystemP_FAILURE) {
         exit(1);
     }
 
-    
-    if(hwa_open_handler() == SystemP_FAILURE){
+    if (hwa_open_handler() == SystemP_FAILURE) {
         exit(1);
     }
 
     // init all required DPUs
     rangeProc_dpuInit();
-
+    // TODO: init rest of DPUs as required
     DebugP_log("init passed");
-    /* FECSS RF Power ON*/
 
     MMWave_populateChannelCfg();
 
+    /* FECSS RF Power ON (turns on antennas) */
     int32_t retVal;
-    retVal = rl_fecssRfPwrOnOff(M_DFP_DEVICE_INDEX_0, &channelCfg);
-    if(retVal != M_DFP_RET_CODE_OK)
-    {
+    retVal = rl_fecssRfPwrOnOff(M_DFP_DEVICE_INDEX_0, &gSysContext.channelCfg);
+    if (retVal != M_DFP_RET_CODE_OK) {
         DebugP_log("Error: FECSS RF Power ON/OFF failed\r\n");
         retVal = SystemP_FAILURE;
         exit(1);
@@ -218,7 +211,7 @@ void freertos_main(void *args)
                                  &gUartTaskObj);         /* pointer to statically allocated task object memory */
     configASSERT(gUartTask != NULL);
 
-    if(mmwave_startSensor() == SystemP_FAILURE){
+    if (mmwave_startSensor() == SystemP_FAILURE){
         exit(1);
     }
     

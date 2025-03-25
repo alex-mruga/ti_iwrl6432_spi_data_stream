@@ -27,13 +27,14 @@
 #include "ti_drivers_open_close.h"
 #include <datapath/dpu/rangeproc/v0/rangeprochwa.h>
 
+#include "system.h"
 #include "defines.h"
 #include "uart_transmit.h"
 
 
-
 #define APP_UART_BUFSIZE              (1024)
 #define APP_UART_RECEIVE_BUFSIZE      (8U)
+
 
 uint8_t gUartBuffer[APP_UART_BUFSIZE];
 uint8_t gUartReceiveBuffer[APP_UART_RECEIVE_BUFSIZE];
@@ -48,11 +49,9 @@ volatile uint32_t gNumBytesRead = 0U, gNumBytesWritten = 0U;
 const uint8_t header[4] = {0xAA, 0xBB, 0xCC, 0xDD};
 const uint8_t footer[4] = {0xDD, 0xCC, 0xBB, 0xAA};
 
-extern DPU_RangeProcHWA_Config rangeProcDpuCfg;
 
-
-void uart_transmit_loop(){
-    cmplx16ImRe_t *radarCube = rangeProcDpuCfg.hwRes.radarCube.data;
+void uart_transmit_loop() {
+    cmplx16ImRe_t *radarCube = gSysContext.rangeProcDpuCfg.hwRes.radarCube.data;
     
     int32_t          transferOK;
     UART_Transaction trans;
@@ -60,7 +59,7 @@ void uart_transmit_loop(){
     UART_Transaction_init(&trans);
 
 
-    while(true){
+    while(true) {
         SemaphoreP_pend(&uart_tx_start_sem, SystemP_WAIT_FOREVER);
 
         gNumBytesWritten = 0U;
@@ -78,7 +77,7 @@ void uart_transmit_loop(){
         // only send data of one virtual antenna though, because only range fft is transmitted for now.
         uint32_t i;
         for (i = 0; i < NUM_RANGE_BINS; i++) {
-            
+
             // data structure in radarCube:
             // Cube[chirp][antenna][range]
 
@@ -92,16 +91,16 @@ void uart_transmit_loop(){
             trans.buf = (void *) &radarCube[address_offset];
             trans.count = 4;
             transferOK = UART_write(gUartHandle[CONFIG_UART_CONSOLE], &trans);
-            if (transferOK != SystemP_SUCCESS){
-            DebugP_log("Uart Tx failed");
-        }
+            if (transferOK != SystemP_SUCCESS) {
+                DebugP_log("Uart Tx failed");
+            }
         }
 
         // send footer
         trans.buf = (void *) &footer;
         trans.count = 4;
         transferOK = UART_write(gUartHandle[CONFIG_UART_CONSOLE], &trans);
-        if (transferOK != SystemP_SUCCESS){
+        if (transferOK != SystemP_SUCCESS) {
             DebugP_log("Uart Tx failed");
         }
 

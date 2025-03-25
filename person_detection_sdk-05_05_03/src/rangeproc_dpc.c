@@ -41,7 +41,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdio.h>
 #include <kernel/dpl/DebugP.h>
 #include <utils/mathutils/mathutils.h>
 #include "drivers/edma/v0/edma.h"
@@ -49,99 +48,94 @@
 #include "ti_drivers_config.h"
 #include "ti_drivers_open_close.h"
 #include "ti_board_open_close.h"
-
 #include "drivers/prcm/v0/prcm.h"
-
-#include <datapath/dpu/rangeproc/v0/rangeprochwa.h>
 #include "drivers/hwa.h"
 
+#include "system.h"
+#include "defines.h"
+#include "dpu_res.h"
 #include "mmwave_basic.h"
-#include "rangeproc_dpc.h"
 #include "mem_pool.h"
 #include "uart_transmit.h"
+#include "rangeproc_dpc.h"
 
 
-DPU_RangeProcHWA_Handle rangeProcHWADpuHandle;
-DPU_RangeProcHWA_Config rangeProcDpuCfg;
-
+/*! @brief for debugging: hardware interrupt objects for registering chirp available ISR */
 HwiP_Object gHwiChirpAvailableHwiObject;
+
+/*! @brief for debugging: hardware interrupt objects for registering frame start ISR */
 HwiP_Object gHwiFrameStartHwiObject;
 
-// Ping and Poing, hence 2 objects
-Edma_IntrObject intrObj_Rangeproc[2];
-
-volatile unsigned long long demoStartTime;
-
-/*! @brief L3 ram memory pool object */
-extern MemPoolObj L3RamObj;
-
-/*! @brief Core Local ram memory pool object */
-extern MemPoolObj CoreLocalRamObj;
-
-extern HWA_Handle hwaHandle;
-
-/*! @brief Pointer to radar cube data for easier debugging access */
-cmplx16ImRe_t * gRadarCubeDebugPtr = NULL;
-void *gAdcDataDebugPtr = NULL;
-
+/*! @brief for debugging: Chirp counter for when chirp ISR is registered */
 uint32_t gChirpCount;
+
+/*! @brief for debugging: Frame counter for when chirp ISR is registered */
 uint32_t gFrameCount;
 
-void uartTask(){
+/*! @brief for debugging: Pointer to radar cube data for easier debugging access */
+cmplx16ImRe_t * gRadarCubeDebugPtr = NULL;
+
+/*! @brief for debugging: Pointer to radar ADC data for easier debugging access */
+void *gAdcDataDebugPtr = NULL;
+
+
+/*! @brief Rangeproc Callback EDMA Interrupt object (Ping and Poing, hence 2 objects) */
+Edma_IntrObject intrObj_Rangeproc[2];
+
+
+void uartTask() {
     uart_transmit_loop();
 }
 
-void dpcTask()
-{
+void dpcTask() {
     int32_t retVal = -1;
     DPU_RangeProcHWA_OutParams outParams;
 
     gChirpCount = 0;
     gFrameCount = 0;
     
-    DPC_ObjDet_MemPoolReset(&L3RamObj);
-    DPC_ObjDet_MemPoolReset(&CoreLocalRamObj);
+    DPC_ObjDet_MemPoolReset(&gSysContext.L3RamObj);
+    DPC_ObjDet_MemPoolReset(&gSysContext.CoreLocalRamObj);
 
     /* configure DPUs: */
     RangeProc_config();
+    // TODO: configure rest of DPUs if required
 
     SemaphoreP_post(&dpcCfgDoneSemHandle);
     
-    // register Frame Start ISR
-    if(registerFrameStartInterrupt() != 0){
+    // for debugging: register Frame Start ISR
+    if (registerFrameStartInterrupt() != 0) {
         DebugP_log("Error: Failed to register frame start interrupts\n");
         DebugP_assert(0);
     }
 
-    // register Chirp ISR
-    if(registerChirpInterrupt() != 0){
+    // for debugging: register Chirp available ISR
+    if (registerChirpInterrupt() != 0) {
         DebugP_log("Error: Failed to register chirp interrupt\n");
         DebugP_assert(0);
     }
 
-    // register Chirp available ISR
-    if(registerChirpAvailableInterrupts() != 0){
+    // for debugging: register Chirp available ISR
+    if (registerChirpAvailableInterrupts() != 0) {
         DebugP_log("Error: Failed to register chirp interrupt\n");
         DebugP_assert(0);
     }
 
-
-    /* give initial trigger for the first frame*/
-    retVal = DPU_RangeProcHWA_control(rangeProcHWADpuHandle, DPU_RangeProcHWA_Cmd_triggerProc, NULL, 0);
-    if(retVal < 0)
-    {
+    // give initial trigger for the first frame 
+    retVal = DPU_RangeProcHWA_control(gSysContext.rangeProcHWADpuHandle, DPU_RangeProcHWA_Cmd_triggerProc, NULL, 0);
+    if (retVal < 0) {
         /* Not Expected */
         DebugP_log("RangeProc DPU control error %d\n", retVal);
         DebugP_assert(0);
     }
 
-    // endless loop for continuous chirping and processing of data.   
-    while(true){
+    // endless loop for continuous chirping and processing of data
+    while(true) {
         
         memset((void *)&outParams, 0, sizeof(DPU_RangeProcHWA_OutParams));
 
-        retVal = DPU_RangeProcHWA_process(rangeProcHWADpuHandle, &outParams);
-        if(retVal < 0){
+        retVal = DPU_RangeProcHWA_process(gSysContext.rangeProcHWADpuHandle, &outParams);
+        if (retVal < 0) {
             /* Not Expected */
             DebugP_log("RangeProc DPU process error %d\n", retVal);
             DebugP_assert(0);
@@ -149,43 +143,38 @@ void dpcTask()
         // trigger Uart transmission
         SemaphoreP_post(&uart_tx_start_sem);
 
-        // wait for Uart transmission;
+        // wait for Uart transmission to complete
         SemaphoreP_pend(&uart_tx_done_sem, SystemP_WAIT_FOREVER);
 
-
-        /* Give initial trigger for the next frame */
-        retVal = DPU_RangeProcHWA_control(rangeProcHWADpuHandle,
+        /* give initial trigger for the next frame */
+        retVal = DPU_RangeProcHWA_control(gSysContext.rangeProcHWADpuHandle,
                     DPU_RangeProcHWA_Cmd_triggerProc, NULL, 0);
-        if(retVal < 0)
-        {
+        if (retVal < 0) {
             DebugP_log("Error: DPU_RangeProcHWA_control failed with error code %d", retVal);
             DebugP_assert(0);
         }
     }
 }
 
-void rangeProc_dpuInit()
-{
+void rangeProc_dpuInit() {
     int32_t errorCode = 0;
     DPU_RangeProcHWA_InitParams initParams;
-    initParams.hwaHandle = hwaHandle;
+    initParams.hwaHandle = gSysContext.hwaHandle;
 
-    rangeProcHWADpuHandle = DPU_RangeProcHWA_init(&initParams, &errorCode);
-    if (rangeProcHWADpuHandle == NULL)
-    {
+    gSysContext.rangeProcHWADpuHandle = DPU_RangeProcHWA_init(&initParams, &errorCode);
+    if (gSysContext.rangeProcHWADpuHandle == NULL) {
         DebugP_log ("Debug: RangeProc DPU initialization returned error %d\n", errorCode);
         DebugP_assert (0);
         return;
     }
 }
 
-void RangeProc_config()
-{
-    DPU_RangeProcHWA_HW_Resources *pHwConfig = &rangeProcDpuCfg.hwRes;
-    DPU_RangeProcHWA_StaticConfig *params = &rangeProcDpuCfg.staticCfg;
+void RangeProc_config() {
+    DPU_RangeProcHWA_HW_Resources *pHwConfig = &gSysContext.rangeProcDpuCfg.hwRes;
+    DPU_RangeProcHWA_StaticConfig *params = &gSysContext.rangeProcDpuCfg.staticCfg;
     uint32_t bytesPerRxChan;
 
-    memset((void *)&rangeProcDpuCfg, 0, sizeof(DPU_RangeProcHWA_Config));
+    memset((void *)&gSysContext.rangeProcDpuCfg, 0, sizeof(DPU_RangeProcHWA_Config));
 
     // disable low power mode
     params->lowPowerMode = 0;
@@ -210,7 +199,7 @@ void RangeProc_config()
 
     /* windowing */
     params->windowSize = sizeof(uint32_t) * ((NUM_ADC_SAMPLES +1 ) / 2); // symmetric window (Blackman), for real samples (therefore /2)
-    params->window =  (int32_t *)DPC_ObjDet_MemPoolAlloc(&CoreLocalRamObj,
+    params->window =  (int32_t *)DPC_ObjDet_MemPoolAlloc(&gSysContext.CoreLocalRamObj,
                                                         params->windowSize,
                                                         sizeof(uint32_t));
 
@@ -250,8 +239,7 @@ void RangeProc_config()
 
     /* initialize RX channel offsets */
     uint32_t index;
-    for (index = 0; index < NUM_RX_ANTENNAS; index++)
-    {
+    for (index = 0; index < NUM_RX_ANTENNAS; index++) {
         params->ADCBufData.dataProperty.rxChanOffset[index] = index * bytesPerRxChan;
     }
 
@@ -309,11 +297,11 @@ void RangeProc_config()
     pHwConfig->radarCube.datafmt = DPIF_RADARCUBE_FORMAT_6;
 
         /* radar cube */
-    rangeProcDpuCfg.hwRes.radarCube.data  = (cmplx16ImRe_t *) DPC_ObjDet_MemPoolAlloc(&L3RamObj,
+    gSysContext.rangeProcDpuCfg.hwRes.radarCube.data  = (cmplx16ImRe_t *) DPC_ObjDet_MemPoolAlloc(&gSysContext.L3RamObj,
                                                                                         pHwConfig->radarCube.dataSize,
                                                                                         sizeof(uint32_t));
     // bend global radar cube debug pointer to radar cube data 
-    gRadarCubeDebugPtr = rangeProcDpuCfg.hwRes.radarCube.data;
+    gRadarCubeDebugPtr = gSysContext.rangeProcDpuCfg.hwRes.radarCube.data;
     /* Further non EDMA related HWA configurations */
     pHwConfig->hwaCfg.paramSetStartIdx = 0;
     pHwConfig->hwaCfg.numParamSet = DPU_RANGEPROCHWA_NUM_HWA_PARAM_SETS;
@@ -339,10 +327,9 @@ void RangeProc_config()
 
     /* configure HWA with set parameters */
     int32_t retVal;
-    retVal = DPU_RangeProcHWA_config(rangeProcHWADpuHandle, &rangeProcDpuCfg);
+    retVal = DPU_RangeProcHWA_config(gSysContext.rangeProcHWADpuHandle, &gSysContext.rangeProcDpuCfg);
  
-    if(retVal < 0)
-    {
+    if (retVal < 0) {
         DebugP_log("DEBUG: RANGE DPU config return error:%d \n", retVal);
         DebugP_assert(0);
     }
@@ -353,8 +340,7 @@ void RangeProc_config()
  *  @n
  *      This is to register Chirpt Interrupt
  */
-int32_t registerChirpInterrupt(void)
-{
+int32_t registerChirpInterrupt(void) {
     int32_t           retVal = 0;
     int32_t           status = SystemP_SUCCESS;
     HwiP_Params       hwiPrms;
@@ -368,12 +354,9 @@ int32_t registerChirpInterrupt(void)
     hwiPrms.args        = NULL;
     status              = HwiP_construct(&gHwiChirpAvailableHwiObject, &hwiPrms);
 
-    if(SystemP_SUCCESS != status)
-    {
+    if (SystemP_SUCCESS != status) {
         retVal = SystemP_FAILURE;
-    }
-    else
-    {
+    } else {
         HwiP_enableInt((uint32_t)CSL_APPSS_INTR_MUXED_FECSS_CHIRPTIMER_CHIRP_START_AND_CHIRP_END);
     }
 
@@ -385,14 +368,12 @@ int32_t registerChirpInterrupt(void)
 *  @n
 *    Chirp Start ISR
 */
-void chirpStartISR(void *arg)
-{
+void chirpStartISR(void *arg) {
     HwiP_clearInt(CSL_APPSS_INTR_MUXED_FECSS_CHIRPTIMER_CHIRP_START_AND_CHIRP_END);
 }
 
 
-int32_t registerFrameStartInterrupt(void)
-{
+int32_t registerFrameStartInterrupt(void) {
     int32_t           retVal = 0;
     int32_t           status = SystemP_SUCCESS;
     HwiP_Params       hwiPrms;
@@ -405,20 +386,16 @@ int32_t registerFrameStartInterrupt(void)
     //hwiPrms.priority    = 0;
     status              = HwiP_construct(&gHwiFrameStartHwiObject, &hwiPrms);
 
-    if(SystemP_SUCCESS != status)
-    {
+    if (SystemP_SUCCESS != status) {
         retVal = SystemP_FAILURE;
-    }
-    else
-    {
+    } else {
         HwiP_enableInt((uint32_t)CSL_APPSS_INTR_FECSS_FRAMETIMER_FRAME_START);
     }
 
     return retVal;
 }
 
-static void frameStartISR(void *arg)
-{
+static void frameStartISR(void *arg) {
     /* Clear the interrupt */
     HwiP_clearInt(CSL_APPSS_INTR_FECSS_FRAMETIMER_FRAME_START);
 
@@ -430,8 +407,7 @@ static void frameStartISR(void *arg)
 }
 
 //The function reads the FRAME_REF_TIMER that runs free at 40MHz
-uint32_t Cycleprofiler_getTimeStamp(void)
-{
+uint32_t Cycleprofiler_getTimeStamp(void) {
     uint32_t *frameRefTimer;
     frameRefTimer = (uint32_t *) 0x5B000020;
     return *frameRefTimer;
@@ -442,12 +418,10 @@ uint32_t Cycleprofiler_getTimeStamp(void)
  *  @n
  *      This is to register Chirp Available Interrupt
  */
-int32_t registerChirpAvailableInterrupts(void)
-{
+int32_t registerChirpAvailableInterrupts(void) {
     int32_t           retVal = 0;
     int32_t           status = SystemP_SUCCESS;
     HwiP_Params       hwiPrms;
-
 
     /* Register interrupt */
     HwiP_Params_init(&hwiPrms);
@@ -458,12 +432,9 @@ int32_t registerChirpAvailableInterrupts(void)
     hwiPrms.args        = NULL;
     status              = HwiP_construct(&gHwiChirpAvailableHwiObject, &hwiPrms);
 
-    if(SystemP_SUCCESS != status)
-    {
+    if (SystemP_SUCCESS != status) {
         retVal = SystemP_FAILURE;
-    }
-    else
-    {
+    } else {
         HwiP_enableInt((uint32_t)CSL_APPSS_INTR_MUXED_FECSS_CHIRP_AVAIL_IRQ_AND_ADC_VALID_START_AND_SYNC_IN);
     }
 
@@ -475,8 +446,7 @@ int32_t registerChirpAvailableInterrupts(void)
 *  @n
 *    Chirp ISR
 */
-static void ChirpAvailISR(void *arg)
-{
+static void ChirpAvailISR(void *arg) {
     HwiP_clearInt(CSL_APPSS_INTR_MUXED_FECSS_CHIRP_AVAIL_IRQ_AND_ADC_VALID_START_AND_SYNC_IN); // CSL_MSS_INTR_RSS_ADC_CAPTURE_COMPLETE
     gChirpCount++;
 }

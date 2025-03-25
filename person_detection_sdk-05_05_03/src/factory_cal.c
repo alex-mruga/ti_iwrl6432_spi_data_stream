@@ -45,12 +45,6 @@
  */
 
 
-/* Standard Include Files. */
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-
 #include "kernel/dpl/DebugP.h"
 #include "kernel/dpl/SystemP.h"
 #include "control/mmwave/mmwave.h"
@@ -62,10 +56,12 @@
 #include <mmwavelink/include/rl_sensor.h>
 #include <kernel/dpl/CacheP.h>
 
-#include "factory_cal.h"
+#include "system.h"
+#include "defines.h"
 #include "mmwave_basic.h"
 #include "mmwave_control_config.h"
-#include "defines.h"
+#include "factory_cal.h"
+
 
 
 Mmw_calibData calibData __attribute__((aligned(8))) = {0};
@@ -104,26 +100,21 @@ int32_t restoreFactoryCal(void)
     factoryCalCfg.fecRFFactoryCalCmd.c_CalTxBackOffSel[1] = CLI_FACCALCFG_TX_BACKOFF_SEL;
 
     /* Calculate Calibration Rf Frequency. Use Center frequency of the bandwidth(being used in demo) for calibration */
-    calRfFreq = (profileTimeCfg.w_ChirpRfFreqStart) + \
-                ((((CHIRPTIMINGCFG_CHIRP_RF_FREQ_SLOPE * 256.0)/300) * (profileComCfg.h_ChirpRampEndTime * 0.1)) / 2);
+    calRfFreq = (gSysContext.profileTimeCfg.w_ChirpRfFreqStart) + \
+                ((((CHIRPTIMINGCFG_CHIRP_RF_FREQ_SLOPE * 256.0)/300) * (gSysContext.profileComCfg.h_ChirpRampEndTime * 0.1)) / 2);
     factoryCalCfg.fecRFFactoryCalCmd.xh_CalRfSlope = 0x4Du; /* 2.2Mhz per uSec*/
 
 
     factoryCalCfg.fecRFFactoryCalCmd.h_CalRfFreq = calRfFreq;
-    if(channelCfg.h_TxChCtrlBitMask == 0x3)
-    {
+    if (gSysContext.channelCfg.h_TxChCtrlBitMask == 0x3) {
         factoryCalCfg.fecRFFactoryCalCmd.c_TxPwrCalTxEnaMask[0] = 0x3;
         factoryCalCfg.fecRFFactoryCalCmd.c_TxPwrCalTxEnaMask[1] = 0x1;
-    }
-    else 
-    {
-        if(channelCfg.h_TxChCtrlBitMask == 0x1)
-        {
+    } else {
+        if (gSysContext.channelCfg.h_TxChCtrlBitMask == 0x1) {
             factoryCalCfg.fecRFFactoryCalCmd.c_TxPwrCalTxEnaMask[0] = 0x1;
             factoryCalCfg.fecRFFactoryCalCmd.c_TxPwrCalTxEnaMask[1] = 0x1;
         }
-        if(channelCfg.h_TxChCtrlBitMask == 0x2)
-        {
+        if (gSysContext.channelCfg.h_TxChCtrlBitMask == 0x2) {
             factoryCalCfg.fecRFFactoryCalCmd.c_TxPwrCalTxEnaMask[0] = 0x2;
             factoryCalCfg.fecRFFactoryCalCmd.c_TxPwrCalTxEnaMask[1] = 0x2;
         }
@@ -158,7 +149,7 @@ int32_t restoreFactoryCal(void)
     /* Disable factory calibration. */
     factoryCalCfg.isFactoryCalEnabled = false;
 
-    retVal = MMWave_factoryCalibConfig(gCtrlHandle, &factoryCalCfg, &errCode);
+    retVal = MMWave_factoryCalibConfig(gSysContext.gCtrlHandle, &factoryCalCfg, &errCode);
     if (retVal != SystemP_SUCCESS)
     {
 
@@ -180,13 +171,13 @@ int32_t restoreFactoryCal(void)
     }
 
     /* Configuring command for Run time CLPC calibration (Required if CLPC calib is enabled) */
-    fecTxclpcCalCmd.c_CalMode = 0x0u; /* No Override */
-    fecTxclpcCalCmd.c_CalTxBackOffSel[0] = factoryCalCfg.fecRFFactoryCalCmd.c_CalTxBackOffSel[0];
-    fecTxclpcCalCmd.c_CalTxBackOffSel[1] = factoryCalCfg.fecRFFactoryCalCmd.c_CalTxBackOffSel[1];
-    fecTxclpcCalCmd.h_CalRfFreq = factoryCalCfg.fecRFFactoryCalCmd.h_CalRfFreq;
-    fecTxclpcCalCmd.xh_CalRfSlope = factoryCalCfg.fecRFFactoryCalCmd.xh_CalRfSlope;
-    fecTxclpcCalCmd.c_TxPwrCalTxEnaMask[0] = factoryCalCfg.fecRFFactoryCalCmd.c_TxPwrCalTxEnaMask[0];
-    fecTxclpcCalCmd.c_TxPwrCalTxEnaMask[1] = factoryCalCfg.fecRFFactoryCalCmd.c_TxPwrCalTxEnaMask[1];
+    gSysContext.fecTxclpcCalCmd.c_CalMode = 0x0u; /* No Override */
+    gSysContext.fecTxclpcCalCmd.c_CalTxBackOffSel[0] = factoryCalCfg.fecRFFactoryCalCmd.c_CalTxBackOffSel[0];
+    gSysContext.fecTxclpcCalCmd.c_CalTxBackOffSel[1] = factoryCalCfg.fecRFFactoryCalCmd.c_CalTxBackOffSel[1];
+    gSysContext.fecTxclpcCalCmd.h_CalRfFreq = factoryCalCfg.fecRFFactoryCalCmd.h_CalRfFreq;
+    gSysContext.fecTxclpcCalCmd.xh_CalRfSlope = factoryCalCfg.fecRFFactoryCalCmd.xh_CalRfSlope;
+    gSysContext.fecTxclpcCalCmd.c_TxPwrCalTxEnaMask[0] = factoryCalCfg.fecRFFactoryCalCmd.c_TxPwrCalTxEnaMask[0];
+    gSysContext.fecTxclpcCalCmd.c_TxPwrCalTxEnaMask[1] = factoryCalCfg.fecRFFactoryCalCmd.c_TxPwrCalTxEnaMask[1];
 
     return retVal;
 }
