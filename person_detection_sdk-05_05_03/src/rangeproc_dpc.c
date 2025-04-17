@@ -184,18 +184,28 @@ void RangeProc_config() {
       https://software-dl.ti.com/ra-processors/esd/MMWAVE-L-SDK/05_04_00_01/exports/api_guide_xwrL64xx/MMWAVE_DEMO.html
      */
     /* number of TX antennas (on the IWRL6432BOOST 2)*/
-    params->numTxAntennas = NUM_TX_ANTENNAS;
+    params->numTxAntennas = gSysContext.numTxAntennas;
     /* number of RX antennas, product of TX- and RX-antennas (on the IWRL6432BOOST 2*3=6) */
-    params->numVirtualAntennas = NUM_VIRT_ANTENNAS;
+    params->numVirtualAntennas = gSysContext.numTxAntennas * gSysContext.numRxAntennas;
     /* size of real part of range FFT: half of the range FFT size, since the ADC samples are real valued*/
     params->numRangeBins = CLI_NUM_RBINS; //CLI_NUM_ADC_SAMPLES/2;
     /* number of chirps per frame (= number of chirps per burst, if Nburst = 1) */
-    params->numChirpsPerFrame = NUM_CHIRPS_PER_FRAME;
-    /* number of doppler chirps per frame (derived from rangeproc init example) */
-    params->numDopplerChirpsPerFrame = NUM_DOPPLER_CHIRPS_PER_FRAME;
-    params->numDopplerChirpsPerProc = NUM_DOPPLER_CHIRPS_PER_PROC; // params->numDopplerChirpsPerFrame
-    /* enable BPM mode (instead of TDM) */
-    params->isBpmEnabled = TRUE;
+    params->numChirpsPerFrame = CLI_NUM_BURSTS_PER_FRAME * CLI_NUM_CHIRPS_PER_BURST;
+    /* number of doppler chirps per frame (derived from rangeproc init example): one doppler chirp each set of TX antennas */
+    params->numDopplerChirpsPerFrame = params->numChirpsPerFrame / gSysContext.numTxAntennas;
+    /* number of doppler chirps per processing evolution: only differs from numDopplerChirpsPerFrame with minor motion mode*/
+    params->numDopplerChirpsPerProc = params->numDopplerChirpsPerFrame;
+    /* BPM / TDM MIMO enable */
+    if ((CLI_MIMO_SEL == 1) || (CLI_MIMO_SEL == 0)) {
+        /* TDM-MIMO*/
+        params->isBpmEnabled = FALSE;
+    } else if (CLI_MIMO_SEL == 4) {
+        /* BPM-MIMO*/
+        params->isBpmEnabled = TRUE;
+    } else {
+        DebugP_log("Error: c_ChirpTxMimoPatSel must have value either 1 (TDM-MIMO) or 4 (BPM-MIMO)\n");
+        exit(1);    
+    }
 
     /* windowing */
     params->windowSize = sizeof(uint32_t) * ((CLI_NUM_ADC_SAMPLES +1 ) / 2); // symmetric window (Blackman), for real samples (therefore /2)
@@ -213,11 +223,11 @@ void RangeProc_config() {
     params->ADCBufData.dataProperty.adcBits = 2U; // 12-bit only
     params->ADCBufData.dataProperty.numChirpsPerChirpEvent = 1U;
     params->ADCBufData.data = (void *)CSL_APP_HWA_ADCBUF_RD_U_BASE;
-    params->ADCBufData.dataProperty.numRxAntennas = (uint8_t) NUM_RX_ANTENNAS;
+    params->ADCBufData.dataProperty.numRxAntennas = (uint8_t) gSysContext.numRxAntennas;
 
     /* dataSize defines the size of buffer that holds ADC data of every frame */
     /* ADCBufData.dataSize omitted due to forum post: https://e2e.ti.com/support/sensors-group/sensors/f/sensors-forum/1324580/awrl6432boost-adc-buffer-data-size-in-motion-and-presence-detection-demo */
-    params->ADCBufData.dataSize = CLI_NUM_ADC_SAMPLES * NUM_RX_ANTENNAS * sizeof(uint16_t) * 2; // times 2, because of ping and pong C:\ti\mmwave-sdk\docs\MotionPresenceDetectionDemo_documentation.pdf 
+    params->ADCBufData.dataSize = CLI_NUM_ADC_SAMPLES * gSysContext.numRxAntennas * sizeof(uint16_t) * 2; // times 2, because of ping and pong C:\ti\mmwave-sdk\docs\MotionPresenceDetectionDemo_documentation.pdf 
     params->ADCBufData.dataProperty.numAdcSamples = CLI_NUM_ADC_SAMPLES;
     
     mathUtils_genWindow((uint32_t *)params->window,
@@ -239,7 +249,7 @@ void RangeProc_config() {
 
     /* initialize RX channel offsets */
     uint32_t index;
-    for (index = 0; index < NUM_RX_ANTENNAS; index++) {
+    for (index = 0; index < gSysContext.numRxAntennas; index++) {
         params->ADCBufData.dataProperty.rxChanOffset[index] = index * bytesPerRxChan;
     }
 
@@ -292,8 +302,8 @@ void RangeProc_config() {
     pHwConfig->edmaOutCfg.path[1].dataOutMajor.eventQueue = DPC_OBJDET_DPU_RANGEPROC_EDMAOUT_MAJOR_PONG_EVENT_QUE;
    
     /* radar cube config*/
-    /* total size of radar cube in bytes*/
-    pHwConfig->radarCube.dataSize = CLI_NUM_RBINS * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * NUM_DOPPLER_CHIRPS_PER_FRAME;
+    /* total size of radar cube in bytes (num range bins x num virtual antennas x sizeof x num doppler chirps) */
+    pHwConfig->radarCube.dataSize = CLI_NUM_RBINS * params->numVirtualAntennas * sizeof(cmplx16ReIm_t) * params->numDopplerChirpsPerFrame;
     pHwConfig->radarCube.datafmt = DPIF_RADARCUBE_FORMAT_6;
 
         /* radar cube */

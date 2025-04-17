@@ -83,7 +83,12 @@ typedef struct MemPoolObj_t
 
 
 /*! @brief Global struct which holds all handles and configs. */
-typedef struct{
+typedef struct {
+    /*! @brief Number of enabled TX antennas. */
+    uint16_t numTxAntennas;
+
+    /*! @brief Number of enabled RX antennas.*/
+    uint16_t numRxAntennas;
 
     /*! @brief This is the mmWave control handle which is used to configure the BSS. */
     MMWave_Handle gCtrlHandle;

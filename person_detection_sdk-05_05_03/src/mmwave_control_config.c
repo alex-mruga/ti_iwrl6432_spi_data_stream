@@ -108,7 +108,7 @@ static void Mmwave_populateDefaultProfileCfg (T_RL_API_SENS_CHIRP_PROF_COMN_CFG*
     /* Front End Firmware expects Start freq (MHz) as 1 LSB = (3 x APLL_FREQ / 2^16) * 2^6 resolution  */
     gSysContext.profileTimeCfg.w_ChirpRfFreqStart           = CLI_CHIRP_START_FREQ;
     gSysContext.profileTimeCfg.h_ChirpTxEnSel               = CLI_CHA_CFG_TX_BITMASK;
-    gSysContext.profileTimeCfg.h_ChirpTxBpmEnSel            = CHIRPTIMINGCFG_CHIRP_TX_BPM_EN_SEL;
+    gSysContext.profileTimeCfg.h_ChirpTxBpmEnSel            = 0x0U; // MIMO BPM enable (hardcoded to 0 in demo project);
 
     rfBandwidth = (gSysContext.profileComCfg.h_ChirpRampEndTime*0.1) * CLI_CHIRP_SLOPE; //In MHz/usec
     rampDownTime = MIN((gSysContext.profileTimeCfg.h_ChirpIdleTime*0.1-1.0), 6.0); //In usec
@@ -325,9 +325,25 @@ static void Mmwave_ADCBufConfig
   *  @return None
 */
 void MMWave_populateChannelCfg() {
-    gSysContext.channelCfg.h_RxChCtrlBitMask  = CLI_CHA_CFG_RX_BITMASK;
     gSysContext.channelCfg.h_TxChCtrlBitMask  = CLI_CHA_CFG_TX_BITMASK;
+    gSysContext.channelCfg.h_RxChCtrlBitMask  = CLI_CHA_CFG_RX_BITMASK;
     gSysContext.channelCfg.c_MiscCtrl         = CLI_CHA_CFG_MISC_CTRL;
+
+    // calculate number RX and TX antennas from bitmask
+    gSysContext.numTxAntennas = 0;
+    gSysContext.numRxAntennas = 0;
+    for (uint32_t i = 0; i < SYS_COMMON_NUM_TX_ANTENNAS; i++) {
+        if ((gSysContext.channelCfg.h_TxChCtrlBitMask >> i) & 0x1) {
+            gSysContext.numTxAntennas++;
+        }
+    }
+
+    for (uint32_t i = 0; i < SYS_COMMON_NUM_RX_CHANNEL; i++) {
+        if ((gSysContext.channelCfg.h_RxChCtrlBitMask >> i) & 0x1) {
+            gSysContext.numRxAntennas++;
+        }
+    }
+
 
     // omitted "calculation" of rxAntOrder, since doppler is not used in this project
 }
