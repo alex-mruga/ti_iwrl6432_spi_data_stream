@@ -90,32 +90,31 @@ static void Mmwave_populateDefaultProfileCfg (T_RL_API_SENS_CHIRP_PROF_COMN_CFG*
     float scale = 65536./(3*100*100);
 
     /* Populate the *default* profile configuration: */
-    gSysContext.profileComCfg.c_DigOutputSampRate           = CHIRPCOMNCFG_DIG_OUTPUT_SAMP_RATE;   // 23; // M_RL_SENS_DIG_OUT_SAMP_RATE_MAX_12P5M
-    gSysContext.profileComCfg.c_DigOutputBitsSel            = CHIRPCOMNCFG_DIG_OUTPUT_BITS_SEL;    // 0; // M_RL_SENS_DIG_OUT_12BITS_4LSB_ROUND
-    gSysContext.profileComCfg.c_DfeFirSel                   = CHIRPCOMNCFG_DFE_FIR_SEL;            // 0; // M_RL_SENS_DFE_FIR_LONG_FILT
-    gSysContext.profileComCfg.h_NumOfAdcSamples             = CHIRPCOMNCFG_NUM_OF_ADC_SAMPLES;     // 128; // 256U; /* 2.56us */
-    gSysContext.profileComCfg.c_ChirpTxMimoPatSel           = CHIRPCOMNCFG_CHIRP_TX_MIMO_PAT_SEL;  // 4; // 0; // M_RL_SENS_TX_MIMO_PATRN_DIS
-    gSysContext.profileComCfg.c_MiscSettings                = CHIRPCOMNCFG_MISC_SETTINGS;          // 0U; /* HPF FINIT, CRD ena, PA blank dis */
-    gSysContext.profileComCfg.c_HpfFastInitDuration         = CHIRPCOMNCFG_HPF_FAST_INIT_DURATION; // 15U; /* 1.5us */
-    gSysContext.profileComCfg.h_ChirpRampEndTime            = CHIRPCOMNCFG_CHIRP_RAMP_END_TIME * 10.0;    // 361; // 600; // 250U; /* 25us low res */
-    gSysContext.profileComCfg.c_ChirpRxHpfSel               = CHIRPCOMNCFG_CHIRP_RX_HPF_SEL;       // 1; // M_RL_SENS_RX_HPF_SEL_350KHZ
+    gSysContext.profileComCfg.c_DigOutputSampRate           = CLI_DIG_OUT_SAMPLING_RATE;
+    gSysContext.profileComCfg.c_DigOutputBitsSel            = CLI_DIG_OUT_BITS_SEL;
+    gSysContext.profileComCfg.c_DfeFirSel                   = CLI_DFE_FIR_SEL;
+    gSysContext.profileComCfg.h_NumOfAdcSamples             = CLI_NUM_ADC_SAMPLES;
+    gSysContext.profileComCfg.c_ChirpTxMimoPatSel           = CLI_MIMO_SEL;
+    gSysContext.profileComCfg.c_MiscSettings                = CLI_C_MISC_SETTINGS;
+    gSysContext.profileComCfg.c_HpfFastInitDuration         = CLI_HPF_FAST_INIT_DURATION;
+    gSysContext.profileComCfg.h_ChirpRampEndTime            = CLI_CHIRP_RAMP_END_TIME;
+    gSysContext.profileComCfg.c_ChirpRxHpfSel               = CLI_CHIRP_RX_HPF_SEL;
 
     /* Populate the *default* timing configuration: */
-    gSysContext.profileTimeCfg.h_ChirpIdleTime              = CHIRPTIMINGCFG_CHIRP_IDLE_TIME * 10.0;       // 80; // 400; // 65U; /* 6.5us low res */
-    gSysContext.profileTimeCfg.h_ChirpAdcStartTime          = CHIRPTIMINGCFG_CHIRP_ADC_START_TIME;  // 300; // 30770;
-    gSysContext.profileTimeCfg.xh_ChirpTxStartTime          = CHIRPTIMINGCFG_CHIRP_TX_START_TIME;   // 0; // -10; /* -0.2us */
-    gSysContext.profileTimeCfg.xh_ChirpRfFreqSlope          = CHIRPTIMINGCFG_CHIRP_RF_FREQ_SLOPE;   // 419; // 699; // 3495; /* 100MHz/us , 77G - 2621 */
+    gSysContext.profileTimeCfg.h_ChirpIdleTime              = CLI_CHIRP_IDLE_TIME;
+    gSysContext.profileTimeCfg.h_ChirpAdcStartTime          = CLI_CHIRP_ADC_START_TIME;
+    gSysContext.profileTimeCfg.xh_ChirpTxStartTime          = CLI_CHIRP_TX_START_TIME;
+    gSysContext.profileTimeCfg.xh_ChirpRfFreqSlope          = CLI_CHIRP_SLOPE;
     /* Front End Firmware expects Start freq (MHz) as 1 LSB = (3 x APLL_FREQ / 2^16) * 2^6 resolution  */
-    gSysContext.profileTimeCfg.w_ChirpRfFreqStart           = (CHIRPTIMINGCFG_CHIRP_RF_FREQ_START * 1000.0 * 256.0)/(300);
-    gSysContext.profileTimeCfg.h_ChirpTxEnSel               = CHIRPTIMINGCFG_CHIRP_TX_EN_SEL;       // 0x3U; /* 2 TX enable in chirp */
-    gSysContext.profileTimeCfg.h_ChirpTxBpmEnSel            = CHIRPTIMINGCFG_CHIRP_TX_BPM_EN_SEL;   // 0x3U; // 0; // 0x2U; /* TX1 BPM enable in chirp */
+    gSysContext.profileTimeCfg.w_ChirpRfFreqStart           = CLI_CHIRP_START_FREQ;
+    gSysContext.profileTimeCfg.h_ChirpTxEnSel               = CLI_CHA_CFG_TX_BITMASK;
+    gSysContext.profileTimeCfg.h_ChirpTxBpmEnSel            = CHIRPTIMINGCFG_CHIRP_TX_BPM_EN_SEL;
 
-    rfBandwidth = (gSysContext.profileComCfg.h_ChirpRampEndTime*0.1) * CHIRPTIMINGCFG_CHIRP_RF_FREQ_SLOPE; //In MHz/usec
+    rfBandwidth = (gSysContext.profileComCfg.h_ChirpRampEndTime*0.1) * CLI_CHIRP_SLOPE; //In MHz/usec
     rampDownTime = MIN((gSysContext.profileTimeCfg.h_ChirpIdleTime*0.1-1.0), 6.0); //In usec
     gSysContext.profileComCfg.h_CrdNSlopeMag = (uint16_t) fabs((scale * rfBandwidth / rampDownTime + 0.5));
 
-    // magic calculations, derived from demo project
-    gSysContext.profileTimeCfg.xh_ChirpRfFreqSlope  = (gSysContext.profileTimeCfg.xh_ChirpRfFreqSlope * 1048576.0)/(3* 100 * 100);
+    gSysContext.profileTimeCfg.xh_ChirpRfFreqSlope  = CLI_CHIRP_FREQ_SLOPE;
 
 
     /* Initialize the profile configuration: */
@@ -233,7 +232,7 @@ void Mmwave_populateDefaultOpenCfg (MMWave_OpenCfg* ptrOpenCfg) {
     ptrOpenCfg->ptrfecTxclpcCalCmd = &gSysContext.fecTxclpcCalCmd;
     ptrOpenCfg->customCalibrationEnableMask = 0U;
     ptrOpenCfg->fecRDIFCtrlCmd.c_RdifEnable = M_RL_FECSS_RDIF_DIS;
-    ptrOpenCfg->fecRDIFCtrlCmd.h_RdifSampleCount = NUM_ADC_SAMPLES; //profileComCfg.h_NumOfAdcSamples;
+    ptrOpenCfg->fecRDIFCtrlCmd.h_RdifSampleCount = CLI_NUM_ADC_SAMPLES; //profileComCfg.h_NumOfAdcSamples;
 }
 
 static void Mmwave_EnChannelSetOffset(
@@ -326,9 +325,9 @@ static void Mmwave_ADCBufConfig
   *  @return None
 */
 void MMWave_populateChannelCfg() {
-    gSysContext.channelCfg.h_RxChCtrlBitMask  = RX_CH_CTRL_BITMASK;
-    gSysContext.channelCfg.h_TxChCtrlBitMask  = TX_CH_CTRL_BITMASK;
-    gSysContext.channelCfg.c_MiscCtrl         = CHANNEL_CFG_MISC_CTRL;
+    gSysContext.channelCfg.h_RxChCtrlBitMask  = CLI_CHA_CFG_RX_BITMASK;
+    gSysContext.channelCfg.h_TxChCtrlBitMask  = CLI_CHA_CFG_TX_BITMASK;
+    gSysContext.channelCfg.c_MiscCtrl         = CLI_CHA_CFG_MISC_CTRL;
 
     // omitted "calculation" of rxAntOrder, since doppler is not used in this project
 }
@@ -360,12 +359,12 @@ void Mmwave_populateDefaultChirpControlCfg (MMWave_CtrlCfg* ptrCtrlCfg) {
     memset ((void*)ptrCtrlCfg, 0, sizeof(MMWave_CtrlCfg));
 
     /* Populate the frame configuration: */
-    gSysContext.frameCfg.h_NumOfChirpsInBurst      = NUM_CHIRPS_PER_BURST;
-    gSysContext.frameCfg.c_NumOfChirpsAccum        = NUM_CHIRPS_ACCUM;
-    gSysContext.frameCfg.w_BurstPeriodicity        = W_BURST_PERIOD; 
-    gSysContext.frameCfg.h_NumOfBurstsInFrame      = NUM_BURSTS_PER_FRAME;
-    gSysContext.frameCfg.w_FramePeriodicity        = FRAME_PERIOD;
-    gSysContext.frameCfg.h_NumOfFrames             = NUM_FRAMES;
+    gSysContext.frameCfg.h_NumOfChirpsInBurst      = CLI_NUM_CHIRPS_PER_BURST;
+    gSysContext.frameCfg.c_NumOfChirpsAccum        = CLI_NUM_CHIRPS_ACCUM;
+    gSysContext.frameCfg.w_BurstPeriodicity        = CLI_W_BURST_PERIOD; 
+    gSysContext.frameCfg.h_NumOfBurstsInFrame      = CLI_NUM_BURSTS_PER_FRAME;
+    gSysContext.frameCfg.w_FramePeriodicity        = CLI_FRAME_PERIOD;
+    gSysContext.frameCfg.h_NumOfFrames             = CLI_NUM_FRAMES;
 
     /* Populate the profile configuration: */
     Mmwave_populateDefaultProfileCfg (&profileCfg, &profileTimeCfg);
@@ -442,10 +441,10 @@ void Mmwave_populateDefaultCalibrationCfg (MMWave_CalibrationCfg* ptrCalibration
  */
 void Mmwave_populateDefaultStartCfg (MMWave_StrtCfg* ptrStartCfg) {
     /* Populate the start configuration: */
-    ptrStartCfg->frameTrigMode      = SENSOR_START_FRAME_TRIG_MODE;
-    ptrStartCfg->chirpStartSigLbEn  = SENSOR_START_CHIRP_START_SIG_LB_ENABLE;
-    ptrStartCfg->frameLivMonEn      = SENSOR_START_FRAME_LIVE_MON_ENABLE;
-    ptrStartCfg->frameTrigTimerVal  = SENSOR_START_FRAME_TRIG_TIMER_VAL;
+    ptrStartCfg->frameTrigMode      = CLI_SENSOR_START_FRM_TRIG;
+    ptrStartCfg->chirpStartSigLbEn  = CLI_SENSOR_START_LB_EN;
+    ptrStartCfg->frameLivMonEn      = CLI_SENSOR_START_MON_EN;
+    ptrStartCfg->frameTrigTimerVal  = CLI_SENSOR_START_TRIG_TIMER;
 
     return;
 }

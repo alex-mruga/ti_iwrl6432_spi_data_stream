@@ -41,6 +41,14 @@
 #include <drivers/hwa.h>
 #include "kernel/dpl/SemaphoreP.h"
 
+
+/*!
+ * @brief DMA channel defines (as opposed to more dynamic DPC_ObjDet_HwaDmaTrigSrcChanPoolAlloc() in MPD demo project)
+ */
+#define DMA_TRIG_SRC_CHAN_0 0
+#define DMA_TRIG_SRC_CHAN_1 1
+
+
 /*!
  * @brief Memory Configuration used during init API
  */

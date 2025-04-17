@@ -188,7 +188,7 @@ void RangeProc_config() {
     /* number of RX antennas, product of TX- and RX-antennas (on the IWRL6432BOOST 2*3=6) */
     params->numVirtualAntennas = NUM_VIRT_ANTENNAS;
     /* size of real part of range FFT: half of the range FFT size, since the ADC samples are real valued*/
-    params->numRangeBins = NUM_RANGE_BINS; //NUM_ADC_SAMPLES/2;
+    params->numRangeBins = CLI_NUM_RBINS; //CLI_NUM_ADC_SAMPLES/2;
     /* number of chirps per frame (= number of chirps per burst, if Nburst = 1) */
     params->numChirpsPerFrame = NUM_CHIRPS_PER_FRAME;
     /* number of doppler chirps per frame (derived from rangeproc init example) */
@@ -198,7 +198,7 @@ void RangeProc_config() {
     params->isBpmEnabled = TRUE;
 
     /* windowing */
-    params->windowSize = sizeof(uint32_t) * ((NUM_ADC_SAMPLES +1 ) / 2); // symmetric window (Blackman), for real samples (therefore /2)
+    params->windowSize = sizeof(uint32_t) * ((CLI_NUM_ADC_SAMPLES +1 ) / 2); // symmetric window (Blackman), for real samples (therefore /2)
     params->window =  (int32_t *)DPC_ObjDet_MemPoolAlloc(&gSysContext.CoreLocalRamObj,
                                                         params->windowSize,
                                                         sizeof(uint32_t));
@@ -217,8 +217,8 @@ void RangeProc_config() {
 
     /* dataSize defines the size of buffer that holds ADC data of every frame */
     /* ADCBufData.dataSize omitted due to forum post: https://e2e.ti.com/support/sensors-group/sensors/f/sensors-forum/1324580/awrl6432boost-adc-buffer-data-size-in-motion-and-presence-detection-demo */
-    params->ADCBufData.dataSize = NUM_ADC_SAMPLES * NUM_RX_ANTENNAS * sizeof(uint16_t) * 2; // times 2, because of ping and pong C:\ti\mmwave-sdk\docs\MotionPresenceDetectionDemo_documentation.pdf 
-    params->ADCBufData.dataProperty.numAdcSamples = NUM_ADC_SAMPLES;
+    params->ADCBufData.dataSize = CLI_NUM_ADC_SAMPLES * NUM_RX_ANTENNAS * sizeof(uint16_t) * 2; // times 2, because of ping and pong C:\ti\mmwave-sdk\docs\MotionPresenceDetectionDemo_documentation.pdf 
+    params->ADCBufData.dataProperty.numAdcSamples = CLI_NUM_ADC_SAMPLES;
     
     mathUtils_genWindow((uint32_t *)params->window,
                                 (uint32_t) params->ADCBufData.dataProperty.numAdcSamples,
@@ -231,10 +231,10 @@ void RangeProc_config() {
     params->rangeFFTtuning.numLastButterflyStagesToScale = 0; /* no scaling needed as ADC is 16-bit and we have 8 bits to grow */  
 
     /* size of range FFT: equal to number of ADC samples*/
-    params->rangeFftSize = NUM_ADC_SAMPLES;
+    params->rangeFftSize = CLI_NUM_ADC_SAMPLES;
 
     /* bytes per RX channel (each chirp is uint_16) */
-    bytesPerRxChan = NUM_ADC_SAMPLES * sizeof(uint16_t);
+    bytesPerRxChan = CLI_NUM_ADC_SAMPLES * sizeof(uint16_t);
     bytesPerRxChan = (bytesPerRxChan + 15) / 16 * 16; // ensure that value is multiple of 16 (for EDMA?)
 
     /* initialize RX channel offsets */
@@ -293,7 +293,7 @@ void RangeProc_config() {
    
     /* radar cube config*/
     /* total size of radar cube in bytes*/
-    pHwConfig->radarCube.dataSize = NUM_RANGE_BINS * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * NUM_DOPPLER_CHIRPS_PER_FRAME;
+    pHwConfig->radarCube.dataSize = CLI_NUM_RBINS * NUM_VIRT_ANTENNAS * sizeof(cmplx16ReIm_t) * NUM_DOPPLER_CHIRPS_PER_FRAME;
     pHwConfig->radarCube.datafmt = DPIF_RADARCUBE_FORMAT_6;
 
         /* radar cube */

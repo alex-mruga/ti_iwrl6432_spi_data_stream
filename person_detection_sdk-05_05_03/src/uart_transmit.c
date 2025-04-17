@@ -76,7 +76,7 @@ void uart_transmit_loop() {
         // send actual radar cube data
         // only send data of one virtual antenna though, because only range fft is transmitted for now.
         uint32_t i;
-        for (i = 0; i < NUM_RANGE_BINS; i++) {
+        for (i = 0; i < CLI_NUM_RBINS; i++) {
 
             // data structure in radarCube:
             // Cube[chirp][antenna][range]

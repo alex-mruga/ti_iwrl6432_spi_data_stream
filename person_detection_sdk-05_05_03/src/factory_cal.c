@@ -101,7 +101,7 @@ int32_t restoreFactoryCal(void)
 
     /* Calculate Calibration Rf Frequency. Use Center frequency of the bandwidth(being used in demo) for calibration */
     calRfFreq = (gSysContext.profileTimeCfg.w_ChirpRfFreqStart) + \
-                ((((CHIRPTIMINGCFG_CHIRP_RF_FREQ_SLOPE * 256.0)/300) * (gSysContext.profileComCfg.h_ChirpRampEndTime * 0.1)) / 2);
+                ((((CLI_CHIRP_SLOPE * 256.0)/300) * (gSysContext.profileComCfg.h_ChirpRampEndTime * 0.1)) / 2);
     factoryCalCfg.fecRFFactoryCalCmd.xh_CalRfSlope = 0x4Du; /* 2.2Mhz per uSec*/
 
 
