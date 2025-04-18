@@ -31,19 +31,17 @@ def print_basic_config_info(data):
     slope_mhz_per_us = float(data['chirpTimingCfg']['chirpRfFreqSlope'])
     ramp_time_us     = float(data['chirpComnCfg']['chirpRampEndTime'])
 
+    # calculate bandwidth in Hz
     slope_hz_per_s   = slope_mhz_per_us * 1e12
     ramp_time_s      = ramp_time_us * 1e-6
-
-    # calculate bandwidth in Hz
-    bandwidth_hz = slope_hz_per_s * ramp_time_s
+    bandwidth_hz     = slope_hz_per_s * ramp_time_s
 
     # calculate range resolution in meters
-    range_res = c / (2 * bandwidth_hz)
+    range_res        = c / (2 * bandwidth_hz)
 
-    msg = f"""\
-
+    msg = f"""
 Some basic information on the configuration:
-  - n range bins (N):      {int(data['chirpComnCfg']['numOfAdcSamples']) // 2}
+  - n range bins (N_bins): {int(data['chirpComnCfg']['numOfAdcSamples']) // 2}
   - bandwidth (B):         {bandwidth_hz * 1e-9} GHz
   - range resolution (ΔR): {(range_res * 100):.2f} cm
 """
