@@ -20,6 +20,35 @@ CONFIG_STRUCTURE = {
 # name of the output file
 DEFINES_HEADER_NAME= "defines.h"
 
+def print_basic_config_info(data):
+    """
+    Print basic info calculated from parameters
+    """
+
+    c = 3e8  # speed of light in m/s
+
+    # get slope (MHz/us) and ramp duration (us) from data
+    slope_mhz_per_us = float(data['chirpTimingCfg']['chirpRfFreqSlope'])
+    ramp_time_us     = float(data['chirpComnCfg']['chirpRampEndTime'])
+
+    slope_hz_per_s   = slope_mhz_per_us * 1e12
+    ramp_time_s      = ramp_time_us * 1e-6
+
+    # calculate bandwidth in Hz
+    bandwidth_hz = slope_hz_per_s * ramp_time_s
+
+    # calculate range resolution in meters
+    range_res = c / (2 * bandwidth_hz)
+
+    msg = f"""\
+
+Some basic information on the configuration:
+  - n range bins (N):      {int(data['chirpComnCfg']['numOfAdcSamples']) // 2}
+  - bandwidth (B):         {bandwidth_hz * 1e-9} GHz
+  - range resolution (ΔR): {(range_res * 100):.2f} cm
+"""
+    print(msg)
+
 
 def parse_cfg_file(file_path):
     """
@@ -247,6 +276,9 @@ def main():
     # generate output file
     generate_defines_file(data, script_name, os.path.basename(args.input_file), final)
     print(f"generated header: {final}")
+
+    # output some basic info about the config
+    print_basic_config_info(data)
 
 
 if __name__ == '__main__':
