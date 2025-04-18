@@ -6,10 +6,10 @@ import matplotlib.animation as animation
 import threading
 
 # ----- Configuration Parameters -----
-SERIAL_PORT = 'COM5'
+SERIAL_PORT = '/dev/ttyACM1'
 BAUD_RATE = 115200
 
-DATA_LENGTH = 128         # Number of complex samples per frame
+DATA_LENGTH = 64         # Number of complex samples per frame
 SAMPLE_SIZE = 4           # Each complex sample: 2x int16 (2 bytes each)
 HEADER = b'\xAA\xBB\xCC\xDD'   # 4-byte header marker
 FOOTER = b'\xDD\xCC\xBB\xAA'   # 4-byte footer marker

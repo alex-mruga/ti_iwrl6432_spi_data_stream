@@ -41,6 +41,14 @@
 #include <drivers/hwa.h>
 #include "kernel/dpl/SemaphoreP.h"
 
+
+/*!
+ * @brief DMA channel defines (as opposed to more dynamic DPC_ObjDet_HwaDmaTrigSrcChanPoolAlloc() in MPD demo project)
+ */
+#define DMA_TRIG_SRC_CHAN_0 0
+#define DMA_TRIG_SRC_CHAN_1 1
+
+
 /*!
  * @brief Memory Configuration used during init API
  */
@@ -75,7 +83,12 @@ typedef struct MemPoolObj_t
 
 
 /*! @brief Global struct which holds all handles and configs. */
-typedef struct{
+typedef struct {
+    /*! @brief Number of enabled TX antennas. */
+    uint16_t numTxAntennas;
+
+    /*! @brief Number of enabled RX antennas.*/
+    uint16_t numRxAntennas;
 
     /*! @brief This is the mmWave control handle which is used to configure the BSS. */
     MMWave_Handle gCtrlHandle;
