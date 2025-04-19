@@ -27,8 +27,8 @@ Please note, that there already is an easy way to stream raw ADC data via SPI us
 | [`mem_pool.c`](/minimal_rangeproc_impl/src/mem_pool.c)        | Implements memory pool management functions and data structures. |
 | [`mmwave_basic.c`](/minimal_rangeproc_impl/src/mmwave_basic.c)    | Handles mmWave sensor initialization, configuration, and control. |
 | [`mmwave_control_config.c`](/minimal_rangeproc_impl/src/mmwave_control_config.c) | Configures chirp and profile settings for TI mmWave radar. |
-| [`rangeproc_dpc.c`](/minimal_rangeproc_impl/src/rangeproc_dpc.c)   | Implements the Range Processing DPU (FFT, object detection, UART transmission). |
-| [`uart_transmit.c`](/minimal_rangeproc_impl/src/uart_transmit.c)   | Manages UART transmission of radar cube data, synchronized via semaphores. |
+| [`rangeproc_dpc.c`](/minimal_rangeproc_impl/src/rangeproc_dpc.c)   | Implements the Range Processing DPU (FFT, object detection, SPI transmission). |
+| [`spi_transmit.c`](/minimal_rangeproc_impl/src/spi_transmit.c)   | Manages SPI transmission of radar cube and ADC data, synchronized via semaphores. |
 
 
 | `/minimal_rangeproc_impl/include/`           |  |

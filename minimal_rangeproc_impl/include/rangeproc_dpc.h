@@ -9,10 +9,10 @@
  * its associated functions. It includes declarations for DPU initialization, configuration,
  * and task management, as well as interrupt handling for frame start, chirp start, and
  * chirp available events. The module is designed to facilitate radar signal processing
- * using the Hardware Accelerator (HWA) and UART communication for data transmission.
+ * using the Hardware Accelerator (HWA) and SPI communication for data transmission.
  *
  * The range processing DPU is responsible for processing radar data frames, including
- * FFT computation, object detection, and data transmission over UART. This module
+ * FFT computation, object detection, and data transmission over SPI. This module
  * integrates with the TI mmWave SDK and is derived from the Motion and Presence Detection
  * Demo provided in the SDK.
  *
@@ -55,8 +55,8 @@
 #define DPC_OBJDET_QFORMAT_RANGE_FFT 17
 
 extern SemaphoreP_Object dpcCfgDoneSemHandle;
-extern SemaphoreP_Object uart_tx_start_sem;
-extern SemaphoreP_Object uart_tx_done_sem;
+extern SemaphoreP_Object spi_tx_start_sem;
+extern SemaphoreP_Object spi_tx_done_sem;
 
 /**
  *  @b Description
@@ -103,17 +103,17 @@ void rangeproc_main(void *args);
  * @brief Task function for Data Processing Chain (DPC).
  *
  * This function initializes and manages the data processing chain, including
- * configuring the DPUs, registering interrupts, and triggering UART transmission.
+ * configuring the DPUs, registering interrupts, and triggering SPI transmission.
  * It runs in an infinite loop, processing data frames and triggering the next frame.
  */
 void dpcTask();
 
 /**
- * @brief Task function for UART transmission.
+ * @brief Task function for SPI transmission.
  *
- * This function continuously transmits data over UART.
+ * This function continuously transmits data over SPI.
  */
-void uartTask();
+void spiTask();
 
 /**
  * @brief Registers an interrupt for the frame start event.
