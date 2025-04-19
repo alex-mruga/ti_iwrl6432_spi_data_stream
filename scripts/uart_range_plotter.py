@@ -15,7 +15,7 @@ HEADER = b'\xAA\xBB\xCC\xDD'   # 4-byte header marker
 FOOTER = b'\xDD\xCC\xBB\xAA'   # 4-byte footer marker
 
 # Radar Parameters
-BANDWIDTH = 3328e6        # in Hz
+BANDWIDTH = 2700e6        # in Hz
 C = 3e8                   # Speed of light (m/s)
 range_resolution = C / (2 * BANDWIDTH)  # Range resolution (meters per bin)
 
