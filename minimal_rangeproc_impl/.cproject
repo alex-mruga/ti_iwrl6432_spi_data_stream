@@ -15,25 +15,27 @@
             <storageModule moduleId="cdtBuildSystem" version="4.0.0">
                 <configuration artifactExtension="out" artifactName="${ProjName}" buildProperties="" cleanCommand="${CG_CLEAN_CMD}" description="" id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1489696067" name="Debug" parent="com.ti.ccstudio.buildDefinitions.TMS470.Debug" postbuildStep="$(MAKE) -C ${CCS_PROJECT_DIR} -f makefile_ccs_bootimage_gen OUTNAME=${BuildArtifactFileBaseName} PROFILE=${ConfigName} MCU_PLUS_SDK_PATH=${MCU_PLUS_SDK_PATH} CG_TOOL_ROOT=${CG_TOOL_ROOT} CCS_INSTALL_DIR=${CCS_INSTALL_DIR} CCS_IDE_MODE=${CCS_IDE_MODE}">
                     <folderInfo id="com.ti.ccstudio.buildDefinitions.TMS470.Debug.1489696067." name="/" resourcePath="">
-                        <toolChain id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.DebugToolchain.967566525" name="TI Build Tools" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.DebugToolchain" targetTool="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.linkerDebug.1679010194">
-                            <option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.882451454" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
+                        <toolChain id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.DebugToolchain.1233975514" name="TI Build Tools" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.DebugToolchain" targetTool="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.linkerDebug.1915798208">
+                            <option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.1988739160" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
                                 <listOptionValue value="DEVICE_CONFIGURATION_ID=Cortex M.IWRL6432"/>
                                 <listOptionValue value="DEVICE_CORE_ID="/>
                                 <listOptionValue value="DEVICE_ENDIANNESS=little"/>
                                 <listOptionValue value="OUTPUT_FORMAT=ELF"/>
-                                <listOptionValue value="CCS_MBS_VERSION=51.0.0"/>
                                 <listOptionValue value="RUNTIME_SUPPORT_LIBRARY="/>
-                                <listOptionValue value="OUTPUT_TYPE=executable"/>
+                                <listOptionValue value="CCS_MBS_VERSION=51.0.0"/>
                                 <listOptionValue value="PRODUCTS=sysconfig:1.20.0;MMWAVE-L-SDK:5.5.3.00;"/>
                                 <listOptionValue value="PRODUCT_MACRO_IMPORTS={&quot;sysconfig&quot;:[&quot;${SYSCONFIG_TOOL_INCLUDE_PATH}&quot;,&quot;${SYSCONFIG_TOOL_LIBRARY_PATH}&quot;,&quot;${SYSCONFIG_TOOL_LIBRARIES}&quot;,&quot;${SYSCONFIG_TOOL_SYMBOLS}&quot;,&quot;${SYSCONFIG_TOOL_SYSCONFIG_MANIFEST}&quot;],&quot;MMWAVE-L-SDK&quot;:[&quot;${COM_TI_MMWAVE_L_SDK_INCLUDE_PATH}&quot;,&quot;${COM_TI_MMWAVE_L_SDK_LIBRARY_PATH}&quot;,&quot;${COM_TI_MMWAVE_L_SDK_LIBRARIES}&quot;,&quot;${COM_TI_MMWAVE_L_SDK_SYMBOLS}&quot;,&quot;${COM_TI_MMWAVE_L_SDK_SYSCONFIG_MANIFEST}&quot;]}"/>
+                                <listOptionValue value="OUTPUT_TYPE=executable"/>
                             </option>
-                            <option id="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION.1183355705" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION" value="TICLANG_3.2.2.LTS" valueType="string"/>
-                            <targetPlatform id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.targetPlatformDebug.1316763115" name="Platform" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.targetPlatformDebug"/>
-                            <builder buildPath="${BuildDirectory}" id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.builderDebug.138379099" keepEnvironmentInBuildfile="false" name="GNU Make" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.builderDebug"/>
-                            <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug.1897295160" name="Arm Compiler" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerDebug">
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.GENERATE_DWARF_DEBUG.1250364923" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.GENERATE_DWARF_DEBUG" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.GENERATE_DWARF_DEBUG.G_LOWERCASE" valueType="enumerated"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.ENDIAN_NESS__BIG_LITTLE.166194379" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.ENDIAN_NESS__BIG_LITTLE" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.ENDIAN_NESS__BIG_LITTLE.MLITTLE_ENDIAN" valueType="enumerated"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.INCLUDE_PATH.187677233" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.INCLUDE_PATH" valueType="includePath">
+                            <option id="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION.1859098861" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION" value="TICLANG_4.0.0.LTS" valueType="string"/>
+                            <targetPlatform id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.targetPlatformDebug.364825799" name="Platform" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.targetPlatformDebug"/>
+                            <builder buildPath="${BuildDirectory}" id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.builderDebug.328633083" keepEnvironmentInBuildfile="false" name="GNU Make" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.builderDebug"/>
+                            <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.compilerDebug.457758582" name="Arm Compiler" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.compilerDebug">
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.MCPU.860470017" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.MCPU" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.MCPU.cortex-m4" valueType="enumerated"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.MFLOAT_ABI.1531191626" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.MFLOAT_ABI" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.MFLOAT_ABI.hard" valueType="enumerated"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.ENDIAN_NESS__BIG_LITTLE.1889810843" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.ENDIAN_NESS__BIG_LITTLE" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.ENDIAN_NESS__BIG_LITTLE.MLITTLE_ENDIAN" valueType="enumerated"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.SELECT_PROCESSOR_MODE__ARM_THUMB.2084066803" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.SELECT_PROCESSOR_MODE__ARM_THUMB" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.SELECT_PROCESSOR_MODE__ARM_THUMB.MTHUMB" valueType="enumerated"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.INCLUDE_PATH.1429251376" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.INCLUDE_PATH" valueType="includePath">
                                     <listOptionValue value="${SYSCONFIG_TOOL_INCLUDE_PATH}"/>
                                     <listOptionValue value="${COM_TI_MMWAVE_L_SDK_INCLUDE_PATH}"/>
                                     <listOptionValue value="${CG_TOOL_ROOT}/include/c"/>
@@ -45,43 +47,24 @@
                                     <listOptionValue value="${PROJECT_ROOT}/include"/>
                                     <listOptionValue value="${MCU_PLUS_SDK_PATH}/firmware/mmwave_dfp/mmwavelink"/>
                                 </option>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.DEFINE.859577281" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.DEFINE" valueType="definedSymbols">
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.DEFINE.2076216769" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.DEFINE" valueType="definedSymbols">
                                     <listOptionValue value="${SYSCONFIG_TOOL_SYMBOLS}"/>
                                     <listOptionValue value="${COM_TI_MMWAVE_L_SDK_SYMBOLS}"/>
                                     <listOptionValue value="SOC_XWRL64XX"/>
                                     <listOptionValue value="_DEBUG_=1"/>
                                 </option>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.MCPU.1100564764" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.MCPU" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.MCPU.cortex-m4" valueType="enumerated"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.MFLOAT_ABI.1757344168" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.MFLOAT_ABI" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.MFLOAT_ABI.hard" valueType="enumerated"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.UNALIGNED_MEMORY_ACCESSES.1014252737" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.UNALIGNED_MEMORY_ACCESSES" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.UNALIGNED_MEMORY_ACCESSES.MNO_UNALIGNED_ACCESS" valueType="enumerated"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.SELECT_PROCESSOR_MODE__ARM_THUMB.1459598309" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.SELECT_PROCESSOR_MODE__ARM_THUMB" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.SELECT_PROCESSOR_MODE__ARM_THUMB.MTHUMB" valueType="enumerated"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.WALL.1615247801" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.WALL" value="true" valueType="boolean"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.WNO.1061828993_" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.WNO_" valueType="stringList">
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.GENERATE_DWARF_DEBUG.1209049621" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.GENERATE_DWARF_DEBUG" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.GENERATE_DWARF_DEBUG.G_LOWERCASE" valueType="enumerated"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.WALL.2009622232" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.WALL" value="true" valueType="boolean"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.WNO.1674792844_" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.WNO_" valueType="stringList">
                                     <listOptionValue value="gnu-variable-sized-type-not-at-end"/>
                                     <listOptionValue value="unused-function"/>
                                 </option>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.UNALIGNED_MEMORY_ACCESSES.1462906362" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.UNALIGNED_MEMORY_ACCESSES" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.compilerID.UNALIGNED_MEMORY_ACCESSES.MNO_UNALIGNED_ACCESS" valueType="enumerated"/>
                             </tool>
-                            <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.linkerDebug.1679010194" name="Arm Linker" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.linkerDebug">
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.OUTPUT_FILE.1048728936" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.OUTPUT_FILE" value="${ProjName}.out" valueType="string"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.MAP_FILE.654324458" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.MAP_FILE" value="hwa_fft1d.${ConfigName}.map" valueType="string"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.XML_LINK_INFO.858684841" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.XML_LINK_INFO" value="${ProjName}_linkInfo.xml" valueType="string"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.DISPLAY_ERROR_NUMBER.1632369464" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.DISPLAY_ERROR_NUMBER" value="true" valueType="boolean"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.DIAG_WRAP.170590238" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.DIAG_WRAP" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.DIAG_WRAP.off" valueType="enumerated"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.REREAD_LIBS.2032009097" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.REREAD_LIBS" value="true" valueType="boolean"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.SEARCH_PATH.657052326" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.SEARCH_PATH" valueType="libPaths">
-                                    <listOptionValue value="${SYSCONFIG_TOOL_LIBRARY_PATH}"/>
-                                    <listOptionValue value="${COM_TI_MMWAVE_L_SDK_LIBRARY_PATH}"/>
-                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib"/>
-                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/drivers/lib"/>
-                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/datapath/lib"/>
-                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/board/lib"/>
-                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/control/lib"/>
-                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/utils/lib"/>
-                                    <listOptionValue value="${MMW_DFP_PATH}/mmwavelink/lib/xWRLx432"/>
-                                    <listOptionValue value="${MMW_DFP_PATH}/fecsslib/lib/xWRLx432"/>
-                                    <listOptionValue value="${CG_TOOL_ROOT}/lib"/>
-                                </option>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.LIBRARY.1853484187" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.LIBRARY" valueType="libs">
+                            <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.linkerDebug.1915798208" name="Arm Linker" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.exe.linkerDebug">
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.MAP_FILE.1408152191" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.MAP_FILE" value="hwa_fft1d.${ConfigName}.map" valueType="string"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.OUTPUT_FILE.66113886" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.OUTPUT_FILE" value="${ProjName}.out" valueType="string"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.LIBRARY.1640966633" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.LIBRARY" valueType="libs">
                                     <listOptionValue value="${SYSCONFIG_TOOL_LIBRARIES}"/>
                                     <listOptionValue value="${COM_TI_MMWAVE_L_SDK_LIBRARIES}"/>
                                     <listOptionValue value="freertos.xwrL64xx.m4f.ti-arm-clang.debug.lib"/>
@@ -95,17 +78,33 @@
                                     <listOptionValue value="fecss_patch_m4.lib"/>
                                     <listOptionValue value="libc.a"/>
                                 </option>
-                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.INITIALIZATION_MODEL.1552288060" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.INITIALIZATION_MODEL" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.linkerID.INITIALIZATION_MODEL.RAM_MODEL" valueType="enumerated"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.SEARCH_PATH.789695200" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.SEARCH_PATH" valueType="libPaths">
+                                    <listOptionValue value="${SYSCONFIG_TOOL_LIBRARY_PATH}"/>
+                                    <listOptionValue value="${COM_TI_MMWAVE_L_SDK_LIBRARY_PATH}"/>
+                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/kernel/freertos/lib"/>
+                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/drivers/lib"/>
+                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/datapath/lib"/>
+                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/board/lib"/>
+                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/control/lib"/>
+                                    <listOptionValue value="${MCU_PLUS_SDK_PATH}/source/utils/lib"/>
+                                    <listOptionValue value="${MMW_DFP_PATH}/mmwavelink/lib/xWRLx432"/>
+                                    <listOptionValue value="${MMW_DFP_PATH}/fecsslib/lib/xWRLx432"/>
+                                    <listOptionValue value="${CG_TOOL_ROOT}/lib"/>
+                                </option>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.DIAG_WRAP.907387808" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.DIAG_WRAP" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.DIAG_WRAP.off" valueType="enumerated"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.DISPLAY_ERROR_NUMBER.929067082" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.DISPLAY_ERROR_NUMBER" value="true" valueType="boolean"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.XML_LINK_INFO.129108555" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.XML_LINK_INFO" value="${ProjName}_linkInfo.xml" valueType="string"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.INITIALIZATION_MODEL.497285584" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.INITIALIZATION_MODEL" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.linkerID.INITIALIZATION_MODEL.RAM_MODEL" valueType="enumerated"/>
                             </tool>
-                            <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex.1375128099" name="Arm Hex Utility" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.hex"/>
-                            <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.objcopy.1287175181" name="Arm Objcopy Utility" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.objcopy"/>
-                            <tool id="com.ti.ccstudio.buildDefinitions.sysConfig.847803163" name="SysConfig" superClass="com.ti.ccstudio.buildDefinitions.sysConfig">
-                                <option id="com.ti.ccstudio.buildDefinitions.sysConfig.PRODUCTS.1698322682" superClass="com.ti.ccstudio.buildDefinitions.sysConfig.PRODUCTS" valueType="stringList">
+                            <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.hex.1233355725" name="Arm Hex Utility" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.hex"/>
+                            <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.objcopy.292042654" name="Arm Objcopy Utility" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_4.0.objcopy"/>
+                            <tool id="com.ti.ccstudio.buildDefinitions.sysConfig.1395263021" name="SysConfig" superClass="com.ti.ccstudio.buildDefinitions.sysConfig">
+                                <option id="com.ti.ccstudio.buildDefinitions.sysConfig.PRODUCTS.1874983543" superClass="com.ti.ccstudio.buildDefinitions.sysConfig.PRODUCTS" valueType="stringList">
                                     <listOptionValue value="${SYSCONFIG_TOOL_SYSCONFIG_MANIFEST}"/>
                                     <listOptionValue value="${COM_TI_MMWAVE_L_SDK_SYSCONFIG_MANIFEST}"/>
                                 </option>
-                                <option id="com.ti.ccstudio.buildDefinitions.sysConfig.CONTEXT.1931661695" superClass="com.ti.ccstudio.buildDefinitions.sysConfig.CONTEXT" value="m4fss0-0" valueType="string"/>
-                                <option id="com.ti.ccstudio.buildDefinitions.sysConfig.OTHER_FLAGS.1438904259" superClass="com.ti.ccstudio.buildDefinitions.sysConfig.OTHER_FLAGS" valueType="stringList">
+                                <option id="com.ti.ccstudio.buildDefinitions.sysConfig.CONTEXT.1119140299" superClass="com.ti.ccstudio.buildDefinitions.sysConfig.CONTEXT" value="m4fss0-0" valueType="string"/>
+                                <option id="com.ti.ccstudio.buildDefinitions.sysConfig.OTHER_FLAGS.1090164525" superClass="com.ti.ccstudio.buildDefinitions.sysConfig.OTHER_FLAGS" valueType="stringList">
                                     <listOptionValue value="--part Default"/>
                                     <listOptionValue value="--package FCCSP"/>
                                 </option>
@@ -144,7 +143,7 @@
                             </option>
                             <option id="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION.978765502" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_CODEGEN_VERSION" value="TICLANG_3.2.2.LTS" valueType="string"/>
                             <targetPlatform id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.targetPlatformRelease.1152794086" name="Platform" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.targetPlatformRelease"/>
-                            <builder buildPath="${BuildDirectory}" id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.builderRelease.1279971295" name="GNU Make.Release" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.builderRelease"/>
+                            <builder buildPath="${BuildDirectory}" id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.builderRelease.1279971295" keepEnvironmentInBuildfile="false" name="GNU Make" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.builderRelease"/>
                             <tool id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerRelease.1615558177" name="Arm Compiler" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.exe.compilerRelease">
                                 <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.release.1573755415" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.release" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.OPT_LEVEL.s" valueType="enumerated"/>
                                 <option id="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.ENDIAN_NESS__BIG_LITTLE.1430247594" superClass="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.ENDIAN_NESS__BIG_LITTLE" value="com.ti.ccstudio.buildDefinitions.TMS470_TICLANG_3.2.compilerID.ENDIAN_NESS__BIG_LITTLE.MLITTLE_ENDIAN" valueType="enumerated"/>

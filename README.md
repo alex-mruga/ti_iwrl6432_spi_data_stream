@@ -34,7 +34,7 @@ The project utilizes **MMWAVE-L-SDK version 05.05.03.00**. Download [here](https
 ## Project Structure
 
 ```
-/person_detecton_sdk-05_05_03
+/minimal_rangeproc_impl
 ├── src/                         # Source files
 ├── include/                     # Header files
 ├── example.syscfg               # configuration file for configuring the MCU drivers
@@ -51,18 +51,18 @@ Detailed documentation can be found in form of Doxygen comments in the source fi
 #### **Brief overview of important source files:**
 
 
-| `/person_detection_sdk-05_05_03/src/`                  |  |
+| `/minimal_rangeproc_impl/src/`                  |  |
 |-----------------------|-------------|
-| [`main.c`](/person_detection_sdk-05_05_03/src/main.c)             | Initializes hardware, configures the radar sensor, sets up DPUs, and starts FreeRTOS. |
-| [`factory_cal.c`](/person_detection_sdk-05_05_03/src/factory_cal.c)      | Restores and applies factory calibration data from flash memory. |
-| [`mem_pool.c`](/person_detection_sdk-05_05_03/src/mem_pool.c)        | Implements memory pool management functions and data structures. |
-| [`mmwave_basic.c`](/person_detection_sdk-05_05_03/src/mmwave_basic.c)    | Handles mmWave sensor initialization, configuration, and control. |
-| [`mmwave_control_config.c`](/person_detection_sdk-05_05_03/src/mmwave_control_config.c) | Configures chirp and profile settings for TI mmWave radar. |
-| [`rangeproc_dpc.c`](/person_detection_sdk-05_05_03/src/rangeproc_dpc.c)   | Implements the Range Processing DPU (FFT, object detection, UART transmission). |
-| [`uart_transmit.c`](/person_detection_sdk-05_05_03/src/uart_transmit.c)   | Manages UART transmission of radar cube data, synchronized via semaphores. |
+| [`main.c`](/minimal_rangeproc_impl/src/main.c)             | Initializes hardware, configures the radar sensor, sets up DPUs, and starts FreeRTOS. |
+| [`factory_cal.c`](/minimal_rangeproc_impl/src/factory_cal.c)      | Restores and applies factory calibration data from flash memory. |
+| [`mem_pool.c`](/minimal_rangeproc_impl/src/mem_pool.c)        | Implements memory pool management functions and data structures. |
+| [`mmwave_basic.c`](/minimal_rangeproc_impl/src/mmwave_basic.c)    | Handles mmWave sensor initialization, configuration, and control. |
+| [`mmwave_control_config.c`](/minimal_rangeproc_impl/src/mmwave_control_config.c) | Configures chirp and profile settings for TI mmWave radar. |
+| [`rangeproc_dpc.c`](/minimal_rangeproc_impl/src/rangeproc_dpc.c)   | Implements the Range Processing DPU (FFT, object detection, UART transmission). |
+| [`uart_transmit.c`](/minimal_rangeproc_impl/src/uart_transmit.c)   | Manages UART transmission of radar cube data, synchronized via semaphores. |
 
 
-| `/person_detection_sdk-05_05_03/include/`           |  |
+| `/minimal_rangeproc_impl/include/`           |  |
 |--------------|-------------|
-| [`system.h`](./person_detection_sdk-05_05_03/include/system.h)  | Holds most global handles and configs. |
-| [`defines.h`](./person_detection_sdk-05_05_03/include/defines.h)  | Defines chirp parameters (antenna settings, chirp configurations, timing). Configurations can be generated using the [mmWave Sensing Estimator](https://dev.ti.com/gallery/view/mmwave/mmWaveSensingEstimator/ver/2.4.0/) and the [chirp_config_to_defines.py](/scripts/chirp_config_to_defines.py) script. |
+| [`system.h`](./minimal_rangeproc_impl/include/system.h)  | Holds most global handles and configs. |
+| [`defines.h`](./minimal_rangeproc_impl/include/defines.h)  | Defines chirp parameters (antenna settings, chirp configurations, timing). Configurations can be generated using the [mmWave Sensing Estimator](https://dev.ti.com/gallery/view/mmwave/mmWaveSensingEstimator/ver/2.4.0/) and the [chirp_config_to_defines.py](/scripts/chirp_config_to_defines.py) script. |
