@@ -247,7 +247,7 @@ def main():
     # determine desired output path
     script_dir  = os.path.dirname(os.path.abspath(sys.argv[0]))
     repo_root   = os.path.dirname(script_dir)
-    default_dir = os.path.join(repo_root, 'person_detection_sdk-05_05_03', 'include')
+    default_dir = os.path.join(repo_root, 'minimal_rangeproc_impl', 'include')
 
     # if output file arg is provided, ensure that it is an actual file and not a dir
     #   otherwise use the defined default dir
