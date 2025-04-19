@@ -12,8 +12,11 @@ const flash      = scripting.addModule("/board/flash/flash", {}, false);
 const flash1     = flash.addInstance();
 const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1      = edma.addInstance();
+const edma2      = edma.addInstance();
 const hwa        = scripting.addModule("/drivers/hwa/hwa", {}, false);
 const hwa1       = hwa.addInstance();
+const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
+const mcspi1     = mcspi.addInstance();
 const clock      = scripting.addModule("/kernel/dpl/clock");
 const debug_log  = scripting.addModule("/kernel/dpl/debug_log");
 const mpu_armv7  = scripting.addModule("/kernel/dpl/mpu_armv7", {}, false);
@@ -38,6 +41,20 @@ edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
 
 hwa1.$name = "CONFIG_HWA0";
+
+mcspi1.$name                   = "CONFIG_MCSPI0";
+mcspi1.intrEnable              = "DMA";
+mcspi1.mcspiChannel[0].$name   = "CONFIG_MCSPI_CH0";
+mcspi1.mcspiChannel[0].bitRate = 15000000;
+
+edma2.$name                           = "CONFIG_EDMA1";
+mcspi1.edmaDriver                     = edma2;
+edma2.edmaRmDmaCh[0].$name            = "CONFIG_EDMA_RM5";
+edma2.edmaRmQdmaCh[0].$name           = "CONFIG_EDMA_RM6";
+edma2.edmaRmTcc[0].$name              = "CONFIG_EDMA_RM7";
+edma2.edmaRmParam[0].$name            = "CONFIG_EDMA_RM8";
+edma2.edmaRmReservedDmaCh[0].$name    = "CONFIG_EDMA_RM9";
+edma2.edmaRmReservedDmaCh[0].endIndex = 1;
 
 mpu_armv71.$name        = "CONFIG_MPU_REGION0";
 mpu_armv71.attributes   = "Device";
@@ -67,3 +84,8 @@ flash1.peripheralDriver.QSPI.DIN0.$suggestSolution = "PAD_AE";
 flash1.peripheralDriver.QSPI.DIN1.$suggestSolution = "PAD_AF";
 flash1.peripheralDriver.QSPI.CLK.$suggestSolution  = "PAD_AA";
 flash1.peripheralDriver.QSPI.CS.$suggestSolution   = "PAD_AB";
+mcspi1.MCSPI.$suggestSolution                      = "MCSPIA";
+mcspi1.MCSPI.CLK.$suggestSolution                  = "PAD_AG";
+mcspi1.MCSPI.MOSI.$suggestSolution                 = "PAD_AI";
+mcspi1.MCSPI.MISO.$suggestSolution                 = "PAD_AJ";
+mcspi1.mcspiChannel[0].CSn.$suggestSolution        = "PAD_AH";
