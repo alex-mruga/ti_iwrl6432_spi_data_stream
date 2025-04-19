@@ -11,6 +11,6 @@
 	<templateProperties value="id=example.projectspec.hwa_fft1d_xwrL64xx-evm_m4fss0-0_freertos_ti-arm-clang"/>
 	<activeTargetConfiguration value="targetConfigs/IWRL6432.ccxml"/>
 	<isTargetConfigurationManual value="false"/>
-	<origin value="C:\ti\MMWAVE_L_SDK_05_05_03_00\examples\drivers\hwa\hwa_fft1D\xwrL64xx-evm\m4fss0-0_freertos\ti-arm-clang\example.projectspec"/>
+	<origin value="/home/leon/gitrepos/ti_iwrl6432boost_dsp/person_detection_sdk-05_05_03"/>
 	<filesToOpen value=""/>
 </projectOptions>
