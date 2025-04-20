@@ -33,6 +33,15 @@ extern SemaphoreP_Object spi_tx_start_sem;
 extern SemaphoreP_Object spi_tx_done_sem;
 
 /**
+ * @brief Transfer a buffer via SPI in DMA mode, split into chunks if neccessary.
+ *
+ * @param txBuf       pointer to the data buffer
+ * @param totalBytes  total number of bytes to transfer
+ * @return SystemP_SUCCESS on success, otherwise error from SPI transfer
+ */
+static int32_t spi_transfer_buffer(void *txBuf, uint32_t totalBytes);
+
+/**
  * @brief SPI transmission loop function.
  *
  * This function continuously waits for a signal to start SPI transmission,
