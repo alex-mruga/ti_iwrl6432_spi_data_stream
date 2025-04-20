@@ -32,26 +32,78 @@
 #include "spi_transmit.h"
 
 
+// #define ADC_DATA_BUFF_MAX_SIZE      (8192U)
+
+#define MAX_SPI_TRANSFER_SIZE       (65536U) // Max. Bytes per transfer burst (FTDI: 65536 Byte)
+#define BITS_PER_FRAME              (32U)    // Bits per SPI frame */
+#define BYTES_PER_FRAME             (BITS_PER_FRAME/8U)
+
+
+// uint8_t gMcspiTxBuffer[APP_MCSPI_MSGSIZE] __attribute__((aligned(32)));
+// uint8_t gMcspiRxBuffer[APP_MCSPI_MSGSIZE] __attribute__((aligned(32)));
+
 // #define APP_UART_BUFSIZE              (1024)
 // #define APP_UART_RECEIVE_BUFSIZE      (8U)
 
-/**
- * @brief Header and footer for each radarCube transmission over SPI.
- *
- * These markers are used to indicate the start and end of each frame 
- * data packet during SPI transmission.
- */
-const uint8_t header[4] = {0xAA, 0xBB, 0xCC, 0xDD};
-const uint8_t footer[4] = {0xDD, 0xCC, 0xBB, 0xAA};
-
-
 void spi_transmit_loop() {
-    cmplx16ImRe_t *radarCube = gSysContext.rangeProcDpuCfg.hwRes.radarCube.data;
+    // McSPI transaction object
+    MCSPI_Transaction spiTransaction;
+    int32_t           transferOK;
+
+    // assign pointers which point to data which is transferred
+    cmplx16ImRe_t *radarCubePtr = gSysContext.rangeProcDpuCfg.hwRes.radarCube.data;
+    //uint8_t *adcData           = 
+
+    // Total bytes in one radar-cube frame
+    uint32_t radarCubeBytes = gSysContext.rangeProcDpuCfg.hwRes.radarCube.dataSize \
+                               * sizeof(cmplx16ImRe_t);
+
 
     while(true) {
+        // wait for new frame to be captured
         SemaphoreP_pend(&spi_tx_start_sem, SystemP_WAIT_FOREVER);
 
-        // TODO
+        // init transfer variables for this frame
+        uint32_t bytesRemaining = radarCubeBytes;
+        uint32_t chunkIndex     = 0;
+
+        while(bytesRemaining > 0) {
+            // determine this chunk's byte size
+            uint32_t chunkSize;
+            if (bytesRemaining > MAX_SPI_TRANSFER_SIZE) {
+                // data is larger than one transfer can handle
+                chunkSize = MAX_SPI_TRANSFER_SIZE;
+            } else {
+                // data fits in a single transfer
+                chunkSize = bytesRemaining;
+            }
+
+            // number of 32-bit frames in this chunk
+            uint32_t frameCount = chunkSize / BYTES_PER_FRAME;
+
+            // Calculate word offset in radarCube[]
+            uint32_t wordOffset = (MAX_SPI_TRANSFER_SIZE / BYTES_PER_FRAME) * chunkIndex;
+            
+            // initiate SPI transfer
+            MCSPI_Transaction_init(&spiTransaction);
+            spiTransaction.channel   = gConfigMcspi0ChCfg[0].chNum;
+            spiTransaction.dataSize  = BITS_PER_FRAME;
+            spiTransaction.csDisable = TRUE; // set CS low during transaction
+            spiTransaction.count     = frameCount;
+            spiTransaction.txBuf     = (void *)&radarCubePtr[wordOffset];
+            spiTransaction.rxBuf     = NULL;
+            spiTransaction.args      = NULL;
+        
+            transferOK = MCSPI_transfer(gMcspiHandle[CONFIG_MCSPI0], &spiTransaction);
+            
+            if (transferOK != 0) {
+                DebugP_log("SPI radar cube data transfer failed\r\n");
+            }
+
+            // Update for next chunk
+            bytesRemaining -= chunkSize;
+            chunkIndex++;
+        }
 
         SemaphoreP_post(&spi_tx_done_sem);
     }
