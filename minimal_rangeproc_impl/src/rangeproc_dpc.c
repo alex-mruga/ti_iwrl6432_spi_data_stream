@@ -225,7 +225,7 @@ void RangeProc_config() {
     params->ADCBufData.data = (void *)CSL_APP_HWA_ADCBUF_RD_U_BASE;
     params->ADCBufData.dataProperty.numRxAntennas = (uint8_t) gSysContext.numRxAntennas;
 
-    /* dataSize defines the size of buffer that holds ADC data of every frame */
+    /* dataSize defines the size of buffer that holds ADC data of every chirp */
     /* ADCBufData.dataSize omitted due to forum post: https://e2e.ti.com/support/sensors-group/sensors/f/sensors-forum/1324580/awrl6432boost-adc-buffer-data-size-in-motion-and-presence-detection-demo */
     params->ADCBufData.dataSize = CLI_NUM_ADC_SAMPLES * gSysContext.numRxAntennas * sizeof(uint16_t) * 2; // times 2, because of ping and pong C:\ti\mmwave-sdk\docs\MotionPresenceDetectionDemo_documentation.pdf 
     params->ADCBufData.dataProperty.numAdcSamples = CLI_NUM_ADC_SAMPLES;
