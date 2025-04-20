@@ -85,7 +85,7 @@
 #define DPC_TASK_PRI 5
 #define SPI_TASK_PRI 10
 
-
+// Global struct which holds all config and handles
 SystemContext_t gSysContext;
 
 StaticTask_t gMainTaskObj;
