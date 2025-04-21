@@ -44,6 +44,7 @@ hwa1.$name = "CONFIG_HWA0";
 
 mcspi1.$name                   = "CONFIG_MCSPI0";
 mcspi1.intrEnable              = "DMA";
+mcspi1.mode                    = "PERIPHERAL";
 mcspi1.mcspiChannel[0].$name   = "CONFIG_MCSPI_CH0";
 mcspi1.mcspiChannel[0].bitRate = 15000000;
 
