@@ -34,9 +34,9 @@ class SpiFtdiFrameReader:
     
     Usage:
         reader = SpiFtdiFrameReader(frame_length=6144, url="ftdi://ftdi:232h/1?latency=1", cs=0, freq=15e6, mode=0)
-
         for frame in reader:
             print(frame)
+
     """
     def __init__(self,
                 frame_length: int,
@@ -64,9 +64,9 @@ class SpiFtdiFrameReader:
         except UsbToolsError as e:
             raise RuntimeError(f"No FTDI device not found at '{url}': {e}") from e
         except Exception as e:
-             if self._spi:
-                 self._spi.terminate()
-             raise RuntimeError(f"Failed to configure FTDI or GPIO: {e}") from e
+            if self._spi:
+                self._spi.terminate()
+            raise RuntimeError(f"Failed to configure FTDI or GPIO: {e}") from e
 
     def __iter__(self):
         return self
