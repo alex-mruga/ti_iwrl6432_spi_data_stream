@@ -10,7 +10,7 @@ class RadarCube:
     Attributes:
         data (np.ndarray):
             Complex‐valued array holding the raw cube, with shape
-            (n_antenna, n_chirp, n_rangebin).
+            (n_chirp, n_antenna, n_rangebin).
         timestamp (float):
             Epoch time in seconds when this frame was captured.
         view (_View):
@@ -19,47 +19,38 @@ class RadarCube:
 
     Usage:
         # create radar cube object
-        cube = RadarCube(n_antennas=3, n_chirps=8, n_rangebins=128)
+        cube = RadarCube(arr)
 
         # access raw data
         raw = cube.data
         print(raw.shape)
 
         # use view accessor
-        ant0       = cube.view.antenna[0]      # Form (8, 128)
-        chirp5     = cube.view.chirp[5]        # Form (3, 128)
-        rangebin10 = cube.view.rangebin[10]    # Form (3, 8)
+        chirp0     = cube.view.chirp[0]
+        ant5       = cube.view.antenna[5]
+        rangebin10 = cube.view.rangebin[10]
     """
 
     def __init__(self,
-                 n_antennas: int,
-                 n_chirps: int,
-                 n_rangebins: int,
+                 data: np.ndarray,
                  timestamp: float = None):
-        self.data = np.zeros((n_antennas, n_chirps, n_rangebins), dtype=np.complex64)
+        if not isinstance(data, np.ndarray):
+            raise TypeError("Input 'data' must be a NumPy array.")
+
+        self.data = data
         self.timestamp = timestamp or time.time()
 
         # view object with 3 radar cube axis, so radar cube data can be
         #   accessed more easily via e.g. cubeobj.view.antenna[0]
-        self.view = self._View(self.data, dims=("antenna", "chirp", "rangebin"))
+        self.view = self._View(self.data, dims=("chirp", "antenna", "rangebin"))
 
     class _View:
         """
         Internal class providing named-axis access to the radar cube array.
 
-        Enables slicing by dimension name (antenna, chirp, rangebin) via dot notation.
+        Enables slicing by dimension name (chirp, antenna, rangebin) via dot notation.
         """
         def __init__(self, array: np.ndarray, dims: tuple[str, ...]):
-            """
-            Args:
-                n_antennas (int)    : Number of virtual antennas.
-                n_chirps (int)      : Number of Doppler chirps per frame.
-                n_rangebins (int)   : Number of range bins per chirp.
-                dtype (np.dtype, optional): Data type for array elements.
-                    Defaults to np.complex64.
-                timestamp (float, optional): Capture time in seconds since epoch.
-                    Defaults to current time.
-            """
             self._array = array
             self._dims  = dims
 
