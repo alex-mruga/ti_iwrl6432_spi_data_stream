@@ -13,6 +13,8 @@ const flash1     = flash.addInstance();
 const edma       = scripting.addModule("/drivers/edma/edma", {}, false);
 const edma1      = edma.addInstance();
 const edma2      = edma.addInstance();
+const gpio       = scripting.addModule("/drivers/gpio/gpio", {}, false);
+const gpio1      = gpio.addInstance();
 const hwa        = scripting.addModule("/drivers/hwa/hwa", {}, false);
 const hwa1       = hwa.addInstance();
 const mcspi      = scripting.addModule("/drivers/mcspi/mcspi", {}, false);
@@ -40,11 +42,19 @@ edma1.edmaRmTcc[0].$name           = "CONFIG_EDMA_RM2";
 edma1.edmaRmParam[0].$name         = "CONFIG_EDMA_RM3";
 edma1.edmaRmReservedDmaCh[0].$name = "CONFIG_EDMA_RM4";
 
+gpio1.$name                = "GPIO_LED";
+gpio1.pinDir               = "OUTPUT";
+gpio1.GPIO.$assign         = "GPIO";
+gpio1.GPIO.gpioPin.$assign = "PAD_AV";
+
 hwa1.$name = "CONFIG_HWA0";
 
 mcspi1.$name                   = "CONFIG_MCSPI0";
 mcspi1.intrEnable              = "DMA";
 mcspi1.mode                    = "PERIPHERAL";
+mcspi1.dpe1                    = "DISABLE";
+mcspi1.dpe0                    = "ENABLE";
+mcspi1.trMode                  = "TX_ONLY";
 mcspi1.mcspiChannel[0].$name   = "CONFIG_MCSPI_CH0";
 mcspi1.mcspiChannel[0].bitRate = 15000000;
 
