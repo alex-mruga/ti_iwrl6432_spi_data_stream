@@ -32,7 +32,7 @@
 #include "spi_transmit.h"
 
 
-#define MAX_SPI_TRANSFER_SIZE       (65536U) // Max. Bytes per transfer burst (FTDI: 65536 Byte)
+#define MAX_SPI_TRANSFER_SIZE       (65000U) // Max. Bytes per transfer burst (FTDI: 65536 Byte)
 #define BITS_PER_FRAME              (32U)    // Bits per SPI frame */
 #define BYTES_PER_FRAME             (BITS_PER_FRAME/8U)
 
@@ -69,10 +69,17 @@ static int32_t spi_transfer_buffer(void *txBuf, uint32_t totalBytes) {
         spiTransaction.rxBuf     = NULL;
         spiTransaction.args      = NULL;
 
+        // set SPI_BUSY pin low and thereby trigger SPI master to read
+        GPIO_pinWriteLow(gpioBaseAddrLed, pinNumLed);
+
+        // write data
         transferOK = MCSPI_transfer(gMcspiHandle[CONFIG_MCSPI0], &spiTransaction);
         if (transferOK != SystemP_SUCCESS) {
             return transferOK;
         }
+
+        // transfer complete, set SPI_BUSY pin high again
+        GPIO_pinWriteHigh(gpioBaseAddrLed, pinNumLed);
 
         // update for next chunk
         bytesRemaining -= chunkSize;
@@ -90,8 +97,7 @@ void spi_transmit_loop() {
     //uint8_t *adcData           = 
 
     // Total bytes in one radar-cube frame
-    uint32_t radarCubeBytes = gSysContext.rangeProcDpuCfg.hwRes.radarCube.dataSize \
-                               * sizeof(cmplx16ImRe_t);
+    uint32_t radarCubeBytes = gSysContext.rangeProcDpuCfg.hwRes.radarCube.dataSize;
 
 
     while(true) {

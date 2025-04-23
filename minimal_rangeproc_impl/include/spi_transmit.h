@@ -33,6 +33,11 @@ extern SemaphoreP_Object spi_tx_start_sem;
 extern SemaphoreP_Object spi_tx_done_sem;
 
 /**
+ * @brief LED (SPI_BUSY) GPIO control related variables.
+ */
+extern uint32_t gpioBaseAddrLed, pinNumLed;
+
+/**
  * @brief Transfer a buffer via SPI in DMA mode, split into chunks if neccessary.
  *
  * @param txBuf       pointer to the data buffer

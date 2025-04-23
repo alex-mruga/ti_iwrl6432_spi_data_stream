@@ -107,6 +107,9 @@ SemaphoreP_Object dpcCfgDoneSemHandle;
 SemaphoreP_Object spi_tx_start_sem;
 SemaphoreP_Object spi_tx_done_sem;
 
+// LED / SPI_BUSY GPIO pin
+uint32_t gpioBaseAddrLed, pinNumLed;
+
 
 void rangeproc_main(void *args);
 
@@ -115,6 +118,11 @@ void freertos_main(void *args) {
     /* Peripheral Driver Initialization */
     Drivers_open();
     Board_driversOpen();
+
+    /* Configure the LED GPIO which at the same time is also SPI_BUSY GPIO pin */
+    gpioBaseAddrLed = (uint32_t) GPIO_LED_BASE_ADDR;
+    pinNumLed       = GPIO_LED_PIN;
+    GPIO_setDirMode(gpioBaseAddrLed, pinNumLed, GPIO_LED_DIR);
 
     /* Create binary semaphore to pend Main task and wait for dpu config */
     SemaphoreP_constructBinary(&pend_main_sem, 0);
