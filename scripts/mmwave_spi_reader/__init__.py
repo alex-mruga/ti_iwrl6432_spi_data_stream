@@ -9,5 +9,6 @@ __version__ = "0.1.0"
 
 from .spi_ftdi_frame_reader import SpiFtdiFrameReader
 from .reader import MmWaveSpiReader
+from .types import RadarCube
 
-__all__ = ["SpiFtdiFrameReader", "MmWaveSpiReader"]
+__all__ = ["SpiFtdiFrameReader", "MmWaveSpiReader", "RadarCube"]
