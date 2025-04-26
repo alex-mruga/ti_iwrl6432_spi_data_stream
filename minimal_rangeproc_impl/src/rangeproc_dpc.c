@@ -249,7 +249,7 @@ void RangeProc_config() {
 
     /* initialize RX channel offsets */
     uint32_t index;
-    for (index = 0; index < gSysContext.numRxAntennas; index++) {
+    for (index = 0; index < SYS_COMMON_NUM_RX_CHANNEL; index++) {
         params->ADCBufData.dataProperty.rxChanOffset[index] = index * bytesPerRxChan;
     }
 
