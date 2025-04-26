@@ -32,7 +32,7 @@
 #include "spi_transmit.h"
 
 
-#define MAX_SPI_TRANSFER_SIZE       (65000U) // Max. Bytes per transfer burst (FTDI: 65536 Byte)
+#define MAX_SPI_TRANSFER_SIZE       (65024U) // Max. Bytes per transfer burst (FTDI: 65536 Byte)
 #define BITS_PER_FRAME              (32U)    // Bits per SPI frame */
 #define BYTES_PER_FRAME             (BITS_PER_FRAME/8U)
 
