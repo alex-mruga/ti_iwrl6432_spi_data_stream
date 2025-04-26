@@ -56,7 +56,7 @@ mcspi1.dpe1                    = "DISABLE";
 mcspi1.dpe0                    = "ENABLE";
 mcspi1.trMode                  = "TX_ONLY";
 mcspi1.mcspiChannel[0].$name   = "CONFIG_MCSPI_CH0";
-mcspi1.mcspiChannel[0].bitRate = 15000000;
+mcspi1.mcspiChannel[0].bitRate = 30000000;
 
 edma2.$name                           = "CONFIG_EDMA1";
 mcspi1.edmaDriver                     = edma2;
