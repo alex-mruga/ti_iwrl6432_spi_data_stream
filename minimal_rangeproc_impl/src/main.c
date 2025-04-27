@@ -5,20 +5,20 @@
  * This file contains the main entry point and initialization logic for the radar
  * signal processing application. It sets up the hardware, initializes the radar
  * sensor, configures the Data Processing Units (DPUs), and starts the FreeRTOS
- * scheduler to manage tasks for radar processing and UART communication.
+ * scheduler to manage tasks for radar processing and SPI communication.
  *
  * The application performs the following key steps:
  * 1. Initializes the hardware and drivers.
  * 2. Configures the radar sensor and performs factory calibration.
  * 3. Initializes the DPUs for range processing.
- * 4. Creates FreeRTOS tasks for radar processing (DPC) and UART communication.
+ * 4. Creates FreeRTOS tasks for radar processing (DPC) and SPI communication.
  * 5. Starts the radar sensor and enters the FreeRTOS scheduler.
  *
  * This implementation is adapted from the Motion and Presence Detection Demo
  * provided in the TI mmWave SDK.
  *
  * @note This module relies on the TI mmWave SDK, FreeRTOS, and various hardware
- *       drivers for radar sensor control, DPU configuration, and UART communication.
+ *       drivers for radar sensor control, DPU configuration, and SPI communication.
  *
  * @copyright (C) 2022-24 Texas Instruments Incorporated
  *
@@ -54,7 +54,6 @@
 #include <stdlib.h>
 #include <kernel/dpl/DebugP.h>
 #include "board/flash.h"
-#include "drivers/uart/v0/uart_sci.h"
 #include "kernel/dpl/SystemP.h"
 #include "ti_drivers_config.h"
 #include "ti_board_config.h"
@@ -81,12 +80,12 @@
 
 #define MAIN_TASK_SIZE (16384U/sizeof(configSTACK_DEPTH_TYPE))
 #define DPC_TASK_STACK_SIZE 8192
-#define UART_TASK_STACK_SIZE 2048
+#define SPI_TASK_STACK_SIZE 2048
 
 #define DPC_TASK_PRI 5
-#define UART_TASK_PRI 10
+#define SPI_TASK_PRI 10
 
-
+// Global struct which holds all config and handles
 SystemContext_t gSysContext;
 
 StaticTask_t gMainTaskObj;
@@ -97,16 +96,19 @@ StaticTask_t gDpcTaskObj;
 TaskHandle_t gDpcTask;
 StackType_t  gDpcTaskStack[DPC_TASK_STACK_SIZE] __attribute__((aligned(32)));
 // ---
-StaticTask_t gUartTaskObj;
-TaskHandle_t gUartTask;
-StackType_t  gUartTaskStack[UART_TASK_STACK_SIZE] __attribute__((aligned(32)));
+StaticTask_t gSpiTaskObj;
+TaskHandle_t gSpiTask;
+StackType_t  gSpiTaskStack[SPI_TASK_STACK_SIZE] __attribute__((aligned(32)));
 
 // Semaphores
 SemaphoreP_Object pend_main_sem;
 SemaphoreP_Object dpcCfgDoneSemHandle;
 
-SemaphoreP_Object uart_tx_start_sem;
-SemaphoreP_Object uart_tx_done_sem;
+SemaphoreP_Object spi_tx_start_sem;
+SemaphoreP_Object spi_tx_done_sem;
+
+// LED / SPI_BUSY GPIO pin
+uint32_t gpioBaseAddrLed, pinNumLed;
 
 
 void rangeproc_main(void *args);
@@ -117,12 +119,17 @@ void freertos_main(void *args) {
     Drivers_open();
     Board_driversOpen();
 
+    /* Configure the LED GPIO which at the same time is also SPI_BUSY GPIO pin */
+    gpioBaseAddrLed = (uint32_t) GPIO_LED_BASE_ADDR;
+    pinNumLed       = GPIO_LED_PIN;
+    GPIO_setDirMode(gpioBaseAddrLed, pinNumLed, GPIO_LED_DIR);
+
     /* Create binary semaphore to pend Main task and wait for dpu config */
     SemaphoreP_constructBinary(&pend_main_sem, 0);
     SemaphoreP_constructBinary(&dpcCfgDoneSemHandle, 0);
 
-    SemaphoreP_constructBinary(&uart_tx_start_sem, 0);
-    SemaphoreP_constructBinary(&uart_tx_done_sem, 0);
+    SemaphoreP_constructBinary(&spi_tx_start_sem, 0);
+    SemaphoreP_constructBinary(&spi_tx_done_sem, 0);
     
     // Mmwave_HwaConfig_custom();
     /* The following function call and comment is copied from the motion and presence detection demo (motion_detect.c motion_detect()) */
@@ -202,14 +209,14 @@ void freertos_main(void *args) {
 
     SemaphoreP_pend(&dpcCfgDoneSemHandle, SystemP_WAIT_FOREVER);
 
-    gUartTask = xTaskCreateStatic(uartTask, /* Pointer to the function that implements the task. */
-                                 "uart_task",      /* Text name for the task.  This is to facilitate debugging only. */
-                                 UART_TASK_STACK_SIZE,   /* Stack depth in units of StackType_t typically uint32_t on 32b CPUs */
+    gSpiTask = xTaskCreateStatic(spiTask, /* Pointer to the function that implements the task. */
+                                 "spi_task",      /* Text name for the task.  This is to facilitate debugging only. */
+                                 SPI_TASK_STACK_SIZE,   /* Stack depth in units of StackType_t typically uint32_t on 32b CPUs */
                                  NULL,                  /* We are not using the task parameter. */
-                                 UART_TASK_PRI,          /* task priority, 0 is lowest priority, configMAX_PRIORITIES-1 is highest */
-                                 gUartTaskStack,      /* pointer to stack base */
-                                 &gUartTaskObj);         /* pointer to statically allocated task object memory */
-    configASSERT(gUartTask != NULL);
+                                 SPI_TASK_PRI,          /* task priority, 0 is lowest priority, configMAX_PRIORITIES-1 is highest */
+                                 gSpiTaskStack,      /* pointer to stack base */
+                                 &gSpiTaskObj);         /* pointer to statically allocated task object memory */
+    configASSERT(gSpiTask != NULL);
 
     if (mmwave_startSensor() == SystemP_FAILURE){
         exit(1);

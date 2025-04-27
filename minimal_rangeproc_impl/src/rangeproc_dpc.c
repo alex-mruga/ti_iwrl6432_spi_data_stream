@@ -56,7 +56,7 @@
 #include "dpu_res.h"
 #include "mmwave_basic.h"
 #include "mem_pool.h"
-#include "uart_transmit.h"
+#include "spi_transmit.h"
 #include "rangeproc_dpc.h"
 
 
@@ -83,8 +83,8 @@ void *gAdcDataDebugPtr = NULL;
 Edma_IntrObject intrObj_Rangeproc[2];
 
 
-void uartTask() {
-    uart_transmit_loop();
+void spiTask() {
+    spi_transmit_loop();
 }
 
 void dpcTask() {
@@ -140,11 +140,11 @@ void dpcTask() {
             DebugP_log("RangeProc DPU process error %d\n", retVal);
             DebugP_assert(0);
         }
-        // trigger Uart transmission
-        SemaphoreP_post(&uart_tx_start_sem);
+        // trigger SPI transmission
+        SemaphoreP_post(&spi_tx_start_sem);
 
-        // wait for Uart transmission to complete
-        SemaphoreP_pend(&uart_tx_done_sem, SystemP_WAIT_FOREVER);
+        // wait for SPI transmission to complete
+        SemaphoreP_pend(&spi_tx_done_sem, SystemP_WAIT_FOREVER);
 
         /* give initial trigger for the next frame */
         retVal = DPU_RangeProcHWA_control(gSysContext.rangeProcHWADpuHandle,
@@ -225,7 +225,7 @@ void RangeProc_config() {
     params->ADCBufData.data = (void *)CSL_APP_HWA_ADCBUF_RD_U_BASE;
     params->ADCBufData.dataProperty.numRxAntennas = (uint8_t) gSysContext.numRxAntennas;
 
-    /* dataSize defines the size of buffer that holds ADC data of every frame */
+    /* dataSize defines the size of buffer that holds ADC data of every chirp */
     /* ADCBufData.dataSize omitted due to forum post: https://e2e.ti.com/support/sensors-group/sensors/f/sensors-forum/1324580/awrl6432boost-adc-buffer-data-size-in-motion-and-presence-detection-demo */
     params->ADCBufData.dataSize = CLI_NUM_ADC_SAMPLES * gSysContext.numRxAntennas * sizeof(uint16_t) * 2; // times 2, because of ping and pong C:\ti\mmwave-sdk\docs\MotionPresenceDetectionDemo_documentation.pdf 
     params->ADCBufData.dataProperty.numAdcSamples = CLI_NUM_ADC_SAMPLES;
@@ -249,7 +249,7 @@ void RangeProc_config() {
 
     /* initialize RX channel offsets */
     uint32_t index;
-    for (index = 0; index < gSysContext.numRxAntennas; index++) {
+    for (index = 0; index < SYS_COMMON_NUM_RX_CHANNEL; index++) {
         params->ADCBufData.dataProperty.rxChanOffset[index] = index * bytesPerRxChan;
     }
 
