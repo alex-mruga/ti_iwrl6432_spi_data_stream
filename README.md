@@ -1,4 +1,4 @@
-# TI IWRL6432BOOST mmWave Radar data streaming and capture in Python
+# TI IWRL6432BOOST mmWave radar SPI data streaming
 
 ![Work in Progress](https://img.shields.io/badge/status–work%20in%20progress-yellow)
 
@@ -13,7 +13,7 @@ Please note, that there already is an easy way to stream raw ADC data via SPI us
   - efficiently extract processed data for streaming to another device or a host computer
   - more minimalistic and comprehendable approach than running the full mmwave demo project on the MCU
   - stream already FFT processed data instead of ADC data (the FFT is calculated by the Rangeproc DPU during the `framePeriod`)
-- **Compatible with the** [`mmwave-spi-ftdi-reader`](https://github.com/loeens/mmwave-spi-ftdi-reader) **Python module**
+- **Compatible with the** [`mmwave-spi-ftdi-reader`](https://github.com/loeens/mmwave-spi-ftdi-reader) **Python module for reading the SPI data**
   - offers streaming of the data via a USB-SPI adapter cable (e.g. C232HM-DDHSL-0) to a host computer
   - easy to use
   - the whole chain (capturing, transferring, parsing) is able to run in real-time up to Radar Cube sizes of approx. 96 KByte
