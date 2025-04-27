@@ -23,21 +23,6 @@ Please note, that there already is an easy way to stream raw ADC data via SPI us
 
 
 ## Setup
-### Software
-1. Download and install CCS Theia and the MMWAVE-L-SDK (please refer to TI's documentation for this)
-    - [MMWAVE-L-SDK version 05.05.03 Download](https://www.ti.com/tool/download/MMWAVE-L-SDK/05.05.03.00)
-    - [CCS Theia installation guide](https://software-dl.ti.com/ccs/esd/documents/users_guide_ccs_theia_1.5.0/ccs_installation.html#installation-process)
-2. Work yourself through the [quick start guide](https://dev.ti.com/tirex/content/radar_toolbox_2_20_00_05/.metadata/Getting_Started_With_xWRL6432.html#getting-started-with-xwrl6432)  if this is your first time using the EVM
-3. If youy want to use the [`mmwave-spi-ftdi-reader`](https://github.com/loeens/mmwave-spi-ftdi-reader) Python module for reading the SPI data, refer to the installation instructions there.
-4. Head to your CCS Theia workspace clone the repo
-    ```bash
-    cd your-ccs-workspace # default: ~/workspace_ccstheia
-    git clone https://github.com/loeens/ti_iwrl6432_spi_data_stream
-    ```
-5. Open CCS Theia and go to `File` -> `Import Project(s)...` and select the repo directory
-6. After importing, connect your IWRL6432BOOST via Micro-USB and power-cycle it
-7. Build and run in debug via CCS Theia, after that, press the "play" icon to start debugging. Now data is ready to streamed via SPI, start your application for reading the data on your host computer.
-
 ### Hardware
 **Warning:** Please make sure to double-check all your actions with the [EVM's user guide](https://www.ti.com/lit/ug/swru596/swru596.pdf?ts=1745662801627) and the [quick start guide](https://dev.ti.com/tirex/content/radar_toolbox_2_20_00_05/.metadata/Getting_Started_With_xWRL6432.html#getting-started-with-xwrl6432) before doing anything. I don't take any responsibility for damaged hardware.
 1. **Turn on switch 1.1 and 1.6** (turn others off)
@@ -57,6 +42,7 @@ Please note, that there already is an easy way to stream raw ADC data via SPI us
     | CLK           | orange          |
     | SPI_BUSY      | grey            |
     | GND           | black           |
+
 
 ## How does it work?
 Essentially, the SDK function `DPU_RangeProcHWA_control()` triggers a new frame and thus, chirping in the radar frontend. The `DPU_RangeProcHWA_process()` SDK function then processes the ADC data via the rangeproc DPU.
