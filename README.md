@@ -41,8 +41,9 @@ Please note, that there already is an easy way to stream raw ADC data via SPI us
     | CS            | brown           |
     | CLK           | orange          |
     | SPI_BUSY      | grey            |
-    | GND           | black           |
-
+    | GND           | black           | 
+    
+    <img src="docs/images/j2_connector_spi.png" width="300">
 
 ## How does it work?
 Essentially, the SDK function `DPU_RangeProcHWA_control()` triggers a new frame and thus, chirping in the radar frontend. The `DPU_RangeProcHWA_process()` SDK function then processes the ADC data via the rangeproc DPU.
