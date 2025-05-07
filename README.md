@@ -1,4 +1,4 @@
-# TI IWRL6432BOOST mmWave radar SPI data streaming
+# TI IWRL6432BOOST TI IWRL6432BOOST mmWave radar firmware for streaming radar cube data via SPI
 
 ![Work in Progress](https://img.shields.io/badge/status–work%20in%20progress-yellow)
 
